@@ -6,7 +6,7 @@ let logger = require('morgan');
 let cors = require('cors');
 let envError = require('./src/errorHandler/envError');
 require('./src/errorHandler/processError')();
-require('dotenv').config({path : "./config.env"});
+require('dotenv').config({path : "/etc/secrets/config.env"});
 require('./src/service/mongoConnect')();
 
 
