@@ -3,6 +3,7 @@ let router = express.Router();
 let User = require('../src/models/userModel');
 let studentController = require('../src/controller/student');
 const jwtFn = require('../src/middleware/auth');
+const handleErrorAsync = require('../src/errorHandler/handleErrorAsync');
 
 /* GET users listing. */
 router.post('/v1/register', studentController.studentSignUp);

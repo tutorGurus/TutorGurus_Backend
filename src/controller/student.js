@@ -9,6 +9,38 @@ const regex = /^(?=.*[a-z])(?=.*[A-Z])/; //密碼必須包含一個大小以及�
 
 let userController = {
     async studentSignUp(req, res, next){
+    
+    /**
+        * #swagger.tags = ['Student']
+        * #swagger.description = '學生註冊API'
+        * #swagger.parameters['body'] = {
+                in : 'body',
+                type : 'object',
+                required : true,
+                description : '資料格式',
+                schema : {
+                    $name : 'Avocado',
+                    $email : "Avocado@gmail.com",
+                    $userPassword : "Aa1234567",
+                    $confirmPassword : "Aa1234567"
+                }
+            }
+        * #swagger.responses[200] = {
+                description: '註冊成功',
+                schema : {
+                    "status": "success",
+                    "data": {
+                        "name": "Test",
+                        "email": "test@gmail.com",
+                        "password": "$2a$15$si.F.6x1GJk6VwKQWUkmu.LCd/Gif8PTz3ExAGyhE8s8l/UHfOQFq",
+                        "role": "S",
+                        "status": 0,
+                        "_id": "6455d6e919231164a788881"
+                    }
+                }
+            }
+     */
+
         try{
             let {userName, email, userPassword, confirmPassword} = req.body;
             let emailCheck = await User.findOne({"email" : email})
@@ -34,17 +66,37 @@ let userController = {
                 password : secretPassword,
                 role : 'S',
             })
+            console.log(123)
             successHandle(res, newUser);
-        }
-        catch(error){
-            return next(error);
+        } catch(error) {
+            return next(error)
         }
     },
 
     async logIn(req, res, next){
+        /** 
+            #swagger.tags = ['Student']
+            #swagger.description = '學生登入API'
+            #swagger.parameters['body'] = {
+                in : 'body',
+                type : 'object',
+                required : true,
+                description : '資料格式',
+                schema : {
+                    $email : "Test@gmail.com",
+                    $password : "password",
+                }
+            }
+            #swagger.responses[200] = {
+                description: '登入成功獲取token',
+                schema : {
+                    "status": "success",
+                    "data": "JWT token"
+                }
+            }
+         */
         try{
             const { email, password} = req.body;
-            console.log(req.body)
             if(!email || !password){
                 return next(customiError(400,"請輸入完整帳號和密碼"));
             }
@@ -61,6 +113,34 @@ let userController = {
     },
 
     async editInfo(req, res, next){
+        /**
+         * #swagger.tags = ['Student'],
+         * #swagger.description = '學生編輯個人檔案API'
+         * #swagger.parameters['body'] = {
+                in : 'body',
+                type : 'object',
+                required : true,
+                description : '資料格式',
+                schema : {
+                    $name : "userName",
+                    $email : "Test@gmail.com",
+                }
+            }
+            #swagger.responses[200] = {
+                description: '資料修改成功',
+                schema : {
+                    "status": "success",
+                    "data": {
+                        "_id": "userID",
+                        "name": "newName",
+                        "email": "newMail@gmail.com",
+                    }
+                }
+            }
+         * #swagger.security = [{
+            "JwtToken" : []
+            }]
+         */
         try{
             console.log(req.user);
             let { name, email } = req.body;
