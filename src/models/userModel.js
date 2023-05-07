@@ -23,8 +23,36 @@ const userSchema = new mongoose.Schema({
     status : {
         type : Number,
         default : 0,
+    },
+    birthday : {
+        type : Date
+    },
+    phone : {
+        type : String
+    },
+    gender : {
+        type : String,
+    },
+    degree : {
+        type : String,
+    },
+    school : {
+        type : String,
+    },
+    country : {
+        type : String
+    },
+    profile_image : {
+        type : String
+    },
+    bank_account : {
+        type : String
     }
-},{ versionKey : false});
+
+},{ 
+    versionKey : false,
+    timestamps: true
+});
 
 const User = mongoose.model("User", userSchema);
 
