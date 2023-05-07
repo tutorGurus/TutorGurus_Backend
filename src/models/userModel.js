@@ -15,6 +15,9 @@ const userSchema = new mongoose.Schema({
         required : [true, "請填入帳號"],
         select : false
     },
+    tokens : [{
+        tonken : { type : String }
+    }],
     role : {
         type : String,
         enum : ['S', 'T', 'A'],
@@ -55,5 +58,4 @@ const userSchema = new mongoose.Schema({
 });
 
 const User = mongoose.model("User", userSchema);
-
 module.exports = User;

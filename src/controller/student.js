@@ -53,7 +53,6 @@ let userController = {
             if(!auth){
                 return next(customiError(400,"無此帳號或密碼錯誤！"));
             }
-            await User.findByIdAndUpdate(user["_id"],{status : 1});
             jwtFn.jwtGenerating(user, res);
         } catch(err){
             return next(err);

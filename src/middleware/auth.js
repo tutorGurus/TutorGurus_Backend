@@ -8,6 +8,7 @@ let jwtFn = {
     jwtGenerating(userInfo, res){
         //生成JWT
         console.log(process.env.JWT_SECRET, process.env.JWT_DAYS)
+        console.log(userInfo)
         let jwtToken = jwt.sign({id : userInfo["_id"]}, process.env.JWT_SECRET, {expiresIn : process.env.JWT_DAYS});
         successHandler(res, jwtToken);
     },
