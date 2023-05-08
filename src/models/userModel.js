@@ -16,7 +16,7 @@ const userSchema = new mongoose.Schema({
         select : false
     },
     tokens : [{
-        tonken : { type : String }
+        token : { type : String},
     }],
     role : {
         type : String,

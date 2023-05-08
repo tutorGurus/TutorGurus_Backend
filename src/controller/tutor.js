@@ -60,7 +60,13 @@ let tutorController = {
     }, 
 
     async logOut(req, res, next){
-        findUser = await User.findOne()
+        try{
+            console.log(req.user)
+            await User.updateOne({"_id" : req.user._id}, { $pull : { tokens : { token : req.token}}},{new : true});
+            res.send({stauts : "success"});
+        } catch(err){
+            return next(customiError(400, err));
+        }
     },
 
     async editInfo(req, res, next){

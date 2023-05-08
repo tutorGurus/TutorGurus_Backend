@@ -11,4 +11,6 @@ router.post('/v1/login', tutorController.logIn);
 
 router.patch('/v1/profile', jwtFn.isAuth, tutorController.editInfo);
 
+router.post('/v1/logout', jwtFn.isAuth, tutorController.logIn)
+
 module.exports = router;
