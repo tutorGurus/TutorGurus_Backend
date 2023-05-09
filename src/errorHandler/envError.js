@@ -1,12 +1,12 @@
 const devError = (err, res) =>{
-    if(err.statusCode){
+    if(err.isOperational == true){
         res.status(err.statusCode).send({
-        Errormessage : err.message,
-        Erroris : err,
-        Errorstack : err.stack
-    }) 
+            Errormessage : err.message,
+            Erroris : err,
+            Errorstack : err.stack
+        })
     } else {
-        res.status(400).send({
+        res.status(500).send({
             Errormessage : err.message,
             Erroris : err,
             Errorstack : err.stack

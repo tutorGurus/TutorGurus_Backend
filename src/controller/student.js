@@ -105,10 +105,12 @@ let userController = {
             if(!auth){
                 return next(customiError(400,"無此帳號或密碼錯誤！"));
             }
-            await User.findByIdAndUpdate(user["_id"],{status : 1});
             jwtFn.jwtGenerating(user, res);
         } catch(err){
-            return next(err);
+            if(err.message == "Cannot read properties of null (reading 'password')"){
+                return next(customiError(400,"無此帳號或密碼錯誤！"));
+            }
+            return next(customiError(500, "伺服器錯誤！"));
         }
     },
 
@@ -142,7 +144,6 @@ let userController = {
             }]
          */
         try{
-            console.log(req.user);
             let { name, email } = req.body;
             if(!name || !email ){
                 return next(customiError(400, "必填欄位不得為空"));
@@ -162,9 +163,19 @@ let userController = {
                     name :  name,
                     email : email,
                 }
-            },{ new : true });
+            },{ new : true }).select('-tokens');
             successHandle(res, replaceData);
         } catch(err) {
+            return next(customiError(400, err));
+        }
+    },
+
+    async logOut(req, res, next){
+        try{
+            console.log(req.user)
+            await User.updateOne({"_id" : req.user._id}, { $pull : { tokens : { token : req.token}}},{new : true});
+            res.send({stauts : "success"});
+        } catch(err){
             return next(customiError(400, err));
         }
     }

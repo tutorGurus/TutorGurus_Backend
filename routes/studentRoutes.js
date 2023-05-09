@@ -12,8 +12,7 @@ router.post('/v1/login', studentController.logIn);
 
 router.patch('/v1/profile', jwtFn.isAuth, studentController.editInfo);
 
-
-
+router.post('/v1/logout', jwtFn.isAuth, studentController.logOut);
 
 
 module.exports = router;
