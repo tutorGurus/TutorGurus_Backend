@@ -221,17 +221,54 @@
                   "properties": {
                     "_id": {
                       "type": "string",
-                      "example": "6455d6e919231164a7222591"
+                      "example": "userID"
                     },
                     "name": {
                       "type": "string",
-                      "example": "Charlie"
+                      "example": "newName"
                     },
                     "email": {
                       "type": "string",
-                      "example": "benny@gmail.com"
+                      "example": "newMail@gmail.com"
                     }
                   }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JwtToken": []
+          }
+        ]
+      }
+    },
+    "/student/v1/logout": {
+      "post": {
+        "tags": [
+          "Student"
+        ],
+        "description": "登出API",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "登出成功",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
                 }
               },
               "xml": {
@@ -318,6 +355,34 @@
                   "example": "any"
                 },
                 "email": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {}
+      }
+    },
+    "/tutors/v1/logout": {
+      "post": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "example": "any"
+                },
+                "password": {
                   "example": "any"
                 }
               }
