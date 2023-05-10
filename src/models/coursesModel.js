@@ -28,3 +28,6 @@ const courseSchema = new mongoose.Schema({
     versionKey : false,
     timestamps: true
 })
+
+const Courses = mongoose.model("Courses", courseSchema);
+module.exports = Courses;
