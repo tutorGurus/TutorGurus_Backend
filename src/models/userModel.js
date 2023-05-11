@@ -24,28 +24,37 @@ const userSchema = new mongoose.Schema({
         select : false
     },
     birthday : {
-        type : Date
+        type : Date,
+        default : ""
     },
     phone : {
-        type : String
+        type : String,
+        default : ""
     },
     gender : {
         type : String,
+        default : ""
     },
     degree : {
         type : String,
+        default : ""
+
     },
     school : {
         type : String,
+        default : ""
     },
     country : {
-        type : String
+        type : String,
+        default : ""
     },
     profile_image : {
-        type : String
+        type : String,
+        default : " "     
     },
     bank_account : {
-        type : String
+        type : String,
+        default : ""
     },
     carts : {
         type : mongoose.Schema.Types.ObjectId,

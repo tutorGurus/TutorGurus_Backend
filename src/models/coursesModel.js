@@ -22,7 +22,7 @@ const courseSchema = new mongoose.Schema({
     introduction : String,
     is_publish : {
         type : Boolean,
-        default : false
+        default : true
     }
 },{
     versionKey : false,
