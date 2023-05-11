@@ -105,7 +105,7 @@ let userController = {
             if(!auth){
                 return next(customiError(400,"無此帳號或密碼錯誤！"));
             }
-            jwtFn.jwtGenerating(user, res);
+            jwtFn.jwtGenerating(user, res, next);
         } catch(err){
             if(err.message == "Cannot read properties of null (reading 'password')"){
                 return next(customiError(400,"無此帳號或密碼錯誤！"));
@@ -178,8 +178,17 @@ let userController = {
         } catch(err){
             return next(customiError(400, err));
         }
-    }
+    },
 
+    async getUserInfo(req, res, next){
+        try{
+            res.send({
+                status : "success",
+                data : req.user});
+        } catch {
+            return next(customiError(400, err));
+        }
+    }
 }
 
 

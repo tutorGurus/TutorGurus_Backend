@@ -10,9 +10,13 @@ router.post('/v1/register', studentController.studentSignUp);
 
 router.post('/v1/login', studentController.logIn);
 
+router.post('/v1/logout', jwtFn.isAuth, studentController.logOut);
+
 router.patch('/v1/profile', jwtFn.isAuth, studentController.editInfo);
 
-router.post('/v1/logout', jwtFn.isAuth, studentController.logOut);
+router.get('/v1/profile', jwtFn.isAuth, studentController.getUserInfo);
+
+
 
 
 module.exports = router;

@@ -33,7 +33,7 @@ let tutorController = {
                 password : secretPassword,
                 role : 'T',
             })
-            successHadle(res, newUser);
+            successHandle(res, newUser);
         } catch(err){
             
             return next(err);
@@ -94,6 +94,16 @@ let tutorController = {
             },{ new : true });
             successHandle(res, replaceData);
         } catch(err) {
+            return next(customiError(400, err));
+        }
+    },
+
+    async getUserInfo(req, res, next){
+        try{
+            res.send({
+                status : "success",
+                data : req.user});
+        } catch {
             return next(customiError(400, err));
         }
     }

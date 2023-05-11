@@ -5,7 +5,7 @@ const User = require('../models/userModel');
 
 let jwtFn = {
     //生成Token
-    async jwtGenerating(userInfo, res){
+    async jwtGenerating(userInfo, res, next){
         try{
         //生成JWT
         let jwtToken = jwt.sign({id : userInfo["_id"].toString()}, process.env.JWT_SECRET, {expiresIn : process.env.JWT_DAYS});
@@ -18,6 +18,7 @@ let jwtFn = {
     //驗證Token
     async isAuth(req, res, next){
         try {
+            console.log(123);
             let token;
             //驗證是否夾帶token
             if(req.headers.authorization && req.headers.authorization.startsWith('Bearer'))
@@ -36,7 +37,7 @@ let jwtFn = {
             const user = await User.findOne({ "_id" : decryptPayload.id , 'tokens.token' : token });
             if(!user)
                 return next(costomiError(400, "請先登入"));
-            const currentUser = await User.findById(decryptPayload.id).select('+password');
+            const currentUser = await User.findById(decryptPayload.id).select('+password -tokens');
             req.user = currentUser;
             req.token = token;
             next();

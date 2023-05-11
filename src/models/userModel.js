@@ -23,10 +23,6 @@ const userSchema = new mongoose.Schema({
         enum : ['S', 'T', 'A'],
         select : false
     },
-    status : {
-        type : Number,
-        default : 0,
-    },
     birthday : {
         type : Date
     },
@@ -50,12 +46,18 @@ const userSchema = new mongoose.Schema({
     },
     bank_account : {
         type : String
+    },
+    carts : {
+        type : mongoose.Schema.Types.ObjectId,
+        ref : "Carts"
     }
 
 },{ 
     versionKey : false,
     timestamps: true
 });
+
+
 
 const User = mongoose.model("User", userSchema);
 module.exports = User;
