@@ -2,7 +2,8 @@ const User = require('../models/userModel');
 const customiError = require('../errorHandler/customiError');
 const successHandle = require('../service/successHandler');
 
-let tutorController = {
+let tutorInfosController = {
+    // 教師一覽
     async tutorsList(req, res, next){
         try{
             const {tutorID} = req.body;
@@ -17,7 +18,7 @@ let tutorController = {
             return next(err);
         }
     },
-
+    // 教師詳情
     async tutorDetail(req, res, next){
         try{
             const {tutorID} = req.body;
