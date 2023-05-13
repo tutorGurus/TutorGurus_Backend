@@ -59,14 +59,12 @@ let userController = {
             
             let salt = bcrypt.genSaltSync(15);
             let secretPassword = bcrypt.hashSync(userPassword, salt);
-            
             let newUser = await User.create({
                 name : userName,
                 email : email,
                 password : secretPassword,
                 role : 'S',
             })
-            console.log(123)
             successHandle(res, newUser);
         } catch(error) {
             return next(error)
