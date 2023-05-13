@@ -56,10 +56,16 @@ const userSchema = new mongoose.Schema({
         type : String,
         default : ""
     },
-    carts : {
-        type : mongoose.Schema.Types.ObjectId,
-        ref : "Carts"
-    }
+    carts : [{
+        cart : {
+            type : mongoose.Schema.Types.ObjectId,
+            quantity : {
+                type : Number,
+                required : [true, "數量為必填"],
+                default : 1
+            }
+        }      
+    }]
 
 },{ 
     versionKey : false,
