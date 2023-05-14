@@ -1,5 +1,6 @@
 const devError = (err, res) =>{
     res.status(err.statusCode).send({
+        status : false,
         Errormessage : err.message,
         Erroris : err,
         Errorstack : err.stack
@@ -9,6 +10,7 @@ const devError = (err, res) =>{
 const productError = (err, res) =>{
     if(err.isOperational == true){
         res.status(res.statusCode).send({
+            status : false,
             Errormessage : err.message,
         })
     } else {
