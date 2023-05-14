@@ -6,10 +6,6 @@ let tutorInfosController = {
     // 教師一覽
     async tutorsList(req, res, next){
         try{
-            const {tutorID} = req.body;
-            if(!tutorID)
-                return next(customiError(400, "無教師ID "));
-            
             const tutorsList = await User.find({
                 role : 'T',
             })
@@ -21,12 +17,12 @@ let tutorInfosController = {
     // 教師詳情
     async tutorDetail(req, res, next){
         try{
-            const {tutorID} = req.body;
+            const { tutorID } = req.body;
             if(!tutorID)
                 return next(customiError(400, "無教師ID "));
             
             const tutorDetail = await User.find({
-                tutorID: tutorID,
+                tutorId: tutorID,
             })
             successHandle(res, tutorDetail);
         } catch(err){

@@ -29,7 +29,7 @@ const bookingModel = mongoose.Schema({
     },
     endTime : {
         type : Date,
-        require : [ture, "請輸入課程結束時間"]
+        require : [true, "請輸入課程結束時間"]
     }
 }, {
     versionKey : false,

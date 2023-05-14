@@ -1,13 +1,13 @@
 let express = require('express');
 let router = express.Router();
-let tutorInfosController = require('../src/controller/tutorInfos');
+let tutorInfosController = require('../src/controller/tutorInfo');
 //const jwtFn = require('../src/middleware/auth');
 
 // 教師一覽
-router.get('/v1/tutorsInfo ', tutorInfosController.tutorsList);
+router.get('/', tutorInfosController.tutorsList);
 
 // 教師詳情
-router.get('/v1/tutorsInfo/:tutorID', tutorInfosController.tutorDetail);
+router.get('/detail', tutorInfosController.tutorDetail);
 
 
 
