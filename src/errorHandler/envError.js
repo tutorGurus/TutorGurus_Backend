@@ -1,9 +1,17 @@
 const devError = (err, res) =>{
-    res.status(err.statusCode).send({
-        Errormessage : err.message,
-        Erroris : err,
-        Errorstack : err.stack
-    })
+    if(err.isOperational == true){
+        res.status(err.statusCode).send({
+            Errormessage : err.message,
+            Erroris : err,
+            Errorstack : err.stack
+        })
+    } else {
+        res.status(500).send({
+            Errormessage : err.message,
+            Erroris : err,
+            Errorstack : err.stack
+        })
+    }
 }
 
 const productError = (err, res) =>{

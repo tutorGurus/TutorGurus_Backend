@@ -5,20 +5,28 @@ let cookieParser = require('cookie-parser');
 let logger = require('morgan');
 let cors = require('cors');
 let envError = require('./src/errorHandler/envError');
+let swaggerUI = require('swagger-ui-express');
+let swaggerFile = require('./swagger-output.json');
 require('./src/errorHandler/processError')();
-require('dotenv').config({path : "/etc/secrets/config.env"});
+if(process.env.NODE_ENV.trim() === 'dev'){
+  require('dotenv').config({path : './config.env'})
+} else {
+  require('dotenv').config({path : "/etc/secrets/config.env"});
+}
 require('./src/service/mongoConnect')();
 
 
 let app = express();
 
 let indexRouter = require('./routes/index');
-let studentRouter = require('./routes/studentRoutes');
+let studentRouter = require('./routes/studentRoutes'); 
 let tutorsRouter = require('./routes/tutorsRoutes');
+let tutorsInfoRouter = require('./routes/tutorsInfoRoutes');
+let bookingRouter = require('./routes/bookingsRoutes');
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
-
+app.use('/api-doc', swaggerUI.serve, swaggerUI.setup(swaggerFile));
 app.use(cors());
 app.use(logger('dev'));
 app.use(express.json());
@@ -29,6 +37,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/student', studentRouter);
 app.use('/tutors', tutorsRouter);
+app.use('/v1/tutorsInfo', tutorsInfoRouter);
+app.use('/v1/booking', bookingRouter)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
