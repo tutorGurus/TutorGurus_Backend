@@ -26,12 +26,14 @@ let tutorController = {
             
             let salt = bcrypt.genSaltSync(15);
             let secretPassword = bcrypt.hashSync(userPassword, salt);
-            
+            const tutorsList = await User.find({ role : 'T'});
+            let nextTutorNum = tutorsList.length + 1;          
             let newUser = await User.create({
                 name : userName,
                 email : email,
                 password : secretPassword,
                 role : 'T',
+                tutorId : nextTutorNum
             })
             successHandle(res, newUser);
         } catch(err){

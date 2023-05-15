@@ -69,7 +69,6 @@ const userSchema = new mongoose.Schema({
         }],
     tutorId: {
         type : Number,
-        default : " "     
     },       
 },{ 
     versionKey : false,
