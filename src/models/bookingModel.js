@@ -2,22 +2,22 @@ const mongoose = require('mongoose');
 
 const bookingModel = mongoose.Schema({
     booking_user_id : {
-        type : mongoose.Schema.Types.ObjectId,
+        type : String,
         ref : "User",
         required : [true, "課程預約者ID為必填欄位"]
     },
     booked_user_id : {
-        type : mongoose.Schema.Types.ObjectId,
+        type : String,
         ref : "User",
         required : [true, "開課者ID為必填欄位"]
     },
     course_id : {
-        type : mongoose.Schema.Types.ObjectId,
+        type : String,
         ref : "Courses",
         required : [true, "課程ID為必填"]
     },
     status : {
-        type : Number
+        type : String
     },
     room_link : {
         type : String,

@@ -6,10 +6,10 @@ let bookingsController = {
     // 學生查詢預約列表
     async bookingList(req, res, next){
         try{
-            const { id } = req.user._id;
-            
+            let id  = req.user._id;
+            id = id.toHexString();
             const bookingList = await Booking.find({
-                booking_user_id : id,
+                booking_user_id: id,
             })
             successHandle(res, bookingList);
         } catch(err){
@@ -32,13 +32,18 @@ let bookingsController = {
     // 預約課程
     async bookingCourse(req, res, next){
         try{
-            const {id, course_id, startTime, endTime } = req.body;
+            const { booked_user_id, course_id, startTime, endTime } = req.body;
+            let id  = req.user._id;
+            id = id.toHexString();
             
             const bookingCourse = await Booking.create({
                 booking_user_id: id,
+                booked_user_id: booked_user_id,
                 course_id: course_id,
                 startTime: startTime,
                 endTime: endTime,
+                status: 'booked',
+                room_link: 'temp.zoom.link'
             })
             successHandle(res, bookingCourse);
         } catch(err){
@@ -49,10 +54,9 @@ let bookingsController = {
     async editBookingStatus(req, res, next){
         try{
             const { id, status } = req.body;
-            
-            const changeBookingStatus = await Booking.findOneAndUpdate({
-                id: id,
-            },{
+            console.log(id);
+            const changeBookingStatus = await Booking.findByIdAndUpdate(id,
+                {
                 $set:{
                     status: status,
                 }
@@ -68,9 +72,8 @@ let bookingsController = {
         try{
             const { id, link } = req.body;
             
-            const editZoomLink = await Booking.findOneAndUpdate({
-                id: id,
-            },{
+            const editZoomLink = await Booking.findByIdAndUpdate(id,
+                {
                 $set:{
                     room_link: link,
                 }

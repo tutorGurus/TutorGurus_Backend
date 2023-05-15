@@ -1,21 +1,21 @@
 let express = require('express');
 let router = express.Router();
 let bookingController = require('../src/controller/booking');
-//const jwtFn = require('../src/middleware/auth');
+const jwtFn = require('../src/middleware/auth');
 
 // 學生查詢預約列表
-router.get('/v1/booking ', bookingController.bookingList);
+router.get('/', jwtFn.isAuth, bookingController.bookingList);
 
 // 預約課程
-router.post('/v1/booking', bookingController.bookingCourse);
+router.post('/', jwtFn.isAuth, bookingController.bookingCourse);
 
 // 老師查詢預約列表
-router.get('/v1/booking/booked ', bookingController.bookedList);
+router.get('/booked', jwtFn.isAuth, bookingController.bookedList);
 
 // 請假、取消預約
-router.patch('/v1/booking/:bookingId/status', bookingController.editBookingStatus);
+router.patch('/status', jwtFn.isAuth, bookingController.editBookingStatus);
 
 // 修改課程 Zoom Link
-router.patch('/v1/booking/:bookingId/zoom_link', bookingController.editZoomLink);
+router.patch('/zoom_link', jwtFn.isAuth, bookingController.editZoomLink);
 
 module.exports = router;
