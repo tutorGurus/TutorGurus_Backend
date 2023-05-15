@@ -21,6 +21,8 @@ let app = express();
 let indexRouter = require('./routes/index');
 let studentRouter = require('./routes/studentRoutes'); 
 let tutorsRouter = require('./routes/tutorsRoutes');
+let tutorsInfoRouter = require('./routes/tutorsInfoRoutes');
+let bookingRouter = require('./routes/bookingsRoutes');
 let carts = require('./routes/cartRoutes');
 
 // view engine setup
@@ -37,6 +39,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/student', studentRouter);
 app.use('/tutors', tutorsRouter);
+app.use('/v1/tutorsInfo', tutorsInfoRouter);
+app.use('/v1/booking', bookingRouter)
 app.use('/cart', carts);
 
 // catch 404 and forward to error handler

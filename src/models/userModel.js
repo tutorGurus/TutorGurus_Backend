@@ -66,8 +66,11 @@ const userSchema = new mongoose.Schema({
                 required : [true, "數量為必填"],
                 default : 1
             }
-        }      
-    ]
+        }],
+    tutorId: {
+        type : Number,
+        default : " "     
+    },       
 },{ 
     versionKey : false,
     timestamps: true
