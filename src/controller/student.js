@@ -42,8 +42,10 @@ let userController = {
      */
 
         try{
+            console.log(req.body);
             let {userName, email, userPassword, confirmPassword} = req.body;
-            let emailCheck = await User.findOne({"email" : email})
+            let emailCheck = await User.findOne({"email" : email});
+            console.log(emailCheck);
             if(emailCheck)
                 return next(customiError(400, "該信箱已被註冊"));
             if(!userName || !email || !userPassword || !confirmPassword)
