@@ -23,6 +23,8 @@ let studentRouter = require('./routes/studentRoutes');
 let tutorsRouter = require('./routes/tutorsRoutes');
 let tutorsInfoRouter = require('./routes/tutorsInfoRoutes');
 let bookingRouter = require('./routes/bookingsRoutes');
+let coursesRouter = require('./routes/coursesRoutes');
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -38,7 +40,8 @@ app.use('/', indexRouter);
 app.use('/student', studentRouter);
 app.use('/tutors', tutorsRouter);
 app.use('/v1/tutorsInfo', tutorsInfoRouter);
-app.use('/v1/booking', bookingRouter)
+app.use('/v1/booking', bookingRouter);
+app.use('/v1/tutor/courses', coursesRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
