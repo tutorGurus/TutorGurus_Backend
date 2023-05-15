@@ -59,14 +59,12 @@ let userController = {
             
             let salt = bcrypt.genSaltSync(15);
             let secretPassword = bcrypt.hashSync(userPassword, salt);
-            
             let newUser = await User.create({
                 name : userName,
                 email : email,
                 password : secretPassword,
                 role : 'S',
             })
-            console.log(123)
             successHandle(res, newUser);
         } catch(error) {
             return next(error)
@@ -171,6 +169,19 @@ let userController = {
     },
 
     async logOut(req, res, next){
+        /**
+         * #swagger.tags = ['Student'],
+         * #swagger.description = '登出API'
+            #swagger.responses[200] = {
+                description: '登出成功',
+                schema : {
+                    "status": "success"
+                }
+            }
+         * #swagger.security = [{
+            "JwtToken" : []
+            }]
+         */
         try{
             console.log(req.user)
             await User.updateOne({"_id" : req.user._id}, { $pull : { tokens : { token : req.token}}},{new : true});

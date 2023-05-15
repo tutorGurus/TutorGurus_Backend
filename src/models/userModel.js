@@ -56,21 +56,33 @@ const userSchema = new mongoose.Schema({
         type : String,
         default : ""
     },
-    carts : {
-        type : mongoose.Schema.Types.ObjectId,
-        ref : "Carts"
-    },
-    tutorId : {
+    carts : [{
+        cart : {
+            type : mongoose.Schema.Types.ObjectId,
+            ref : "Courses"
+            },
+        quantity : {
+                type : Number,
+                required : [true, "數量為必填"],
+                default : 1
+            }
+        }],
+    tutorId: {
         type : Number,
         default : " "     
-    },
-    
-
+    },       
 },{ 
     versionKey : false,
     timestamps: true
 });
 
+userSchema.pre(/^find/, function(next){
+    this.populate({
+        path : 'carts',
+        populate : { path : 'cart', }
+    });
+    next();
+});
 
 
 const User = mongoose.model("User", userSchema);
