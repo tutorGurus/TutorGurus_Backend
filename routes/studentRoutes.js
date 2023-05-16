@@ -16,6 +16,12 @@ router.patch('/v1/profile', jwtFn.isAuth, studentController.editInfo);
 
 router.get('/v1/profile', jwtFn.isAuth, studentController.getUserInfo);
 
+router.get('/test', (req, res, next) => {
+    res.send({
+        status : "success",
+        message : "測試用！"
+    })
+})
 
 
 

@@ -17,6 +17,7 @@ require('./src/service/mongoConnect')();
 
 
 let app = express();
+app.use(cors());
 
 let indexRouter = require('./routes/index');
 let studentRouter = require('./routes/studentRoutes'); 
@@ -30,7 +31,6 @@ let orders = require('./routes/orderRoutes');
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 app.use('/api-doc', swaggerUI.serve, swaggerUI.setup(swaggerFile));
-app.use(cors());
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
