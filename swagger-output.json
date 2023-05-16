@@ -1352,48 +1352,199 @@
     },
     "/order/v1/order": {
       "post": {
-        "description": "",
+        "tags": [
+          "Order"
+        ],
+        "description": "新增訂單API",
         "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
           {
             "name": "body",
             "in": "body",
+            "required": true,
+            "description": "資料格式",
             "schema": {
               "type": "object",
               "properties": {
-                "id": {
-                  "example": "any"
-                },
                 "courseId": {
-                  "example": "any"
+                  "type": "string",
+                  "example": "courseId"
                 },
                 "totalPrice": {
-                  "example": "any"
+                  "type": "string",
+                  "example": "totalPrice"
+                },
+                "quantity": {
+                  "type": "string",
+                  "example": "quantity"
                 }
-              }
+              },
+              "required": [
+                "courseId",
+                "totalPrice",
+                "quantity"
+              ]
             }
           }
         ],
-        "responses": {}
+        "responses": {
+          "200": {
+            "description": "訂單新增成功成功",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "order_date": {
+                      "type": "string",
+                      "example": "2023-05-16T08:18:32.610Z"
+                    },
+                    "quantity": {
+                      "type": "number",
+                      "example": 3
+                    },
+                    "user_id": {
+                      "type": "string",
+                      "example": "userId"
+                    },
+                    "course_id": {
+                      "type": "string",
+                      "example": "courseId"
+                    },
+                    "total_price": {
+                      "type": "string",
+                      "example": "totalPrice"
+                    },
+                    "status": {
+                      "type": "string",
+                      "example": "訂單完成"
+                    },
+                    "_id": {
+                      "type": "string",
+                      "example": "64633c58bd1134fb95dd1a32"
+                    },
+                    "content": {
+                      "type": "array",
+                      "example": [],
+                      "items": {}
+                    },
+                    "createdAt": {
+                      "type": "string",
+                      "example": "2023-05-16T08:18:32.616Z"
+                    },
+                    "updatedAt": {
+                      "type": "string",
+                      "example": "2023-05-16T08:18:32.616Z"
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JwtToken": []
+          }
+        ]
       }
     },
     "/order/v1/order/test": {
-      "post": {
-        "description": "",
+      "get": {
+        "tags": [
+          "Order"
+        ],
+        "description": "新增訂單API",
         "parameters": [
           {
-            "name": "body",
-            "in": "body",
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "訂單新增成功成功",
             "schema": {
               "type": "object",
               "properties": {
-                "id": {
-                  "example": "any"
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "order_date": {
+                        "type": "string",
+                        "example": "2023-05-16T08:18:32.610Z"
+                      },
+                      "quantity": {
+                        "type": "number",
+                        "example": 3
+                      },
+                      "user_id": {
+                        "type": "string",
+                        "example": "userId"
+                      },
+                      "course_id": {
+                        "type": "string",
+                        "example": "courseId"
+                      },
+                      "total_price": {
+                        "type": "string",
+                        "example": "totalPrice"
+                      },
+                      "status": {
+                        "type": "string",
+                        "example": "訂單完成"
+                      },
+                      "_id": {
+                        "type": "string",
+                        "example": "64633c58bd1134fb95dd1a32"
+                      },
+                      "content": {
+                        "type": "array",
+                        "example": [],
+                        "items": {}
+                      },
+                      "createdAt": {
+                        "type": "string",
+                        "example": "2023-05-16T08:18:32.616Z"
+                      },
+                      "updatedAt": {
+                        "type": "string",
+                        "example": "2023-05-16T08:18:32.616Z"
+                      }
+                    }
+                  }
                 }
+              },
+              "xml": {
+                "name": "main"
               }
             }
           }
-        ],
-        "responses": {}
+        },
+        "security": [
+          {
+            "JwtToken": []
+          }
+        ]
       }
     }
   }

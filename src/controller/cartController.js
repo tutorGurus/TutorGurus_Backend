@@ -4,8 +4,8 @@ const successHandle = require('../service/successHandler');
 const customiError = require('../errorHandler/customiError');
 const mongoose = require('mongoose');
 const { ObjectId } = mongoose.Types;
-let cartController = {
 
+let cartController = {
 
     async getCartContent(req, res, next){
         /**
