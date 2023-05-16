@@ -101,6 +101,9 @@ let userController = {
             if(!validator.isEmail(email)){
                 return  next(customiError(400, "無此帳號或密碼"));}
             const user = await User.findOne({"email" : email}).select("+password");
+            if(!user){
+                return  next(customiError(400, "無此帳號或密碼"));}
+            console.log(3333);
             const auth = await bcrypt.compare(password, user.password);
             if(!auth){
                 return next(customiError(400,"無此帳號或密碼錯誤！"));
