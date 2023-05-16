@@ -1,0 +1,1153 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Meta API",
+    "description": "TutorGurus API Documentation",
+    "version": "1.0.0"
+  },
+  "host": "localhost:8000",
+  "basePath": "/",
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "securityDefinitions": {
+    "JwtToken": {
+      "type": "apiKey",
+      "in": "headers",
+      "name": "authorization",
+      "description": "加上 JWT token"
+    }
+  },
+  "paths": {
+    "/": {
+      "get": {
+        "description": "",
+        "parameters": [],
+        "responses": {}
+      }
+    },
+    "/student/v1/register": {
+      "post": {
+        "tags": [
+          "Student"
+        ],
+        "description": "學生註冊API",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "description": "資料格式",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "userName": {
+                  "type": "string",
+                  "example": "Avocado"
+                },
+                "email": {
+                  "type": "string",
+                  "example": "Avocado@gmail.com"
+                },
+                "password": {
+                  "type": "string",
+                  "example": "Aa1234567"
+                },
+                "confirmPassword": {
+                  "type": "string",
+                  "example": "Aa1234567"
+                }
+              },
+              "required": [
+                "userName",
+                "email",
+                "password",
+                "confirmPassword"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "註冊成功",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "example": "Test"
+                    },
+                    "email": {
+                      "type": "string",
+                      "example": "test@gmail.com"
+                    },
+                    "password": {
+                      "type": "string",
+                      "example": "$2a$15$si.F.6x1GJk6VwKQWUkmu.LCd/Gif8PTz3ExAGyhE8s8l/UHfOQFq"
+                    },
+                    "role": {
+                      "type": "string",
+                      "example": "S"
+                    },
+                    "status": {
+                      "type": "number",
+                      "example": 0
+                    },
+                    "_id": {
+                      "type": "string",
+                      "example": "6455d6e919231164a788881"
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/student/v1/login": {
+      "post": {
+        "tags": [
+          "Student"
+        ],
+        "description": "學生登入API",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "description": "資料格式",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "type": "string",
+                  "example": "Test@gmail.com"
+                },
+                "password": {
+                  "type": "string",
+                  "example": "password"
+                }
+              },
+              "required": [
+                "email",
+                "password"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "登入成功獲取token",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "data": {
+                  "type": "string",
+                  "example": "JWT token"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/student/v1/logout": {
+      "post": {
+        "tags": [
+          "Student"
+        ],
+        "description": "登出API",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "登出成功",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JwtToken": []
+          }
+        ]
+      }
+    },
+    "/student/v1/profile": {
+      "patch": {
+        "tags": [
+          "Student"
+        ],
+        "description": "學生編輯個人檔案API",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "description": "資料格式",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "example": "userName"
+                },
+                "email": {
+                  "type": "string",
+                  "example": "Test@gmail.com"
+                },
+                "phone": {
+                  "type": "string",
+                  "example": "phone"
+                },
+                "gender": {
+                  "type": "string",
+                  "example": "gender"
+                },
+                "degree": {
+                  "type": "string",
+                  "example": "degree"
+                },
+                "school": {
+                  "type": "string",
+                  "example": "school"
+                },
+                "country": {
+                  "type": "string",
+                  "example": "country"
+                },
+                "profile_image": {
+                  "type": "string",
+                  "example": "profile_image"
+                },
+                "birthday": {
+                  "type": "string",
+                  "example": "2023-01-01"
+                }
+              },
+              "required": [
+                "name",
+                "email",
+                "phone",
+                "gender",
+                "degree",
+                "school",
+                "country",
+                "profile_image",
+                "birthday"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "資料修改成功",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "_id": {
+                      "type": "string",
+                      "example": "userID"
+                    },
+                    "name": {
+                      "type": "string",
+                      "example": "userName"
+                    },
+                    "email": {
+                      "type": "string",
+                      "example": "Test@gmail.com"
+                    },
+                    "phone": {
+                      "type": "string",
+                      "example": "phone"
+                    },
+                    "gender": {
+                      "type": "string",
+                      "example": "gender"
+                    },
+                    "degree": {
+                      "type": "string",
+                      "example": "degree"
+                    },
+                    "school": {
+                      "type": "string",
+                      "example": "school"
+                    },
+                    "country": {
+                      "type": "string",
+                      "example": "country"
+                    },
+                    "profile_image": {
+                      "type": "string",
+                      "example": "profile_image"
+                    },
+                    "birthday": {
+                      "type": "string",
+                      "example": "2023-01-01"
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JwtToken": []
+          }
+        ]
+      },
+      "get": {
+        "tags": [
+          "Student"
+        ],
+        "description": "學生取得個人檔案API",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "資料取得成功",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "_id": {
+                      "type": "string",
+                      "example": "6462d56fa8ef5218d79afd79"
+                    },
+                    "name": {
+                      "type": "string",
+                      "example": "Rose"
+                    },
+                    "email": {
+                      "type": "string",
+                      "example": "rose@gmail.com"
+                    },
+                    "password": {
+                      "type": "string",
+                      "example": "$2a$15$8UHRa0FEVu/wNaY/eYKel.hhNF3p1Og0exWIqTS.GRjezRsjUZhOu"
+                    },
+                    "birthday": {},
+                    "phone": {
+                      "type": "string",
+                      "example": ""
+                    },
+                    "gender": {
+                      "type": "string",
+                      "example": ""
+                    },
+                    "degree": {
+                      "type": "string",
+                      "example": ""
+                    },
+                    "school": {
+                      "type": "string",
+                      "example": ""
+                    },
+                    "country": {
+                      "type": "string",
+                      "example": ""
+                    },
+                    "profile_image": {
+                      "type": "string",
+                      "example": " "
+                    },
+                    "bank_account": {
+                      "type": "string",
+                      "example": ""
+                    },
+                    "carts": {
+                      "type": "array",
+                      "example": [],
+                      "items": {}
+                    },
+                    "createdAt": {
+                      "type": "string",
+                      "example": "2023-05-16T00:59:27.783Z"
+                    },
+                    "updatedAt": {
+                      "type": "string",
+                      "example": "2023-05-16T01:01:51.564Z"
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JwtToken": []
+          }
+        ]
+      }
+    },
+    "/tutors/v1/register": {
+      "post": {
+        "tags": [
+          "Teacher"
+        ],
+        "description": "教師註冊API",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "description": "資料格式",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "userName": {
+                  "type": "string",
+                  "example": "Avocado"
+                },
+                "email": {
+                  "type": "string",
+                  "example": "Avocado@gmail.com"
+                },
+                "password": {
+                  "type": "string",
+                  "example": "Aa1234567"
+                },
+                "confirmPassword": {
+                  "type": "string",
+                  "example": "Aa1234567"
+                }
+              },
+              "required": [
+                "userName",
+                "email",
+                "password",
+                "confirmPassword"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "註冊成功",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "example": "userName"
+                    },
+                    "email": {
+                      "type": "string",
+                      "example": "userEmail"
+                    },
+                    "password": {
+                      "type": "string",
+                      "example": "secretPassword"
+                    },
+                    "role": {
+                      "type": "string",
+                      "example": "T"
+                    },
+                    "birthday": {
+                      "type": "string",
+                      "example": "xxxx-xx-xx"
+                    },
+                    "phone": {
+                      "type": "string",
+                      "example": "userPhone"
+                    },
+                    "gender": {
+                      "type": "string",
+                      "example": "gender"
+                    },
+                    "degree": {
+                      "type": "string",
+                      "example": "degree"
+                    },
+                    "school": {
+                      "type": "string",
+                      "example": "school"
+                    },
+                    "country": {
+                      "type": "string",
+                      "example": "counrty"
+                    },
+                    "profile_image": {
+                      "type": "string",
+                      "example": "https://profile "
+                    },
+                    "bank_account": {
+                      "type": "string",
+                      "example": ""
+                    },
+                    "tutorId": {
+                      "type": "string",
+                      "example": "titorId"
+                    },
+                    "_id": {
+                      "type": "string",
+                      "example": "6462d932383dc3473f1b67f4"
+                    },
+                    "tokens": {
+                      "type": "array",
+                      "example": [],
+                      "items": {}
+                    },
+                    "carts": {
+                      "type": "array",
+                      "example": [],
+                      "items": {}
+                    },
+                    "createdAt": {
+                      "type": "string",
+                      "example": "2023-05-16T01:15:30.737Z"
+                    },
+                    "updatedAt": {
+                      "type": "string",
+                      "example": "2023-05-16T01:15:30.737Z"
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tutors/v1/login": {
+      "post": {
+        "tags": [
+          "Teacher"
+        ],
+        "description": "教師登入API",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "description": "資料格式",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "type": "string",
+                  "example": "Test@gmail.com"
+                },
+                "password": {
+                  "type": "string",
+                  "example": "password"
+                }
+              },
+              "required": [
+                "email",
+                "password"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "登入成功獲取token",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "data": {
+                  "type": "string",
+                  "example": "JWT token"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tutors/v1/profile": {
+      "patch": {
+        "tags": [
+          "Teacher"
+        ],
+        "description": "老師編輯個人檔案API",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "description": "資料格式",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "example": "userName"
+                },
+                "email": {
+                  "type": "string",
+                  "example": "Test@gmail.com"
+                },
+                "phone": {
+                  "type": "string",
+                  "example": "phone"
+                },
+                "gender": {
+                  "type": "string",
+                  "example": "gender"
+                },
+                "degree": {
+                  "type": "string",
+                  "example": "degree"
+                },
+                "school": {
+                  "type": "string",
+                  "example": "school"
+                },
+                "country": {
+                  "type": "string",
+                  "example": "country"
+                },
+                "profile_image": {
+                  "type": "string",
+                  "example": "profile_image"
+                },
+                "birthday": {
+                  "type": "string",
+                  "example": "2023-01-01"
+                }
+              },
+              "required": [
+                "name",
+                "email",
+                "phone",
+                "gender",
+                "degree",
+                "school",
+                "country",
+                "profile_image",
+                "birthday"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "資料修改成功",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "_id": {
+                      "type": "string",
+                      "example": "userID"
+                    },
+                    "name": {
+                      "type": "string",
+                      "example": "userName"
+                    },
+                    "email": {
+                      "type": "string",
+                      "example": "Test@gmail.com"
+                    },
+                    "phone": {
+                      "type": "string",
+                      "example": "phone"
+                    },
+                    "gender": {
+                      "type": "string",
+                      "example": "gender"
+                    },
+                    "degree": {
+                      "type": "string",
+                      "example": "degree"
+                    },
+                    "school": {
+                      "type": "string",
+                      "example": "school"
+                    },
+                    "country": {
+                      "type": "string",
+                      "example": "country"
+                    },
+                    "tutorId": {
+                      "type": "string",
+                      "example": "tutorId"
+                    },
+                    "profile_image": {
+                      "type": "string",
+                      "example": "profile_image"
+                    },
+                    "birthday": {
+                      "type": "string",
+                      "example": "2023-01-01"
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JwtToken": []
+          }
+        ]
+      },
+      "get": {
+        "tags": [
+          "Teacher"
+        ],
+        "description": "教師取得個人檔案API",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "資料取得成功",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "_id": {
+                      "type": "string",
+                      "example": "id"
+                    },
+                    "name": {
+                      "type": "string",
+                      "example": "userName"
+                    },
+                    "email": {
+                      "type": "string",
+                      "example": "userEmail"
+                    },
+                    "password": {
+                      "type": "string",
+                      "example": "secretPassword"
+                    },
+                    "birthday": {
+                      "type": "string",
+                      "example": "xxxx-xx-xx"
+                    },
+                    "phone": {
+                      "type": "string",
+                      "example": "phoneNum"
+                    },
+                    "gender": {
+                      "type": "string",
+                      "example": "userGender"
+                    },
+                    "degree": {
+                      "type": "string",
+                      "example": "userDegree"
+                    },
+                    "school": {
+                      "type": "string",
+                      "example": "userSchool"
+                    },
+                    "country": {
+                      "type": "string",
+                      "example": "country"
+                    },
+                    "tutorId": {
+                      "type": "string",
+                      "example": "tutorId"
+                    },
+                    "profile_image": {
+                      "type": "string",
+                      "example": "https://profile"
+                    },
+                    "bank_account": {
+                      "type": "string",
+                      "example": ""
+                    },
+                    "createdAt": {
+                      "type": "string",
+                      "example": "2023-05-16T00:59:27.783Z"
+                    },
+                    "updatedAt": {
+                      "type": "string",
+                      "example": "2023-05-16T01:01:51.564Z"
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JwtToken": []
+          }
+        ]
+      }
+    },
+    "/tutors/v1/logout": {
+      "post": {
+        "tags": [
+          "Teacher"
+        ],
+        "description": "登出API",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "登出成功",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JwtToken": []
+          }
+        ]
+      }
+    },
+    "/v1/tutorsInfo/": {
+      "get": {
+        "description": "",
+        "parameters": [],
+        "responses": {}
+      }
+    },
+    "/v1/tutorsInfo/detail": {
+      "get": {
+        "description": "",
+        "parameters": [],
+        "responses": {}
+      }
+    },
+    "/v1/booking/": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {}
+      },
+      "post": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "booked_user_id": {
+                  "example": "any"
+                },
+                "course_id": {
+                  "example": "any"
+                },
+                "startTime": {
+                  "example": "any"
+                },
+                "endTime": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {}
+      }
+    },
+    "/v1/booking/booked": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {}
+      }
+    },
+    "/v1/booking/status": {
+      "patch": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "example": "any"
+                },
+                "status": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {}
+      }
+    },
+    "/v1/booking/zoom_link": {
+      "patch": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "example": "any"
+                },
+                "link": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {}
+      }
+    },
+    "/cart/v1/{coursesID}/cart/": {
+      "post": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "coursesID",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "quantity",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {}
+      }
+    },
+    "/cart/v1/cart": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {}
+      }
+    },
+    "/cart/v1/{coursesID}/cart": {
+      "delete": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "coursesID",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {}
+      }
+    },
+    "/order/v1/order": {
+      "post": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "example": "any"
+                },
+                "courseId": {
+                  "example": "any"
+                },
+                "totalPrice": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {}
+      }
+    },
+    "/order/v1/order/test": {
+      "post": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {}
+      }
+    }
+  }
+}

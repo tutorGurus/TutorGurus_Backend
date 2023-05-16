@@ -1,10 +1,19 @@
 const devError = (err, res) =>{
-    res.status(err.statusCode).send({
-        status : false,
-        Errormessage : err.message,
-        Erroris : err,
-        Errorstack : err.stack
-    })
+    if(err.isOperational == true){
+        res.status(err.statusCode).send({
+            status : false,
+            Errormessage : err.message,
+            Erroris : err,
+            Errorstack : err.stack
+        })
+    } else {
+        res.status(500).send({
+            status : false,
+            Errormessage : err.message,
+            Erroris : err,
+            Errorstack : err.stack
+        })
+    }
 }
 
 const productError = (err, res) =>{
@@ -16,6 +25,7 @@ const productError = (err, res) =>{
     } else {
         console.log("未定義的錯誤!");
         res.status(500).send({
+            status : false,
             Errormessage : "請聯繫客服"
         })
     }
