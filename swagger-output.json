@@ -5,7 +5,7 @@
     "description": "TutorGurus API Documentation",
     "version": "1.0.0"
   },
-  "host": "localhost:8000",
+  "host": "https://tutorgurus-backend.onrender.com",
   "basePath": "/",
   "schemes": [
     "http",
