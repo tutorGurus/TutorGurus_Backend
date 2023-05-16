@@ -5,7 +5,7 @@ const doc = {
         title : 'Meta API',
         description : "TutorGurus API Documentation"
     },
-    host : 'https://tutorgurus-backend.onrender.com',
+    host : 'tutorgurus-backend.onrender.com',
     schemes : ['http', 'https'],
     securityDefinitions : {
         JwtToken : {
