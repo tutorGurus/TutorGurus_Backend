@@ -19,9 +19,9 @@ let userController = {
                 required : true,
                 description : '資料格式',
                 schema : {
-                    $name : 'Avocado',
+                    $userName : 'Avocado',
                     $email : "Avocado@gmail.com",
-                    $userPassword : "Aa1234567",
+                    $password : "Aa1234567",
                     $confirmPassword : "Aa1234567"
                 }
             }
@@ -42,7 +42,6 @@ let userController = {
      */
 
         try{
-            
             let {userName, email, password, confirmPassword} = req.body;
             let emailCheck = await User.findOne({"email" : email})
             if(emailCheck)
@@ -125,6 +124,13 @@ let userController = {
                 schema : {
                     $name : "userName",
                     $email : "Test@gmail.com",
+                    $phone : "phone",
+                    $gender : "gender",
+                    $degree : "degree",
+                    $school : "school",
+                    $country : "country",
+                    $profile_image : "profile_image",
+                    $birthday : "2023-01-01"
                 }
             }
             #swagger.responses[200] = {
@@ -133,8 +139,15 @@ let userController = {
                     "status": "success",
                     "data": {
                         "_id": "userID",
-                        "name": "newName",
-                        "email": "newMail@gmail.com",
+                        "name" : "userName",
+                        "email" : "Test@gmail.com",
+                        "phone" : "phone",
+                        "gender" : "gender",
+                        "degree" : "degree",
+                        "school" : "school",
+                        "country" : "country",
+                        "profile_image" : "profile_image",
+                        "birthday" : "2023-01-01"
                     }
                 }
             }
@@ -143,11 +156,10 @@ let userController = {
             }]
          */
         try{
-            let { name, email } = req.body;
+            let { name, email, phone, gender, degree, school, country, profile_image, birthday} = req.body;
             if(!name || !email ){
                 return next(customiError(400, "必填欄位不得為空"));
             }
-            
             if(email.toLowerCase() !== req.user.email){
                 let emailCheck = await User.findOne({"email" : email})
                 if(emailCheck)
@@ -161,8 +173,15 @@ let userController = {
                 $set : {
                     name :  name,
                     email : email,
+                    phone : phone,
+                    gender : gender,
+                    degree : degree,
+                    school : school,
+                    country : country,
+                    profile_image : profile_image,
+                    birthday : birthday
                 }
-            },{ new : true }).select('-tokens');
+            },{ new : true }).select('-tokens -_id');
             successHandle(res, replaceData);
         } catch(err) {
             return next(customiError(400, err));
@@ -193,10 +212,41 @@ let userController = {
     },
 
     async getUserInfo(req, res, next){
+        /**
+         * #swagger.tags = ['Student'],
+         * #swagger.description = '學生取得個人檔案API'
+                #swagger.responses[200] = {
+                description: '資料取得成功',
+                schema : {
+                   "status": "success",
+                   "data": {
+                        "_id": "6462d56fa8ef5218d79afd79",
+                        "name": "Rose",
+                        "email": "rose@gmail.com",
+                        "password": "$2a$15$8UHRa0FEVu/wNaY/eYKel.hhNF3p1Og0exWIqTS.GRjezRsjUZhOu",
+                        "birthday": null,
+                        "phone": "",
+                        "gender": "",
+                        "degree": "",
+                        "school": "",
+                        "country": "",
+                        "profile_image": " ",
+                        "bank_account": "",
+                        "carts": [],
+                        "createdAt": "2023-05-16T00:59:27.783Z",
+                        "updatedAt": "2023-05-16T01:01:51.564Z"
+                    }
+                }
+            }
+         * #swagger.security = [{
+            "JwtToken" : []
+            }]
+         */
         try{
             res.send({
                 status : "success",
-                data : req.user});
+                data : req.user
+            });
         } catch {
             return next(customiError(400, err));
         }
