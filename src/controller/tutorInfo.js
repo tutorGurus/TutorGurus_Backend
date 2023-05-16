@@ -20,7 +20,6 @@ let tutorInfosController = {
             const { tutorID } = req.body;
             if(!tutorID)
                 return next(customiError(400, "無教師ID "));
-            
             const tutorDetail = await User.find({
                 tutorId: tutorID,
             })

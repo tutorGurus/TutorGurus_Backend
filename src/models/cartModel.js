@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const cartModel = new mongoose.Schema({
+const cartSchema = new mongoose.Schema({
     course_id : {
         type : mongoose.Schema.Types.ObjectId,
         ref : "Courses",
@@ -22,5 +22,5 @@ const cartModel = new mongoose.Schema({
         timestamps: true
     })
 
-    const Carts = mongoose.model('Carts', cartModel);
+    const Carts = mongoose.model('Carts', cartSchema);
     module.exports = Carts;

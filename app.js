@@ -25,6 +25,7 @@ let tutorsInfoRouter = require('./routes/tutorsInfoRoutes');
 let bookingRouter = require('./routes/bookingsRoutes');
 let coursesRouter = require('./routes/coursesRoutes');
 let carts = require('./routes/cartRoutes');
+let orders = require('./routes/orderRoutes');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -44,7 +45,7 @@ app.use('/v1/tutorsInfo', tutorsInfoRouter);
 app.use('/v1/tutor/courses', coursesRouter);
 app.use('/v1/booking', bookingRouter)
 app.use('/cart', carts);
-
+app.use('/order', orders);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));

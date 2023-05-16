@@ -1,14 +1,25 @@
 const mongoose = require('mongoose');
+const Courses = require('./coursesModel')
 
 const orderSchema = new mongoose.Schema({
-    title : {
-        type : String,
-        required : [true, "訂單名稱為必填選項"]
+    order_date : {
+        type : Date,
+        require : [true, "訂單日期為必填欄位"]
     },
-    content : {
-        type : String,
-        required : [true, "訂單內容為必填"]
+    quantity : {
+        type : Number,
+        required : [true, "總購買數為必填"]
     },
+    content : [
+        {
+            payment_Info : {
+                type : String
+            },
+            coupon : {
+                type : String
+            }    
+        }
+    ],
     user_id : {
         type : mongoose.Schema.Types.ObjectId,
         ref : "User",
@@ -24,9 +35,23 @@ const orderSchema = new mongoose.Schema({
         required : [true, "課程價格為必填"]
     },
     status : {
-        type : String
+        type : String,
+        default : "訂單完成"
     }
+},{ 
+    versionKey : false,
+    timestamps: true
 })
+
+
+orderSchema.pre(/^find/, function(next){
+    this.populate({
+        path : 'course_id',
+    })
+    next();
+})
+
+
 
 const Order = mongoose.model("Oder", orderSchema);
 module.exports = Order;
