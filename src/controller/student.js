@@ -42,23 +42,24 @@ let userController = {
      */
 
         try{
-            let {userName, email, userPassword, confirmPassword} = req.body;
+            
+            let {userName, email, password, confirmPassword} = req.body;
             let emailCheck = await User.findOne({"email" : email})
             if(emailCheck)
                 return next(customiError(400, "該信箱已被註冊"));
-            if(!userName || !email || !userPassword || !confirmPassword)
+            if(!userName || !email || !password || !confirmPassword)
                 return next(customiError(400, "欄位未填寫完整"));
-            if(!validator.isEmail(email))
-                return  next(customiError(400, "信箱格式錯誤"));
-            if(!regex.test(userPassword))
+            if(!validator.isEmail(email)){
+                return  next(customiError(400, "信箱格式錯誤"));}
+            if(!regex.test(password))
                 return next(customiError(400, "密碼格式不正確 : 至少包含一個大寫與一個小寫"));
-            if(!validator.isLength(userPassword, { min : 8 }))
+            if(!validator.isLength(password, { min : 8 }))
                 return next(customiError(400, "密碼格式不正確 : 至少為8碼"));
-            if(userPassword != confirmPassword)
+            if(password != confirmPassword)
                 return next(customiError(400, "密碼不一致"));
             
             let salt = bcrypt.genSaltSync(15);
-            let secretPassword = bcrypt.hashSync(userPassword, salt);
+            let secretPassword = bcrypt.hashSync(password, salt);
             let newUser = await User.create({
                 name : userName,
                 email : email,
