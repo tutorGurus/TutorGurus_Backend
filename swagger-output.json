@@ -5,7 +5,7 @@
     "description": "TutorGurus API Documentation",
     "version": "1.0.0"
   },
-  "host": "tutorgurus-backend.onrender.com",
+  "host": "localhost:8000",
   "basePath": "/",
   "schemes": [
     "http",
@@ -16,7 +16,8 @@
       "type": "apiKey",
       "in": "headers",
       "name": "authorization",
-      "description": "加上 JWT token"
+      "description": "加上 JWT token",
+      "required": true
     }
   },
   "paths": {
@@ -1047,15 +1048,19 @@
         "responses": {}
       }
     },
-    "/cart/v1/{coursesID}/cart/": {
+    "/cart/v1/{coursesID}/cart": {
       "post": {
-        "description": "",
+        "tags": [
+          "Carts"
+        ],
+        "description": "新增與修改購物車API",
         "parameters": [
           {
             "name": "coursesID",
             "in": "path",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "description": "Course ID."
           },
           {
             "name": "authorization",
@@ -1064,35 +1069,105 @@
           },
           {
             "name": "quantity",
+            "int": "query",
+            "description": "數量",
+            "required": true,
             "in": "query",
             "type": "string"
           }
         ],
-        "responses": {}
-      }
-    },
-    "/cart/v1/cart": {
-      "get": {
-        "description": "",
-        "parameters": [
-          {
-            "name": "authorization",
-            "in": "header",
-            "type": "string"
+        "responses": {
+          "200": {
+            "description": "取得成功",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "cart": {
+                        "type": "object",
+                        "properties": {
+                          "_id": {
+                            "type": "string",
+                            "example": "courseId"
+                          },
+                          "user_id": {
+                            "type": "string",
+                            "example": "userId"
+                          },
+                          "title": {
+                            "type": "string",
+                            "example": "courseName"
+                          },
+                          "category": {
+                            "type": "string",
+                            "example": "courseCetegory"
+                          },
+                          "price": {
+                            "type": "string",
+                            "example": "2000"
+                          },
+                          "introduction": {
+                            "type": "string",
+                            "example": "testIntroduction"
+                          },
+                          "is_publish": {
+                            "type": "boolean",
+                            "example": true
+                          },
+                          "createdAt": {
+                            "type": "string",
+                            "example": "2023-05-15T02:37:16.453Z"
+                          },
+                          "updatedAt": {
+                            "type": "string",
+                            "example": "2023-05-15T02:37:16.453Z"
+                          }
+                        }
+                      },
+                      "quantity": {
+                        "type": "string",
+                        "example": "quantity"
+                      },
+                      "_id": {
+                        "type": "string",
+                        "example": "646320f6802f949dbebcc869"
+                      }
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
           }
-        ],
-        "responses": {}
-      }
-    },
-    "/cart/v1/{coursesID}/cart": {
+        },
+        "security": [
+          {
+            "JwtToken": []
+          }
+        ]
+      },
       "delete": {
-        "description": "",
+        "tags": [
+          "Carts"
+        ],
+        "description": "刪除購物車內容API",
         "parameters": [
           {
             "name": "coursesID",
             "in": "path",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "description": "Course ID."
           },
           {
             "name": "authorization",
@@ -1100,7 +1175,179 @@
             "type": "string"
           }
         ],
-        "responses": {}
+        "responses": {
+          "200": {
+            "description": "刪除成功",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "cart": {
+                        "type": "object",
+                        "properties": {
+                          "_id": {
+                            "type": "string",
+                            "example": "id"
+                          },
+                          "user_id": {
+                            "type": "string",
+                            "example": "userId"
+                          },
+                          "title": {
+                            "type": "string",
+                            "example": "course"
+                          },
+                          "category": {
+                            "type": "string",
+                            "example": "courseCategory"
+                          },
+                          "price": {
+                            "type": "string",
+                            "example": "price"
+                          },
+                          "introduction": {
+                            "type": "string",
+                            "example": "Introduction"
+                          },
+                          "is_publish": {
+                            "type": "boolean",
+                            "example": true
+                          },
+                          "createdAt": {
+                            "type": "string",
+                            "example": "2023-05-15T02:38:11.526Z"
+                          },
+                          "updatedAt": {
+                            "type": "string",
+                            "example": "2023-05-15T02:38:11.526Z"
+                          }
+                        }
+                      },
+                      "quantity": {
+                        "type": "number",
+                        "example": 10
+                      },
+                      "_id": {
+                        "type": "string",
+                        "example": "64632f16e398e5e8c3ae97a8"
+                      }
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JwtToken": []
+          }
+        ]
+      }
+    },
+    "/cart/v1/cart": {
+      "get": {
+        "tags": [
+          "Carts"
+        ],
+        "description": "取得購物車API",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "取得成功",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "cart": {
+                        "type": "object",
+                        "properties": {
+                          "_id": {
+                            "type": "string",
+                            "example": "courseId"
+                          },
+                          "user_id": {
+                            "type": "string",
+                            "example": "userId"
+                          },
+                          "title": {
+                            "type": "string",
+                            "example": "courseName"
+                          },
+                          "category": {
+                            "type": "string",
+                            "example": "courseCetegory"
+                          },
+                          "price": {
+                            "type": "string",
+                            "example": "2000"
+                          },
+                          "introduction": {
+                            "type": "string",
+                            "example": "testIntroduction"
+                          },
+                          "is_publish": {
+                            "type": "boolean",
+                            "example": true
+                          },
+                          "createdAt": {
+                            "type": "string",
+                            "example": "2023-05-15T02:37:16.453Z"
+                          },
+                          "updatedAt": {
+                            "type": "string",
+                            "example": "2023-05-15T02:37:16.453Z"
+                          }
+                        }
+                      },
+                      "quantity": {
+                        "type": "string",
+                        "example": "quantity"
+                      },
+                      "_id": {
+                        "type": "string",
+                        "example": "646320f6802f949dbebcc869"
+                      }
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JwtToken": []
+          }
+        ]
       }
     },
     "/order/v1/order": {
