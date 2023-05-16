@@ -85,7 +85,7 @@ let tutorController = {
     },
 
     async logIn(req, res, next){
-         /** 
+        /** 
             #swagger.tags = ['Teacher']
             #swagger.description = '教師登入API'
             #swagger.parameters['body'] = {
@@ -111,6 +111,8 @@ let tutorController = {
             if(!email || !password){
                 return next(customiError(400,"無此帳號或密碼"));
             }
+            if(!validator.isEmail(email)){
+                return  next(customiError(400, "無此帳號或密碼"));}
             const user = await User.findOne({"email" : email}).select("+password");
             if(!user)
                 return next(customiError(400, "無此帳號或密碼輸入錯誤"));
@@ -125,7 +127,7 @@ let tutorController = {
     }, 
 
     async logOut(req, res, next){
-           /**
+        /**
          * #swagger.tags = ['Teacher'],
          * #swagger.description = '登出API'
             #swagger.responses[200] = {

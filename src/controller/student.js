@@ -98,6 +98,8 @@ let userController = {
             if(!email || !password){
                 return next(customiError(400,"請輸入完整帳號和密碼"));
             }
+            if(!validator.isEmail(email)){
+                return  next(customiError(400, "無此帳號或密碼"));}
             const user = await User.findOne({"email" : email}).select("+password");
             const auth = await bcrypt.compare(password, user.password);
             if(!auth){
