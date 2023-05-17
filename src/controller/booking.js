@@ -1,4 +1,5 @@
 const Booking = require('../models/bookingModel');
+const Course = require('../models/coursesModel');
 const customiError = require('../errorHandler/customiError');
 const successHandle = require('../service/successHandler');
 
@@ -19,8 +20,9 @@ let bookingsController = {
     // 老師查詢預約列表
     async bookedList(req, res, next){
         try{
-            const { id } = req.user._id;
-            
+            let id  = req.user._id;
+            id = id.toHexString();
+
             const bookedList = await Booking.find({
                 booked_user_id : id,
             })
@@ -32,13 +34,16 @@ let bookingsController = {
     // 預約課程
     async bookingCourse(req, res, next){
         try{
-            const { booked_user_id, course_id, startTime, endTime } = req.body;
+            const { course_id, startTime, endTime } = req.body;
             let id  = req.user._id;
             id = id.toHexString();
             
+            let bookedUserID = await Course.findById(course_id).select('user_id -_id');
+            bookedUserID = bookedUserID.user_id.toHexString();
+
             const bookingCourse = await Booking.create({
                 booking_user_id: id,
-                booked_user_id: booked_user_id,
+                booked_user_id: bookedUserID,
                 course_id: course_id,
                 startTime: startTime,
                 endTime: endTime,
@@ -53,9 +58,8 @@ let bookingsController = {
     // 請假、取消預約
     async editBookingStatus(req, res, next){
         try{
-            const { id, status } = req.body;
-            console.log(id);
-            const changeBookingStatus = await Booking.findByIdAndUpdate(id,
+            const { bookingID, status } = req.body;
+            const changeBookingStatus = await Booking.findByIdAndUpdate(bookingID,
                 {
                 $set:{
                     status: status,
@@ -70,9 +74,8 @@ let bookingsController = {
     // 修改課程 Zoom Link
     async editZoomLink(req, res, next){
         try{
-            const { id, link } = req.body;
-            
-            const editZoomLink = await Booking.findByIdAndUpdate(id,
+            const { bookingID, link } = req.body;          
+            const editZoomLink = await Booking.findByIdAndUpdate(bookingID,
                 {
                 $set:{
                     room_link: link,
