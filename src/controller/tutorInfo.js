@@ -8,7 +8,7 @@ let tutorInfosController = {
         try{
             const tutorsList = await User.find({
                 role : 'T',
-            })
+            }).select('-tokens')
             successHandle(res, tutorsList);
         } catch(err){
             return next(err);
@@ -22,7 +22,7 @@ let tutorInfosController = {
                 return next(customiError(400, "無教師ID "));
             const tutorDetail = await User.find({
                 tutorId: tutorID,
-            })
+            }).select('-tokens')
             successHandle(res, tutorDetail);
         } catch(err){
             return next(err);
