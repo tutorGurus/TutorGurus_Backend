@@ -8,6 +8,9 @@ const { ObjectId } = mongoose.Types; //Avocado
 let bookingsController = {
     // 學生查詢預約列表
     async bookingList(req, res, next){
+        /**
+            #swagger.tags = ['Booking']
+         */
         try{
             let id  = req.user._id;
             id = id.toHexString();
@@ -33,6 +36,9 @@ let bookingsController = {
     },
     // 老師查詢預約列表
     async bookedList(req, res, next){
+          /**
+            #swagger.tags = ['Booking']
+         */
         try{
             let id  = req.user._id;
             id = id.toHexString();
@@ -47,6 +53,9 @@ let bookingsController = {
     },
     // 預約課程
     async bookingCourse(req, res, next){
+          /**
+            #swagger.tags = ['Booking']
+         */
         try{
             const { course_id, startTime, endTime} = req.body;
             let id  = req.user._id;
@@ -90,6 +99,9 @@ let bookingsController = {
     },
     // 請假、取消預約
     async editBookingStatus(req, res, next){
+          /**
+            #swagger.tags = ['Booking']
+         */
         try{
             const { bookingID, status } = req.body;
             const changeBookingStatus = await Booking.findByIdAndUpdate(bookingID,
@@ -106,6 +118,9 @@ let bookingsController = {
 
     // 修改課程 Zoom Link
     async editZoomLink(req, res, next){
+          /**
+            #swagger.tags = ['Booking']
+         */
         try{
             const { bookingID, link } = req.body;          
             const editZoomLink = await Booking.findByIdAndUpdate(bookingID,
