@@ -57,7 +57,7 @@ let userController = {
             if(password != confirmPassword)
                 return next(customiError(400, "密碼不一致"));
             
-            let salt = bcrypt.genSaltSync(15);
+            let salt = bcrypt.genSaltSync(8);
             let secretPassword = bcrypt.hashSync(password, salt);
             let newUser = await User.create({
                 name : userName,
