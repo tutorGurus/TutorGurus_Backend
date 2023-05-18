@@ -67,7 +67,7 @@ let tutorController = {
             if(password != confirmPassword)
                 return next(customiError(400, "密碼不一致"));
             
-            let salt = bcrypt.genSaltSync(15);
+            let salt = bcrypt.genSaltSync(8);
             let secretPassword = bcrypt.hashSync(password, salt);
             const tutorsList = await User.find({ role : 'T'});
             let nextTutorNum = tutorsList.length + 1;          
