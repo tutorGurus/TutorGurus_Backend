@@ -1,9 +1,14 @@
 const mongoose = require('mongoose');
+const Courses = require('./coursesModel')
 
 const orderSchema = new mongoose.Schema({
     order_date : {
         type : Date,
         require : [true, "訂單日期為必填欄位"]
+    },
+    quantity : {
+        type : Number,
+        required : [true, "總購買數為必填"]
     },
     content : [
         {
@@ -39,10 +44,11 @@ const orderSchema = new mongoose.Schema({
 })
 
 
-orderSchema.pre('/^find/', function(next){
+orderSchema.pre(/^find/, function(next){
     this.populate({
         path : 'course_id',
     })
+    next();
 })
 
 

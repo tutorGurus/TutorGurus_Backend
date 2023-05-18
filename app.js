@@ -43,8 +43,7 @@ app.use('/tutors', tutorsRouter);
 app.use('/v1/tutorsInfo', tutorsInfoRouter);
 app.use('/v1/booking', bookingRouter)
 app.use('/cart', carts);
-app.use('/order', orders)
-
+app.use('/order', orders);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));

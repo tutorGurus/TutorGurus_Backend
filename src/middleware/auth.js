@@ -18,7 +18,6 @@ let jwtFn = {
     //驗證Token
     async isAuth(req, res, next){
         try {
-            console.log(123);
             let token;
             //驗證是否夾帶token
             if(req.headers.authorization && req.headers.authorization.startsWith('Bearer'))
@@ -40,9 +39,11 @@ let jwtFn = {
             const currentUser = await User.findById(decryptPayload.id).select('+password -tokens');
             req.user = currentUser;
             req.token = token;
+            req.userId = decryptPayload.id;
             next();
         } catch (err){
-            if(err.message == "invalid token"){
+            console.error("auth.js (44)", err.message);
+            if(err.message == "invalid token" || err.message == "jwt expired"){
                 return next(costomiError(400, "請先登入"))
             }
             return next(costomiError(500, "請聯絡客服"));

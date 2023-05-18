@@ -17,7 +17,7 @@ const bookingModel = mongoose.Schema({
         required : [true, "課程ID為必填"]
     },
     status : {
-        type : Number
+        type : String
     },
     room_link : {
         type : String,
@@ -35,6 +35,14 @@ const bookingModel = mongoose.Schema({
     versionKey : false,
     timestamps: true
 })
+
+bookingModel.pre(/^find/, function(next){
+    this.populate({
+        path : 'booked_user_id',
+    })
+    next();
+});
+
 
 const Booking = mongoose.model("Booking", bookingModel);
 module.exports = Booking;

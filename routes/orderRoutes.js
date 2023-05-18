@@ -4,8 +4,8 @@ const orderController = require('../src/controller/orderController');
 const jwtFn = require('../src/middleware/auth');
 
 
-router.post('/v1/order', orderController.createNewOrder);
+router.post('/v1/order',jwtFn.isAuth ,orderController.createNewOrder);
 
-router.post('/v1/order/test', orderController.getOrder);
+router.get('/v1/order/test',jwtFn.isAuth ,orderController.getOrder);
 
 module.exports = router;
