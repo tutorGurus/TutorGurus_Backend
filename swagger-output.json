@@ -922,20 +922,218 @@
     },
     "/v1/tutorsInfo/": {
       "get": {
-        "description": "",
+        "tags": [
+          "Teacher"
+        ],
+        "description": "教師一覽API",
         "parameters": [],
-        "responses": {}
+        "responses": {
+          "200": {
+            "description": "獲取成功",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "_id": {
+                        "type": "string",
+                        "example": "64657e1c72da4bbea188afdf"
+                      },
+                      "name": {
+                        "type": "string",
+                        "example": "avocado"
+                      },
+                      "email": {
+                        "type": "string",
+                        "example": "avocado@gmail.com"
+                      },
+                      "birthday": {
+                        "type": "string",
+                        "example": "birthday"
+                      },
+                      "phone": {
+                        "type": "string",
+                        "example": "phone"
+                      },
+                      "gender": {
+                        "type": "string",
+                        "example": "male"
+                      },
+                      "degree": {
+                        "type": "string",
+                        "example": "碩士"
+                      },
+                      "school": {
+                        "type": "string",
+                        "example": "NCCU"
+                      },
+                      "country": {
+                        "type": "string",
+                        "example": "Taipei"
+                      },
+                      "profile_image": {
+                        "type": "string",
+                        "example": "https://image"
+                      },
+                      "bank_account": {
+                        "type": "string",
+                        "example": ""
+                      },
+                      "tutorId": {
+                        "type": "number",
+                        "example": 1
+                      },
+                      "carts": {
+                        "type": "array",
+                        "example": [],
+                        "items": {}
+                      },
+                      "createdAt": {
+                        "type": "string",
+                        "example": "2023-05-18T01:23:40.548Z"
+                      },
+                      "updatedAt": {
+                        "type": "string",
+                        "example": "2023-05-18T01:25:14.464Z"
+                      }
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
       }
     },
     "/v1/tutorsInfo/detail": {
       "get": {
-        "description": "",
-        "parameters": [],
-        "responses": {}
+        "tags": [
+          "Teacher"
+        ],
+        "description": "獲取師資詳情API",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "description": "資料格式",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "tutorID": {
+                  "type": "string",
+                  "example": "tutorID"
+                }
+              },
+              "required": [
+                "tutorID"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "註冊成功",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "_id": {
+                        "type": "string",
+                        "example": "64657e1c72da4bbea188afdf"
+                      },
+                      "name": {
+                        "type": "string",
+                        "example": "avocado"
+                      },
+                      "email": {
+                        "type": "string",
+                        "example": "avocado@gmail.com"
+                      },
+                      "birthday": {
+                        "type": "string",
+                        "example": "birthday"
+                      },
+                      "phone": {
+                        "type": "string",
+                        "example": "phone"
+                      },
+                      "gender": {
+                        "type": "string",
+                        "example": "male"
+                      },
+                      "degree": {
+                        "type": "string",
+                        "example": "碩士"
+                      },
+                      "school": {
+                        "type": "string",
+                        "example": "NCCU"
+                      },
+                      "country": {
+                        "type": "string",
+                        "example": "Taipei"
+                      },
+                      "profile_image": {
+                        "type": "string",
+                        "example": "https://image"
+                      },
+                      "bank_account": {
+                        "type": "string",
+                        "example": ""
+                      },
+                      "tutorId": {
+                        "type": "number",
+                        "example": 1
+                      },
+                      "carts": {
+                        "type": "array",
+                        "example": [],
+                        "items": {}
+                      },
+                      "createdAt": {
+                        "type": "string",
+                        "example": "2023-05-18T01:23:40.548Z"
+                      },
+                      "updatedAt": {
+                        "type": "string",
+                        "example": "2023-05-18T01:25:14.464Z"
+                      }
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
       }
     },
     "/v1/booking/": {
       "get": {
+        "tags": [
+          "Booking"
+        ],
         "description": "",
         "parameters": [
           {
@@ -947,6 +1145,9 @@
         "responses": {}
       },
       "post": {
+        "tags": [
+          "Booking"
+        ],
         "description": "",
         "parameters": [
           {
@@ -960,9 +1161,6 @@
             "schema": {
               "type": "object",
               "properties": {
-                "booked_user_id": {
-                  "example": "any"
-                },
                 "course_id": {
                   "example": "any"
                 },
@@ -981,6 +1179,9 @@
     },
     "/v1/booking/booked": {
       "get": {
+        "tags": [
+          "Booking"
+        ],
         "description": "",
         "parameters": [
           {
@@ -994,6 +1195,9 @@
     },
     "/v1/booking/status": {
       "patch": {
+        "tags": [
+          "Booking"
+        ],
         "description": "",
         "parameters": [
           {
@@ -1007,7 +1211,7 @@
             "schema": {
               "type": "object",
               "properties": {
-                "id": {
+                "bookingID": {
                   "example": "any"
                 },
                 "status": {
@@ -1022,6 +1226,9 @@
     },
     "/v1/booking/zoom_link": {
       "patch": {
+        "tags": [
+          "Booking"
+        ],
         "description": "",
         "parameters": [
           {
@@ -1035,7 +1242,7 @@
             "schema": {
               "type": "object",
               "properties": {
-                "id": {
+                "bookingID": {
                   "example": "any"
                 },
                 "link": {

@@ -39,6 +39,7 @@ let jwtFn = {
             const currentUser = await User.findById(decryptPayload.id).select('+password -tokens');
             req.user = currentUser;
             req.token = token;
+            req.userId = decryptPayload.id;
             next();
         } catch (err){
             console.error("auth.js (44)", err.message);

@@ -5,7 +5,7 @@ const jwtFn = require('../middleware/auth');
 
 let orderController = {
     
-    async  createNewOrder(req, res, next){
+    async createNewOrder(req, res, next){
          /**
          * #swagger.tags = ['Order'],
          * #swagger.description = '新增訂單API'
@@ -94,7 +94,6 @@ let orderController = {
             const orders = await Order.find(
                 { user_id : req.user["_id"] 
             });
-            console.log(orders);
             successHandle(res, orders);
         } catch(err){
             console.log(err);
