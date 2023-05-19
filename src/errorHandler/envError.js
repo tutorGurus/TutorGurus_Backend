@@ -3,14 +3,14 @@ const devError = (err, res) =>{
         res.status(err.statusCode).send({
             status : false,
             Errormessage : err.message,
-            Erroris : err,
+            ErrorIs : err,
             Errorstack : err.stack
         })
     } else {
         res.status(500).send({
             status : false,
             Errormessage : err.message,
-            Erroris : err,
+            ErrorIs : err,
             Errorstack : err.stack
         })
     }

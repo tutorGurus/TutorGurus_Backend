@@ -51,6 +51,7 @@ const userSchema = new mongoose.Schema({
         type : String,
         default : " "     
     },
+    imageName : String,
     bank_account : {
         type : String,
         default : ""
