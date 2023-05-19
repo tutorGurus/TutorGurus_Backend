@@ -59,7 +59,7 @@ let tutorController = {
             if(!userName || !email || !password || !confirmPassword)
                 return next(customiError(400, "欄位未填寫完整"));
             if(!validator.isEmail(email))
-                return  next(customiError(400, "信箱格式錯誤"));
+                return  next(customiError(400, "信箱格式錯誤",{domain_specific_validation:true,host_whitelist:['gmail.com', 'yahoo.com']}));
             if(!regex.test(password))
                 return next(customiError(400, "密碼格式不正確 : 至少包含一個大寫與一個小寫"));
             if(!validator.isLength(password, { min : 8 }))
@@ -85,7 +85,7 @@ let tutorController = {
     },
 
     async logIn(req, res, next){
-         /** 
+        /** 
             #swagger.tags = ['Teacher']
             #swagger.description = '教師登入API'
             #swagger.parameters['body'] = {
@@ -125,7 +125,7 @@ let tutorController = {
     }, 
 
     async logOut(req, res, next){
-           /**
+        /**
          * #swagger.tags = ['Teacher'],
          * #swagger.description = '登出API'
             #swagger.responses[200] = {
@@ -196,16 +196,14 @@ let tutorController = {
             if(!name || !email ){
                 return next(customiError(400, "必填欄位不得為空"));
             }
-            
-            if(email !== req.user.email){
-                let emailCheck = await User.findOne({"email" : email})
-                if(emailCheck)
-                    return next(customiError(400, "該信箱已被註冊"));
-            }
-            if(!validator.isEmail(email)){
-                return next(customiError(400, "信箱格式錯誤"));
-            }
-            console.log(await User.findOne({"_id" : req.user._id}))
+            // if(email !== req.user.email){
+            //     let emailCheck = await User.findOne({"email" : email})
+            //     if(emailCheck)
+            //         return next(customiError(400, "該信箱已被註冊"));
+            // }
+            // if(!validator.isEmail(email)){
+            //     return next(customiError(400, "信箱格式錯誤"));
+            // }
             let replaceData = await User.findOneAndUpdate( {"_id" : req.user._id}, {
                     name :  name,
                     email : email,

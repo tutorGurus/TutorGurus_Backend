@@ -48,7 +48,7 @@ let userController = {
                 return next(customiError(400, "該信箱已被註冊"));
             if(!userName || !email || !password || !confirmPassword)
                 return next(customiError(400, "欄位未填寫完整"));
-            if(!validator.isEmail(email)){
+            if(!validator.isEmail(email,{domain_specific_validation:true,host_whitelist:['gmail.com', 'yahoo.com']})){
                 return  next(customiError(400, "信箱格式錯誤"));}
             if(!regex.test(password))
                 return next(customiError(400, "密碼格式不正確 : 至少包含一個大寫與一個小寫"));
@@ -160,18 +160,17 @@ let userController = {
             if(!name || !email ){
                 return next(customiError(400, "必填欄位不得為空"));
             }
-            if(email !== req.user.email){
-                let emailCheck = await User.findOne({"email" : email})
-                if(emailCheck)
-                    return next(customiError(400, "該信箱已被註冊"));
-            }
-            if(!validator.isEmail(email)){
-                return next(customiError(400, "信箱格式錯誤"));
-            }
-            console.log(await User.findOne({"_id" : req.user._id}))
+            // if(email !== req.user.email){
+            //     let emailCheck = await User.findOne({"email" : email})
+            //     if(emailCheck)
+            //         return next(customiError(400, "該信箱已被註冊"));
+            // }
+            // if(!validator.isEmail(email)){
+            //     return next(customiError(400, "信箱格式錯誤"));
+            // }
             let replaceData = await User.findOneAndUpdate( {"_id" : req.user._id}, {
                     name :  name,
-                    email : email,
+                    // email : email,
                     phone : phone,
                     gender : gender,
                     degree : degree,
