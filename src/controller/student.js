@@ -50,7 +50,7 @@ let userController = {
             if(!userName || !email || !password || !confirmPassword){
                 return next(customiError(400, "欄位未填寫完整"))
             };
-            if(!validator.isEmail(email,{domain_specific_validation:true,host_whitelist:['gmail.com', 'yahoo.com']})){
+            if(!validator.isEmail(email,{host_whitelist:['gmail.com', 'yahoo.com']})){
                 return  next(customiError(400, "信箱格式錯誤"));
             }
             if(!regex.test(password)){
