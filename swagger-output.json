@@ -1753,6 +1753,106 @@
           }
         ]
       }
+    },
+    "/v1/upload/file": {
+      "post": {
+        "tags": [
+          "ImageProcess"
+        ],
+        "description": "使用者頭貼上傳",
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "singleFile",
+            "in": "formData",
+            "type": "file",
+            "required": true,
+            "description": "Some description..."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "資料修改成功",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "fileUrl": {
+                      "type": "string",
+                      "example": "fileUrl"
+                    },
+                    "fileName": {
+                      "type": "string",
+                      "example": "fileName"
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "JwtToken": []
+          }
+        ]
+      }
+    },
+    "/v1/upload/file/remove": {
+      "delete": {
+        "tags": [
+          "ImageProcess"
+        ],
+        "description": "使用者刪除頭貼",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "資料修改成功",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JwtToken": []
+          }
+        ]
+      }
     }
   }
 }

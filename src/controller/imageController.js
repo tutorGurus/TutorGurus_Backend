@@ -13,6 +13,30 @@ const imageController = {
     
     //上傳圖片
     async uploadImage(req, res, next){
+        /**
+         * #swagger.tags = ['ImageProcess'],
+         * #swagger.description = '使用者頭貼上傳'
+         * #swagger.consumes = ['multipart/form-data']  
+            #swagger.parameters['singleFile'] = {
+                in: 'formData',
+                type: 'file',
+                required: 'true',
+                description: 'Some description...'
+            }
+            #swagger.responses[200] = {
+                description: '資料修改成功',
+                schema : {
+                    "status": "success",
+                    "data": {
+                        "fileUrl": "fileUrl",
+                        "fileName": "fileName"
+                    }
+                }
+            }
+         * #swagger.security = [{
+            "JwtToken" : []
+            }]
+         */
         try{
             let oldImage = req.user['imageName'];
             if(!req.files.length){
@@ -58,6 +82,19 @@ const imageController = {
 
     //刪除圖片
     async removeImage(req, res, next){
+        /**
+         * #swagger.tags = ['ImageProcess'],
+         * #swagger.description = '使用者刪除頭貼'
+            #swagger.responses[200] = {
+                description: '資料修改成功',
+                schema : {
+                    "status": "success"
+                }
+            }
+         * #swagger.security = [{
+            "JwtToken" : []
+            }]
+         */
         try{
             let removeImage = req.user['imageName'];
             if(!removeImage){

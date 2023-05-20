@@ -6,6 +6,6 @@ const fileProcess = require('../src/controller/imageController');
 
 router.post('/file',jwtFn.isAuth ,uploadMiddleware, fileProcess.uploadImage)
 
-router.post('/file/remove', jwtFn.isAuth, fileProcess.removeImage)
+router.delete('/file/remove', jwtFn.isAuth, fileProcess.removeImage)
 
 module.exports = router;
