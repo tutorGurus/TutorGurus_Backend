@@ -6,7 +6,7 @@ const mongoose = require('mongoose');
 const { ObjectId } = mongoose.Types;
 
 let cartController = {
-
+    //獲取購物車內容
     async getCartContent(req, res, next){
         /**
          * #swagger.tags = ['Carts'],
@@ -42,7 +42,7 @@ let cartController = {
         successHandle(res,cartList);
     },
 
-
+    //新增購物車內容
     async addCartContent(req, res, next){
         /**
          * #swagger.tags = ['Carts'],
@@ -111,6 +111,7 @@ let cartController = {
         }
     },
 
+    //刪除購物車內容
     async deleteCartContent(req, res, next){
         /**
          * #swagger.tags = ['Carts'],

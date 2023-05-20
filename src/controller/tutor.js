@@ -7,6 +7,7 @@ const jwtFn = require('../middleware/auth');
 const regex = /^(?=.*[a-z])(?=.*[A-Z])/; //密碼必須包含一個大小以及一個小寫
 
 let tutorController = {
+    //老師註冊
     async teacherSignUp(req, res, next){
         /**
         * #swagger.tags = ['Teacher']
@@ -83,7 +84,7 @@ let tutorController = {
             return next(err);
         }
     },
-
+    //登入
     async logIn(req, res, next){
         /** 
             #swagger.tags = ['Teacher']
@@ -123,7 +124,7 @@ let tutorController = {
             return next(error)
         }
     }, 
-
+    //登出
     async logOut(req, res, next){
         /**
          * #swagger.tags = ['Teacher'],
@@ -146,7 +147,7 @@ let tutorController = {
             return next(customiError(400, err));
         }
     },
-
+    //修改個人資料
     async editInfo(req, res, next){
         /**
          * #swagger.tags = ['Teacher'],
@@ -206,7 +207,7 @@ let tutorController = {
             // }
             let replaceData = await User.findOneAndUpdate( {"_id" : req.user._id}, {
                     name :  name,
-                    email : email,
+                    // email : email,
                     phone : phone,
                     gender : gender,
                     degree : degree,
@@ -220,16 +221,16 @@ let tutorController = {
             return next(customiError(400, err));
         }
     },
-
+    //獲得個人資訊
     async getUserInfo(req, res, next){
-         /**
+        /**
          * #swagger.tags = ['Teacher'],
          * #swagger.description = '教師取得個人檔案API'
                 #swagger.responses[200] = {
                 description: '資料取得成功',
                 schema : {
-                   "status": "success",
-                   "data": {
+                "status": "success",
+                "data": {
                         "_id": "id",
                         "name": "userName",
                         "email": "userEmail",

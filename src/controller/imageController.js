@@ -11,6 +11,7 @@ const User = require('../models/userModel');
 
 const imageController = {
     
+    //上傳圖片
     async uploadImage(req, res, next){
         try{
             let oldImage = req.user['imageName'];
@@ -55,6 +56,7 @@ const imageController = {
         }
     },
 
+    //刪除圖片
     async removeImage(req, res, next){
         try{
             let removeImage = req.user['imageName'];
