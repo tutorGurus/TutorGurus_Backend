@@ -1,4 +1,5 @@
 const User = require('../models/userModel');
+const TutorBackground = require('../models/tutorBackgroundModel');
 const validator = require('validator');
 const bcrypt = require('bcryptjs');
 const customiError = require('../errorHandler/customiError');
@@ -78,6 +79,8 @@ let tutorController = {
                 role : 'T',
                 tutorId : nextTutorNum
             })
+            // 建立關聯的教學背景記錄
+            await TutorBackground.create({ tutorId: newUser._id });
             successHandle(res, newUser);
         } catch(err){
             return next(err);
