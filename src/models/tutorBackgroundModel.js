@@ -1,10 +1,13 @@
 const mongoose = require("mongoose");
 
 const tutorBackgroundSchema = new mongoose.Schema({
-    tutorId : mongoose.Schema.Types.ObjectId,
+    tutorId : {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+    },
     title : {
         type : String,
-        maxlength : 20,
+        maxlength : 50,
         default: ""
     },
     teaching_category : {

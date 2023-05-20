@@ -19,6 +19,9 @@ router.get('/v1/profile', jwtFn.isAuth, tutorController.getUserInfo);
 // 取得所有教師的背景資料
 router.get('/v1/profile/tutorBackground', tutorBackgroundController.getAllTutorBackground);
 
+// 取得單一教師的背景資料
+router.get('/v1/:tutorId/profile/tutorBackground', jwtFn.isAuth, tutorBackgroundController.getTutorBackground);
+
 // 修改單一教師的背景資料
 router.patch('/v1/:tutorId/profile/tutorBackground', jwtFn.isAuth, tutorBackgroundController.updateTutorBackground);
 
