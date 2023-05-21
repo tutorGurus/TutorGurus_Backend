@@ -23,6 +23,7 @@ let studentRouter = require('./routes/studentRoutes');
 let tutorsRouter = require('./routes/tutorsRoutes');
 let tutorsInfoRouter = require('./routes/tutorsInfoRoutes');
 let bookingRouter = require('./routes/bookingsRoutes');
+let coursesRouter = require('./routes/coursesRoutes');
 let carts = require('./routes/cartRoutes');
 let orders = require('./routes/orderRoutes');
 
@@ -41,6 +42,7 @@ app.use('/', indexRouter);
 app.use('/student', studentRouter);
 app.use('/tutors', tutorsRouter);
 app.use('/v1/tutorsInfo', tutorsInfoRouter);
+app.use('/v1/tutor/courses', coursesRouter);
 app.use('/v1/booking', bookingRouter)
 app.use('/cart', carts);
 app.use('/order', orders);
