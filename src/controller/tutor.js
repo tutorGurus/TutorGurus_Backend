@@ -60,7 +60,7 @@ let tutorController = {
             if(!userName || !email || !password || !confirmPassword)
                 return next(customiError(400, "欄位未填寫完整"));
             if(!validator.isEmail(email))
-                return  next(customiError(400, "信箱格式錯誤",{domain_specific_validation:true,host_whitelist:['gmail.com', 'yahoo.com']}));
+                return  next(customiError(400, "信箱格式錯誤",{host_whitelist:['gmail.com', 'yahoo.com']}));
             if(!regex.test(password))
                 return next(customiError(400, "密碼格式不正確 : 至少包含一個大寫與一個小寫"));
             if(!validator.isLength(password, { min : 8 }))
@@ -68,7 +68,7 @@ let tutorController = {
             if(password != confirmPassword)
                 return next(customiError(400, "密碼不一致"));
             
-            let salt = bcrypt.genSaltSync(15);
+            let salt = bcrypt.genSaltSync(8);
             let secretPassword = bcrypt.hashSync(password, salt);
             const tutorsList = await User.find({ role : 'T'});
             let nextTutorNum = tutorsList.length + 1;          
