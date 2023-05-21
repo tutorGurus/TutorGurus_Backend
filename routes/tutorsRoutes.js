@@ -3,6 +3,7 @@ let router = express.Router();
 let User = require('../src/models/userModel');
 let tutorController = require('../src/controller/tutor');
 const tutorBackgroundController = require('../src/controller/tutorBackgroundController');
+const tutorScheduleController = require('../src/controller/tutorScheduleController');
 const jwtFn = require('../src/middleware/auth');
 
 /* GET users listing. */
@@ -16,13 +17,28 @@ router.post('/v1/logout', jwtFn.isAuth, tutorController.logOut);
 
 router.get('/v1/profile', jwtFn.isAuth, tutorController.getUserInfo);
 
-// 取得所有教師的背景資料
+// 取得所有教師-背景資料
 router.get('/v1/profile/tutorBackground', tutorBackgroundController.getAllTutorBackground);
 
-// 取得單一教師的背景資料
+// 取得單一教師-背景資料
 router.get('/v1/:tutorId/profile/tutorBackground', jwtFn.isAuth, tutorBackgroundController.getTutorBackground);
 
-// 修改單一教師的背景資料
+// 修改單一教師-背景資料
 router.patch('/v1/:tutorId/profile/tutorBackground', jwtFn.isAuth, tutorBackgroundController.updateTutorBackground);
+
+// 取得單一教師 - 行事曆設定資料
+router.get('/v1/:tutorId/schedule', tutorScheduleController.getSchedule);
+
+// 修改單一教師 - 行事曆設定資料
+router.patch('/v1/:tutorId/schedule', tutorScheduleController.updateSchedule);
+
+// 取得所有教師 - 行事曆設定資料
+router.get('/v1/schedule', tutorScheduleController.getAllTutorsSchedule);
+
+// 取得單一教師 - 行事曆設定資料 (v-calendar 格式)
+router.get('/v1/:tutorId/scheduleV', tutorScheduleController.getScheduleV);
+
+// 修改單一教師 - 行事曆設定資料 (v-calendar 格式)
+router.patch('/v1/:tutorId/scheduleV', tutorScheduleController.updateScheduleV);
 
 module.exports = router;
