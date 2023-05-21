@@ -20,6 +20,7 @@ const courseSchema = new mongoose.Schema({
         required : [true, "課程價格為必填欄位"]
     },
     introduction : String,
+    preparation : String,
     is_publish : {
         type : Boolean,
         default : true
