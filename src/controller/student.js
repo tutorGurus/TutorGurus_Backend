@@ -160,7 +160,7 @@ let userController = {
             if(!name || !email ){
                 return next(customiError(400, "必填欄位不得為空"));
             }
-            if(email.toLowerCase() !== req.user.email){
+            if(email !== req.user.email){
                 let emailCheck = await User.findOne({"email" : email})
                 if(emailCheck)
                     return next(customiError(400, "該信箱已被註冊"));
@@ -170,7 +170,6 @@ let userController = {
             }
             console.log(await User.findOne({"_id" : req.user._id}))
             let replaceData = await User.findOneAndUpdate( {"_id" : req.user._id}, {
-                $set : {
                     name :  name,
                     email : email,
                     phone : phone,
@@ -180,7 +179,6 @@ let userController = {
                     country : country,
                     profile_image : profile_image,
                     birthday : birthday
-                }
             },{ new : true }).select('-tokens -_id');
             successHandle(res, replaceData);
         } catch(err) {

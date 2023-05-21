@@ -2,17 +2,17 @@ const mongoose = require('mongoose');
 
 const bookingModel = mongoose.Schema({
     booking_user_id : {
-        type : String,
+        type : mongoose.Schema.Types.ObjectId,
         ref : "User",
         required : [true, "課程預約者ID為必填欄位"]
     },
     booked_user_id : {
-        type : String,
+        type : mongoose.Schema.Types.ObjectId,
         ref : "User",
         required : [true, "開課者ID為必填欄位"]
     },
     course_id : {
-        type : String,
+        type : mongoose.Schema.Types.ObjectId,
         ref : "Courses",
         required : [true, "課程ID為必填"]
     },
@@ -35,6 +35,14 @@ const bookingModel = mongoose.Schema({
     versionKey : false,
     timestamps: true
 })
+
+bookingModel.pre(/^find/, function(next){
+    this.populate({
+        path : 'booked_user_id',
+    })
+    next();
+});
+
 
 const Booking = mongoose.model("Booking", bookingModel);
 module.exports = Booking;
