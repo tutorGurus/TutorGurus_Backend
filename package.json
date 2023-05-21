@@ -26,6 +26,8 @@
     "mongoose": "^7.1.0",
     "morgan": "~1.9.1",
     "multer": "^1.4.5-lts.1",
+    "passport": "^0.6.0",
+    "passport-google-oauth20": "^2.0.0",
     "path": "^0.12.7",
     "swagger-autogen": "^2.23.1",
     "swagger-ui-express": "^4.6.3",

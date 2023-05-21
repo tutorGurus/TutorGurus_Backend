@@ -26,6 +26,7 @@ let bookingRouter = require('./routes/bookingsRoutes');
 let carts = require('./routes/cartRoutes');
 let orders = require('./routes/orderRoutes');
 let imageUpload = require('./routes/uploadRoutes');
+let userRouter = require('./routes/commonRoutes');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -41,6 +42,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/student', studentRouter);
 app.use('/tutors', tutorsRouter);
+app.use('/user',userRouter);
 app.use('/v1/tutorsInfo', tutorsInfoRouter);
 app.use('/v1/booking', bookingRouter)
 app.use('/cart', carts);
