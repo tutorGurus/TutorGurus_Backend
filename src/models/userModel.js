@@ -23,8 +23,8 @@ const userSchema = new mongoose.Schema({
         select : false
     },
     birthday : {
-        type : Date,
-        default : ""
+        type : String,
+        default : " "
     },
     phone : {
         type : String,
