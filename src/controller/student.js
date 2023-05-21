@@ -167,7 +167,7 @@ let userController = {
          */
         try{
             let { name, email, phone, gender, degree, school, country, profile_image, birthday} = req.body;
-            if(!name || !email ){
+            if(!name){
                 return next(customiError(400, "必填欄位不得為空"));
             }
             // if(email !== req.user.email){
