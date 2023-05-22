@@ -9,11 +9,13 @@ if(process.env.NODE_ENV.trim() === 'dev'){
     },
     async function(accessToken, refreshToken, profile, cb) {
         try {
+            console.log(profile.photos[0].value);
             const user = await User.findOrCreate(
             {
                 googleId: profile.id,
                 name: profile.displayName, 
                 email: profile.emails[0].value,
+                profile_image : profile.photos[0].value
             }
             );
             return cb(null, user);
@@ -35,6 +37,7 @@ if(process.env.NODE_ENV.trim() === 'dev'){
                     googleId: profile.id,
                     name: profile.displayName, 
                     email: profile.emails[0].value,
+                    profile_image : profile.photos[0].value
                 }
                 );
                 return cb(null, user);
