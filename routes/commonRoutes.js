@@ -4,7 +4,8 @@ const jwtFn = require('../src/middleware/auth');
 const commonProcess = require('../src/controller/commonController');
 const passport = require('../src/middleware/passportValidate');
 
-//goolge登入or註冊
+
+//goolge登or註冊
 router.get('/v1/register/google', passport.authenticate('google', {
     scope : ['email', 'profile']
 }));
@@ -12,6 +13,19 @@ router.get('/v1/register/google', passport.authenticate('google', {
 //google登入後重導向位置
 router.get('/v1/google/callback', passport.authenticate('google', { session: false }), commonProcess.googlelogIn);
 
+//一般註冊
+router.post('/v1/register', commonProcess.SignUp)
 
+//一般登入API
+router.post('/v1/login', commonProcess.logIn);
+
+//登出API
+router.post('/v1/logout', jwtFn.isAuth, commonProcess.logOut);
+
+//修改資料API
+router.patch('/v1/profile', jwtFn.isAuth, commonProcess.editInfo);
+
+//獲取資料API
+router.get('/v1/profile', jwtFn.isAuth, commonProcess.getUserInfo);
 
 module.exports = router;
