@@ -9,7 +9,6 @@ if(process.env.NODE_ENV.trim() === 'dev'){
     },
     async function(accessToken, refreshToken, profile, cb) {
         try {
-            console.log(profile.photos[0].value);
             const user = await User.findOrCreate(
             {
                 googleId: profile.id,

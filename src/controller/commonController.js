@@ -10,6 +10,7 @@ let commonInstruction = {
     //goolge登入API
     async googlelogIn(req, res, next){
         try{
+        console.log(888);
         const user = await User.findById(req.user.id);
         jwtFn.jwtGenerating(user, res, next);
         }
@@ -225,7 +226,6 @@ let commonInstruction = {
             }]
          */
         try{
-            console.log(req.user)
             await User.updateOne({"_id" : req.user._id}, { $pull : { tokens : { token : req.token}}},{new : true});
             res.send({stauts : "success"});
         } catch(err){

@@ -3,15 +3,24 @@ const router = express.Router();
 const jwtFn = require('../src/middleware/auth');
 const commonProcess = require('../src/controller/commonController');
 const passport = require('../src/middleware/passportValidate');
+const customiError = require('../src/errorHandler/customiError');
 
 
 //goolge登or註冊
-router.get('/v1/register/google', passport.authenticate('google', {
+router.get('/v1/register/google/:role',(req, res, next) =>{
+    if(req.params['role'] !== 'T' && req.params['role'] !== 'S'){
+        return next(customiError(400, "路由錯誤(未填入正確的身分類別)"));
+    } else {
+        req.role = req.params['role'];
+        next();
+    }
+}, passport.authenticate('google', {
     scope : ['email', 'profile']
 }));
 
 //google登入後重導向位置
-router.get('/v1/google/callback', passport.authenticate('google', { session: false }), commonProcess.googlelogIn);
+router.get('/v1/google/callback', passport.authenticate('google', 
+{ session: false }), commonProcess.googlelogIn);
 
 //一般註冊
 router.post('/v1/register', commonProcess.SignUp)
