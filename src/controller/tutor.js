@@ -1,4 +1,5 @@
 const User = require('../models/userModel');
+const TutorBackground = require('../models/tutorBackgroundModel');
 const validator = require('validator');
 const bcrypt = require('bcryptjs');
 const customiError = require('../errorHandler/customiError');
@@ -7,6 +8,7 @@ const jwtFn = require('../middleware/auth');
 const regex = /^(?=.*[a-z])(?=.*[A-Z])/; //密碼必須包含一個大小以及一個小寫
 
 let tutorController = {
+    //老師註冊
     async teacherSignUp(req, res, next){
         /**
         * #swagger.tags = ['Teacher']
@@ -59,7 +61,7 @@ let tutorController = {
             if(!userName || !email || !password || !confirmPassword)
                 return next(customiError(400, "欄位未填寫完整"));
             if(!validator.isEmail(email))
-                return  next(customiError(400, "信箱格式錯誤"));
+                return  next(customiError(400, "信箱格式錯誤",{host_whitelist:['gmail.com', 'yahoo.com']}));
             if(!regex.test(password))
                 return next(customiError(400, "密碼格式不正確 : 至少包含一個大寫與一個小寫"));
             if(!validator.isLength(password, { min : 8 }))
@@ -67,7 +69,7 @@ let tutorController = {
             if(password != confirmPassword)
                 return next(customiError(400, "密碼不一致"));
             
-            let salt = bcrypt.genSaltSync(15);
+            let salt = bcrypt.genSaltSync(8);
             let secretPassword = bcrypt.hashSync(password, salt);
             const tutorsList = await User.find({ role : 'T'});
             let nextTutorNum = tutorsList.length + 1;          
@@ -78,12 +80,14 @@ let tutorController = {
                 role : 'T',
                 tutorId : nextTutorNum
             })
+            // 建立關聯的教學背景記錄
+            await TutorBackground.create({ tutorId: newUser._id });
             successHandle(res, newUser);
         } catch(err){
             return next(err);
         }
     },
-
+    //登入
     async logIn(req, res, next){
         /** 
             #swagger.tags = ['Teacher']
@@ -125,7 +129,7 @@ let tutorController = {
             return next(error)
         }
     }, 
-
+    //登出
     async logOut(req, res, next){
         /**
          * #swagger.tags = ['Teacher'],
@@ -148,7 +152,7 @@ let tutorController = {
             return next(customiError(400, err));
         }
     },
-
+    //修改個人資料
     async editInfo(req, res, next){
         /**
          * #swagger.tags = ['Teacher'],
@@ -195,23 +199,20 @@ let tutorController = {
          */
         try{
             let { name, email, phone, gender, degree, school, country, profile_image, birthday } = req.body;
-            if(!name || !email ){
+            if(!name){
                 return next(customiError(400, "必填欄位不得為空"));
             }
-            
-            if(email.toLowerCase() !== req.user.email){
-                let emailCheck = await User.findOne({"email" : email})
-                if(emailCheck)
-                    return next(customiError(400, "該信箱已被註冊"));
-            }
-            if(!validator.isEmail(email)){
-                return next(customiError(400, "信箱格式錯誤"));
-            }
-            console.log(await User.findOne({"_id" : req.user._id}))
+            // if(email !== req.user.email){
+            //     let emailCheck = await User.findOne({"email" : email})
+            //     if(emailCheck)
+            //         return next(customiError(400, "該信箱已被註冊"));
+            // }
+            // if(!validator.isEmail(email)){
+            //     return next(customiError(400, "信箱格式錯誤"));
+            // }
             let replaceData = await User.findOneAndUpdate( {"_id" : req.user._id}, {
-                $set : {
                     name :  name,
-                    email : email,
+                    // email : email,
                     phone : phone,
                     gender : gender,
                     degree : degree,
@@ -219,23 +220,22 @@ let tutorController = {
                     country : country,
                     profile_image : profile_image,
                     birthday : birthday
-                }
             },{ new : true }).select('-tokens -_id');
             successHandle(res, replaceData);
         } catch(err) {
             return next(customiError(400, err));
         }
     },
-
+    //獲得個人資訊
     async getUserInfo(req, res, next){
-         /**
+        /**
          * #swagger.tags = ['Teacher'],
          * #swagger.description = '教師取得個人檔案API'
                 #swagger.responses[200] = {
                 description: '資料取得成功',
                 schema : {
-                   "status": "success",
-                   "data": {
+                "status": "success",
+                "data": {
                         "_id": "id",
                         "name": "userName",
                         "email": "userEmail",

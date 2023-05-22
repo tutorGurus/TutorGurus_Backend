@@ -8,6 +8,7 @@ const jwtFn = require('../middleware/auth');
 const regex = /^(?=.*[a-z])(?=.*[A-Z])/; //密碼必須包含一個大小以及一個小寫
 
 let userController = {
+    //學生註冊
     async studentSignUp(req, res, next){
     
     /**
@@ -48,7 +49,7 @@ let userController = {
                 return next(customiError(400, "該信箱已被註冊"));
             if(!userName || !email || !password || !confirmPassword)
                 return next(customiError(400, "欄位未填寫完整"));
-            if(!validator.isEmail(email)){
+            if(!validator.isEmail(email,{host_whitelist:['gmail.com', 'yahoo.com']})){
                 return  next(customiError(400, "信箱格式錯誤"));}
             if(!regex.test(password))
                 return next(customiError(400, "密碼格式不正確 : 至少包含一個大寫與一個小寫"));
@@ -57,7 +58,7 @@ let userController = {
             if(password != confirmPassword)
                 return next(customiError(400, "密碼不一致"));
             
-            let salt = bcrypt.genSaltSync(15);
+            let salt = bcrypt.genSaltSync(8);
             let secretPassword = bcrypt.hashSync(password, salt);
             let newUser = await User.create({
                 name : userName,
@@ -70,7 +71,7 @@ let userController = {
             return next(error)
         }
     },
-
+    //登入
     async logIn(req, res, next){
         /** 
             #swagger.tags = ['Student']
@@ -116,7 +117,7 @@ let userController = {
             return next(customiError(500, "伺服器錯誤！"));
         }
     },
-
+    //修改個人資料
     async editInfo(req, res, next){
         /**
          * #swagger.tags = ['Student'],
@@ -162,22 +163,20 @@ let userController = {
          */
         try{
             let { name, email, phone, gender, degree, school, country, profile_image, birthday} = req.body;
-            if(!name || !email ){
+            if(!name){
                 return next(customiError(400, "必填欄位不得為空"));
             }
-            if(email.toLowerCase() !== req.user.email){
-                let emailCheck = await User.findOne({"email" : email})
-                if(emailCheck)
-                    return next(customiError(400, "該信箱已被註冊"));
-            }
-            if(!validator.isEmail(email)){
-                return next(customiError(400, "信箱格式錯誤"));
-            }
-            console.log(await User.findOne({"_id" : req.user._id}))
+            // if(email !== req.user.email){
+            //     let emailCheck = await User.findOne({"email" : email})
+            //     if(emailCheck)
+            //         return next(customiError(400, "該信箱已被註冊"));
+            // }
+            // if(!validator.isEmail(email)){
+            //     return next(customiError(400, "信箱格式錯誤"));
+            // }
             let replaceData = await User.findOneAndUpdate( {"_id" : req.user._id}, {
-                $set : {
                     name :  name,
-                    email : email,
+                    // email : email,
                     phone : phone,
                     gender : gender,
                     degree : degree,
@@ -185,14 +184,13 @@ let userController = {
                     country : country,
                     profile_image : profile_image,
                     birthday : birthday
-                }
             },{ new : true }).select('-tokens -_id');
             successHandle(res, replaceData);
         } catch(err) {
             return next(customiError(400, err));
         }
     },
-
+    //登出
     async logOut(req, res, next){
         /**
          * #swagger.tags = ['Student'],
@@ -215,7 +213,7 @@ let userController = {
             return next(customiError(400, err));
         }
     },
-
+    //獲取個人資訊
     async getUserInfo(req, res, next){
         /**
          * #swagger.tags = ['Student'],
@@ -223,8 +221,8 @@ let userController = {
                 #swagger.responses[200] = {
                 description: '資料取得成功',
                 schema : {
-                   "status": "success",
-                   "data": {
+                "status": "success",
+                "data": {
                         "_id": "6462d56fa8ef5218d79afd79",
                         "name": "Rose",
                         "email": "rose@gmail.com",
