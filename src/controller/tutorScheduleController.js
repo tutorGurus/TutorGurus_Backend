@@ -93,81 +93,168 @@ const tutorScheduleController = {
             const dates = body.dates;
             const data = {};
 
-            dates.forEach( entry => {
+            // 將前端傳來的陣列資料整理
+            dates.forEach(entry => {
                 const year = entry[0];
                 const month = entry[1];
                 const day = entry[2];
-                const sTime = entry[3];
-                const eTime = entry[4];
+                const startTime = entry[3];
+                const endTime = entry[4];
 
-                if(!data[year]){
+                if (!data[year]) {
                     data[year] = {
                         months: {}
                     };
                 }
 
-                if(!data[year].months[month]) {
+                if (!data[year].months[month]) {
                     data[year].months[month] = {
                         days: {}
-                    }
+                    };
                 }
 
-                if(!data[year].months[month].days[day]) {
+                if (!data[year].months[month].days[day]) {
                     data[year].months[month].days[day] = {
                         time_slots: []
-                    }
+                    };
                 }
 
                 const timeSlot = {
-                    start_time: sTime,
-                    end_time: eTime
-                }
+                    start_time: startTime,
+                    end_time: endTime
+                };
 
                 data[year].months[month].days[day].time_slots.push(timeSlot);
             });
-
-            // 組成 database 儲存格式
+            // console.log(JSON.stringify(data, null, 2));
             const result = {
                 dates: []
-            }
-
-            Object.keys(data).forEach( year => {
-                const objYear = {
+            };
+            
+            // 將 資料 重組成 database 格式
+            Object.keys(data).forEach(year => {
+                const yearObj = {
                     year: parseInt(year),
                     months: []
                 };
 
-                Object.keys(data[year].months).forEach( month => {
-                    const objMonth = {
+                Object.keys(data[year].months).forEach(month => {
+                    const monthObj = {
                         month: parseInt(month),
                         days: []
-                    }
+                    };
 
-                    Object.keys(data[year].months[month].days).forEach( day => {
-                        const objDay = {
+                    Object.keys(data[year].months[month].days).forEach(day => {
+                        const dayObj = {
                             day: parseInt(day),
                             time_slots: data[year].months[month].days[day].time_slots
                         };
 
-                        objMonth.days.push(objDay);
-                    })
+                    monthObj.days.push(dayObj);
+                    });
 
-                    objYear.months.push(objMonth);
+                    yearObj.months.push(monthObj);
                 });
 
-                result.dates.push(objYear);
+                result.dates.push(yearObj);
             });
-            console.log(result);
+            
+            // console.log(JSON.stringify(result, null, 2));
 
-            const updatedSchedule = await TutorSchedule.findOneAndUpdate(
-                { "tutorId" : id}, 
-                { dates: result }, 
-                { new : true});
-            successHandle(res, updatedSchedule);
+            // 將資料更新至 database
+            for (const yearData of result.dates) {
+                // 確認 database 中是否有該「年度」的資料 (可用於跨年度)
+                const dbYear = await TutorSchedule.findOne({"dates.year": yearData.year});
+                // 若資料庫無該「年度」的資料，則新增資料
+                if (!dbYear) {
+                    const newSchedule = await TutorSchedule.findOneAndUpdate(
+                        {
+                            "tutorId" : id
+                        },
+                        {
+                            dates: result.dates
+                        },
+                        {
+                            new: true
+                        }
+                    );
+                }
+                for (const monthData of yearData.months) {
+                    // 確認 database 中是否有該「月份」的資料
+                    const dbMonth = await TutorSchedule.findOne({"dates.months.month": monthData.month});
+                    // 若資料庫無該「月份」的資料，則新增資料
+                    if (!dbMonth) {
+                        const newSchedule = await TutorSchedule.findOneAndUpdate(
+                            {
+                                "tutorId" : id,
+                                "dates.year": yearData.year
+                            },
+                            {
+                                $push: {
+                                    "dates.$[outer].months": monthData
+                                }
+                            },
+                            {
+                                new: true,
+                                arrayFilters: [
+                                    { "outer.year": yearData.year },
+                                ],
+                            }
+                        );
+                    }
+                    for (const dayData of monthData.days) {
+                        // 確認 database 中是否有該「日期」的資料
+                        const dbDay = await TutorSchedule.findOne({"dates.months.days.day": dayData.day});
+                        // 若資料庫無該「日期」的資料，則新增資料
+                        if (!dbDay) {
+                            const newSchedule = await TutorSchedule.findOneAndUpdate(
+                                {
+                                    "tutorId" : id,
+                                    "dates.year": yearData.year,
+                                    "dates.months.month": monthData.month
+                                },
+                                {
+                                    $push: {
+                                        "dates.$[outer].months.$[inner].days": dayData
+                                    }
+                                },
+                                {
+                                    new: true,
+                                    arrayFilters: [
+                                        { "outer.year": yearData.year },
+                                        { "inner.month": monthData.month }
+                                    ],
+                                }
+                            );
+                        } else { // 更新該日期時段資料
+                            const updatedSchedule = await TutorSchedule.findOneAndUpdate(
+                                {
+                                    tutorId: id,
+                                    "dates.year": yearData.year,
+                                    "dates.months.month": monthData.month,
+                                    "dates.months.days": { $elemMatch: { day: dayData.day } },
+                                },
+                                {
+                                    "dates.$[outer].months.$[inner].days.$[dayFilter].time_slots": dayData.time_slots,
+                                },
+                                {
+                                    new: true,
+                                    arrayFilters: [
+                                        { "outer.year": yearData.year },
+                                        { "inner.month": monthData.month },
+                                        { "dayFilter.day": dayData.day },
+                                    ],
+                                }
+                            );
+                        }
+                    }
+                }
+            }
+            successHandle(res, "OK");
         } catch(err) {
             return next(err);
         } 
-    },
+    }
 }
 
 module.exports = tutorScheduleController;
