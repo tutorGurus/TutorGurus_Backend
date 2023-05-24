@@ -7,16 +7,12 @@ const customiError = require('../src/errorHandler/customiError');
 
 
 //goolge登or註冊
-router.get('/v1/register/google/:role',(req, res, next) =>{
-    if(req.params['role'] !== 'T' && req.params['role'] !== 'S'){
-        return next(customiError(400, "路由錯誤(未填入正確的身分類別)"));
-    } else {
-        req.role = req.params['role'];
-        next();
-    }
+router.get('/v1/register/google',(req, res, next) =>{
+    res.cookie('role' , 'T');
+    next();
 }, passport.authenticate('google', {
-    scope : ['email', 'profile']
-}));
+    scope : ['email', 'profile']}
+) );
 
 //google登入後重導向位置
 router.get('/v1/google/callback', passport.authenticate('google', 

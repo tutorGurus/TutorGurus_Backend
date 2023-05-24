@@ -10,9 +10,8 @@ let commonInstruction = {
     //goolge登入API
     async googlelogIn(req, res, next){
         try{
-        console.log(888);
-        const user = await User.findById(req.user.id);
-        jwtFn.jwtGenerating(user, res, next);
+            const user = await User.findById(req.user.id);
+            jwtFn.jwtGenerating(user, res, next);
         }
         catch(err){
             return next(customiError(400, "登入失敗"))
@@ -32,7 +31,8 @@ let commonInstruction = {
                         $userName : 'Avocado',
                         $email : "Avocado@gmail.com",
                         $password : "Aa1234567",
-                        $confirmPassword : "Aa1234567"
+                        $confirmPassword : "Aa1234567",
+                        $role : "T or S"
                     }
                 }
             * #swagger.responses[200] = {
@@ -113,8 +113,6 @@ let commonInstruction = {
          */
         try{
             const { email, password} = req.body;
-            console.log(email, password);
-
             if(!email || !password){
                 return next(customiError(400,"請輸入完整帳號和密碼"));
             }
@@ -226,7 +224,10 @@ let commonInstruction = {
             }]
          */
         try{
-            await User.updateOne({"_id" : req.user._id}, { $pull : { tokens : { token : req.token}}},{new : true});
+            //多人登入
+            // await User.updateOne({"_id" : req.user._id}, { $pull : { tokens : { token : req.token}}},{new : true});
+            //單人登入
+            await User.updateOne({"_id" : req.user._id},{token : ""});
             res.send({stauts : "success"});
         } catch(err){
             return next(customiError(400, err));

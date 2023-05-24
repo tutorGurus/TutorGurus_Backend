@@ -14,9 +14,13 @@ const userSchema = new mongoose.Schema({
         select : false
     },
     googleId : String,
-    tokens : [{
-        token : { type : String},
-    }],
+    token :{
+        type : String,
+        default : ""
+    },
+    // tokens : [{
+    //     token : { type : String},
+    // }],
     role : {
         type : String,
         enum : ['S', 'T', 'A'],

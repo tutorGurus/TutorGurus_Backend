@@ -7,6 +7,7 @@ let cors = require('cors');
 let envError = require('./src/errorHandler/envError');
 let swaggerUI = require('swagger-ui-express');
 let swaggerFile = require('./swagger-output.json');
+// let session = require('express-session');
 require('./src/errorHandler/processError')();
 if(process.env.NODE_ENV.trim() === 'dev'){
   require('dotenv').config({path : './config.env'})
@@ -39,7 +40,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-
+// app.use(session())
 app.use('/', indexRouter);
 app.use('/student', studentRouter);
 app.use('/tutors', tutorsRouter);
