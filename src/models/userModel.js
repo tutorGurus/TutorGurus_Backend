@@ -11,9 +11,9 @@ const userSchema = new mongoose.Schema({
     },
     password : {
         type : String,
-        required : [true, "請填入帳號"],
         select : false
     },
+    googleId : String,
     tokens : [{
         token : { type : String},
     }],
@@ -23,8 +23,8 @@ const userSchema = new mongoose.Schema({
         select : false
     },
     birthday : {
-        type : Date,
-        default : ""
+        type : String,
+        default : " "
     },
     phone : {
         type : String,
@@ -51,6 +51,7 @@ const userSchema = new mongoose.Schema({
         type : String,
         default : " "     
     },
+    imageName : String,
     bank_account : {
         type : String,
         default : ""
@@ -73,6 +74,16 @@ const userSchema = new mongoose.Schema({
     versionKey : false,
     timestamps: true
 });
+
+userSchema.statics.findOrCreate = async function (doc) {
+    let result = await this.findOne({googleId:doc.googleId});
+    if (result) {
+        return result;
+    } else {
+        result = new this(doc);
+        return await result.save();
+    }
+}
 
 userSchema.pre(/^find/, function(next){
     this.populate({

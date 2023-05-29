@@ -5,8 +5,9 @@ const jwtFn = require('../middleware/auth');
 
 let orderController = {
     
+    //新增訂單
     async createNewOrder(req, res, next){
-         /**
+        /**
          * #swagger.tags = ['Order'],
          * #swagger.description = '新增訂單API'
          * #swagger.parameters['body'] = {
@@ -63,7 +64,7 @@ let orderController = {
         }
     },
 
-
+    //獲取使用者訂單資訊
     async getOrder(req, res, next){
             /**
          * #swagger.tags = ['Order'],
