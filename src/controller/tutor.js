@@ -1,5 +1,6 @@
 const User = require('../models/userModel');
 const TutorBackground = require('../models/tutorBackgroundModel');
+const TutorSchedule = require('../models/tutorScheduleModel');
 const validator = require('validator');
 const bcrypt = require('bcryptjs');
 const customiError = require('../errorHandler/customiError');
@@ -80,8 +81,10 @@ let tutorController = {
                 role : 'T',
                 tutorId : nextTutorNum
             })
-            // 建立關聯的教學背景記錄
+            // 建立關聯資料集 - 教學背景
             await TutorBackground.create({ tutorId: newUser._id });
+            // 建立關聯資料集 - 行事曆
+            await TutorSchedule.create({ tutorId: newUser._id });
             successHandle(res, newUser);
         } catch(err){
             return next(err);
