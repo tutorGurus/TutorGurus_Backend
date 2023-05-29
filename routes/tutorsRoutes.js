@@ -7,14 +7,15 @@ const tutorScheduleController = require('../src/controller/tutorScheduleControll
 const jwtFn = require('../src/middleware/auth');
 
 /* GET users listing. */
+//老師註冊
 router.post('/v1/register', tutorController.teacherSignUp);
-
+//老師登入
 router.post('/v1/login', tutorController.logIn);
-
+//老師修改個人資料
 router.patch('/v1/profile', jwtFn.isAuth, tutorController.editInfo);
-
+//老師登出
 router.post('/v1/logout', jwtFn.isAuth, tutorController.logOut);
-
+//獲取個人資訊
 router.get('/v1/profile', jwtFn.isAuth, tutorController.getUserInfo);
 
 // 取得所有教師-背景資料
