@@ -75,7 +75,7 @@ const imageController = {
             //將檔案的buffer寫入blobStream
             blobStream.end(file.buffer);
         } catch(err){
-            console.log("imageController.js", "line 48")
+            console.log("imageController.js", "line 80")
             return next(customiError(400, err));
         }
     },

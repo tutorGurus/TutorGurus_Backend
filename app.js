@@ -21,8 +21,6 @@ let app = express();
 app.use(cors());
 
 let indexRouter = require('./routes/index');
-let studentRouter = require('./routes/studentRoutes'); 
-let tutorsRouter = require('./routes/tutorsRoutes');
 let tutorsInfoRouter = require('./routes/tutorsInfoRoutes');
 let bookingRouter = require('./routes/bookingsRoutes');
 let coursesRouter = require('./routes/coursesRoutes');
@@ -42,8 +40,6 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 // app.use(session())
 app.use('/', indexRouter);
-app.use('/student', studentRouter);
-app.use('/tutors', tutorsRouter);
 app.use('/user',userRouter);
 app.use('/v1/tutorsInfo', tutorsInfoRouter);
 app.use('/v1/tutor/courses', coursesRouter);
@@ -60,6 +56,7 @@ app.use(function(req, res, next) {
 app.use(function(err, req, res, next) {
   //dev
   if(process.env.NODE_ENV.trim() === "dev"){
+    console.log("app.js / line 59");
     return envError.devError(err, res);
   }
   //production
