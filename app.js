@@ -43,7 +43,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/student', studentRouter);
 app.use('/tutors', tutorsRouter);
-app.use('/user',userRouter);
+app.use('/user', userRouter);
 app.use('/v1/tutorsInfo', tutorsInfoRouter);
 app.use('/v1/tutor/courses', coursesRouter);
 app.use('/v1/booking', bookingRouter)
