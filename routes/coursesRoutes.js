@@ -1,10 +1,10 @@
 let express = require('express');
 let router = express.Router();
 let coursesController = require('../src/controller/courses');
-//const jwtFn = require('../src/middleware/auth');
+const jwtFn = require('../src/middleware/auth');
 
 // 新增一筆課程
-router.post('/', coursesController.createCourse);
+router.post('/', jwtFn.isAuth, coursesController.createCourse);
 
 // 取得所有課程資訊
 router.get('/', coursesController.getAllCourses);

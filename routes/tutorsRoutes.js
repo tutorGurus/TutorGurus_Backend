@@ -4,6 +4,7 @@ let User = require('../src/models/userModel');
 let tutorController = require('../src/controller/tutor');
 const tutorBackgroundController = require('../src/controller/tutorBackgroundController');
 const tutorScheduleController = require('../src/controller/tutorScheduleController');
+let tutorInfosController = require('../src/controller/tutorInfo');
 const jwtFn = require('../src/middleware/auth');
 
 /* GET users listing. */
@@ -12,6 +13,12 @@ router.post('/v1/register', tutorController.teacherSignUp);
 
 //老師修改個人資料
 router.patch('/v1/profile', jwtFn.isAuth, tutorController.editInfo);
+
+// 教師一覽
+router.get('/', tutorInfosController.tutorsList);
+
+// 教師詳情
+router.get('/detail', tutorInfosController.tutorDetail);
 
 // 取得所有教師-背景資料
 router.get('/v1/profile/tutorBackground', tutorBackgroundController.getAllTutorBackground);

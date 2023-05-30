@@ -19,7 +19,7 @@ let commonInstruction = {
     //登入
     async logIn(req, res, next){
         /** 
-            #swagger.tags = ['Student']
+            #swagger.tags = ['共同行為']
             #swagger.description = '學生登入API'
             #swagger.parameters['body'] = {
                 in : 'body',
@@ -61,7 +61,7 @@ let commonInstruction = {
     //登出
     async logOut(req, res, next){
         /**
-         * #swagger.tags = ['Student'],
+         * #swagger.tags = ['共同行為'],
          * #swagger.description = '登出API'
             #swagger.responses[200] = {
                 description: '登出成功',
@@ -73,17 +73,20 @@ let commonInstruction = {
             "JwtToken" : []
             }]
          */
-        try{
-            await User.updateOne({"_id" : req.user._id}, { $pull : { tokens : { token : req.token}}},{new : true});
-            res.send({stauts : "success"});
-        } catch(err){
-            return next(customiError(400, err));
-        }
+            try{
+                //多人登入
+                // await User.updateOne({"_id" : req.user._id}, { $pull : { tokens : { token : req.token}}},{new : true});
+                //單人登入
+                await User.updateOne({"_id" : req.user._id},{token : ""});
+                res.send({stauts : "success"});
+            } catch(err){
+                return next(customiError(400, err));
+            }
     },
     //獲取個人資訊
     async getUserInfo(req, res, next){
         /**
-         * #swagger.tags = ['Student'],
+         * #swagger.tags = ['共同操作'],
          * #swagger.description = '學生取得個人檔案API'
                 #swagger.responses[200] = {
                 description: '資料取得成功',

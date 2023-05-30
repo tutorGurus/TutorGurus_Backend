@@ -90,69 +90,6 @@ let tutorController = {
             return next(err);
         }
     },
-    //登入
-    async logIn(req, res, next){
-        /** 
-            #swagger.tags = ['Teacher']
-            #swagger.description = '教師登入API'
-            #swagger.parameters['body'] = {
-                in : 'body',
-                type : 'object',
-                required : true,
-                description : '資料格式',
-                schema : {
-                    $email : "Test@gmail.com",
-                    $password : "password",
-                }
-            }
-            #swagger.responses[200] = {
-                description: '登入成功獲取token',
-                schema : {
-                    "status": "success",
-                    "data": "JWT token"
-                }
-            }
-         */
-        try {
-            const { email, password} = req.body;
-            if(!email || !password){
-                return next(customiError(400,"無此帳號或密碼"));
-            }
-            const user = await User.findOne({"email" : email}).select("+password");
-            if(!user)
-                return next(customiError(400, "無此帳號或密碼輸入錯誤"));
-            const auth = await bcrypt.compare(password, user.password);
-            if(!auth)
-                return next(customiError(400,"密碼錯誤！"));
-            await User.findByIdAndUpdate(user["_id"],{status : 1});
-            jwtFn.jwtGenerating(user, res);
-        } catch(error){
-            return next(error)
-        }
-    }, 
-    //登出
-    async logOut(req, res, next){
-        /**
-         * #swagger.tags = ['Teacher'],
-         * #swagger.description = '登出API'
-            #swagger.responses[200] = {
-                description: '登出成功',
-                schema : {
-                    "status": "success"
-                }
-            }
-         * #swagger.security = [{
-            "JwtToken" : []
-            }]
-         */
-        try{
-            console.log(req.user)
-            await User.updateOne({"_id" : req.user._id}, { $pull : { tokens : { token : req.token}}},{new : true});
-            res.send({stauts : "success"});
-        } catch(err){
-            return next(customiError(400, err));
-        }
-    },
     //修改個人資料
     async editInfo(req, res, next){
         /**
@@ -224,47 +161,6 @@ let tutorController = {
             },{ new : true }).select('-tokens -_id');
             successHandle(res, replaceData);
         } catch(err) {
-            return next(customiError(400, err));
-        }
-    },
-    //獲得個人資訊
-    async getUserInfo(req, res, next){
-        /**
-         * #swagger.tags = ['Teacher'],
-         * #swagger.description = '教師取得個人檔案API'
-                #swagger.responses[200] = {
-                description: '資料取得成功',
-                schema : {
-                "status": "success",
-                "data": {
-                        "_id": "id",
-                        "name": "userName",
-                        "email": "userEmail",
-                        "password": "secretPassword",
-                        "birthday": "xxxx-xx-xx",
-                        "phone": "phoneNum",
-                        "gender": "userGender",
-                        "degree": "userDegree",
-                        "school": "userSchool",
-                        "country": "country",
-                        "tutorId": "tutorId",
-                        "profile_image": "https://profile",
-                        "bank_account": "",
-                        "createdAt": "2023-05-16T00:59:27.783Z",
-                        "updatedAt": "2023-05-16T01:01:51.564Z"
-                    }
-                }
-            }
-         * #swagger.security = [{
-            "JwtToken" : []
-            }]
-         */
-        try{
-            res.send({
-                status : "success",
-                data : req.user
-        });
-        } catch {
             return next(customiError(400, err));
         }
     }
