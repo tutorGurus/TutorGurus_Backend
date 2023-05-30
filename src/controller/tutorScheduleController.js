@@ -3,11 +3,11 @@ const successHandle = require('../service/successHandler');
 const TutorSchedule = require('../models/tutorScheduleModel');
 
 const tutorScheduleController = {
-    // 取得單一教師 - 全部行事曆資料
+    // 取得單一教師 - 所有年、月份行事曆設定資料
     async getAllTutorsSchedule(req, res, next){ 
     /**
     * #swagger.tags = ['TutorSchedule'],
-    * #swagger.description = '取得單一教師 - 全部行事曆資料'
+    * #swagger.description = '取得單一教師 - 所有年、月份行事曆設定資料'
     #swagger.responses[200] = {
         description: 'OK',
         schema :
@@ -87,7 +87,7 @@ const tutorScheduleController = {
         "JwtToken" : []
         }]
         */
-        const id = req.params.tutorId;
+        const id  = req.user['_id'].toHexString();
         const scheduleAll = await TutorSchedule.find({ "tutorId" : id });
         if (scheduleAll) {
             successHandle(res, scheduleAll);
@@ -184,7 +184,7 @@ const tutorScheduleController = {
             }]
          */
         try {
-            const id = req.params.tutorId;
+            const id  = req.user['_id'].toHexString();
             const inputYear = parseInt(req.query.year);
             const inputStartMonth = parseInt(req.query.startMonth);
             const inputEndMonth = parseInt(req.query.endMonth);
@@ -343,7 +343,7 @@ const tutorScheduleController = {
             }]
          */
         try {
-            const id = req.params.tutorId;
+            const id  = req.user['_id'].toHexString();
             const { body } = req;
             const routineDayTime = body.routine_dayTime;
             const dates = body.dates;
@@ -352,7 +352,8 @@ const tutorScheduleController = {
                 { "tutorId" : id}, 
                 { dates: dates, routine_dayTime: routineDayTime}, 
                 { new : true});
-            successHandle(res, updatedSchedule);
+            // successHandle(res, updatedSchedule);
+            successHandle(res, "已更新教師行事曆！");
         } catch(err) {
             return next(err);
         } 
@@ -483,7 +484,7 @@ const tutorScheduleController = {
             }]
          */
         try {
-            const id = req.params.tutorId;
+            const id  = req.user['_id'].toHexString();
             const inputYear = parseInt(req.query.year);
             const inputStartMonth = parseInt(req.query.startMonth);
             const inputEndMonth = parseInt(req.query.endMonth);
@@ -591,7 +592,7 @@ const tutorScheduleController = {
             }]
          */
         try {
-            const id = req.params.tutorId;
+            const id  = req.user['_id'].toHexString();
             const { body } = req;
             const dates = body.dates;
             const data = {};
@@ -757,7 +758,7 @@ const tutorScheduleController = {
                     }
                 }
             }
-            successHandle(res, "更新時段設定資料成功");
+            successHandle(res, "已更新教師行事曆時段設定！");
         } catch(err) {
             return next(err);
         } 
@@ -782,7 +783,7 @@ const tutorScheduleController = {
             }]
          */
         try {
-            const id = req.params.tutorId;
+            const id  = req.user['_id'].toHexString();
             const { body } = req;
             const dates = body.dates[0];
             // 將 年、月、日 取出
@@ -805,7 +806,8 @@ const tutorScheduleController = {
                     ]
                 }
             );
-            successHandle(res, pullSchedule);
+            // successHandle(res, pullSchedule);
+            successHandle(res, '已更新教師行事曆時段設定！');
         } catch(err) {
             return next(err);
         }
@@ -1031,7 +1033,7 @@ const tutorScheduleController = {
         
         // 前端傳來的資料
         // tutorId
-        const id = req.params.tutorId;
+        const id  = req.user['_id'].toHexString();
 
         const { body } = req;
         // 年度
@@ -1064,7 +1066,7 @@ const tutorScheduleController = {
             }
 
             // 回傳結果
-            successHandle(res, "更新或新增時間設定完成！");
+            successHandle(res, "更新或新增教師行事曆時段設定！");
         } catch(err) {
             return next(err);  
         }
