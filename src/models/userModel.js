@@ -43,9 +43,16 @@ const userSchema = new mongoose.Schema({
         default : ""
 
     },
+    address: "String",
     school : {
+       schooleName : {
         type : String,
         default : ""
+       },
+       major : {
+        type : String,
+        default : ""
+       }
     },
     country : {
         type : String,

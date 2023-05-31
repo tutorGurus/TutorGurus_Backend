@@ -20,7 +20,6 @@ router.get('/v1/T/google/callback', passport.authenticate('google-teacher', { se
 //google登入後重導向學生位置
 router.get('/v1/S/google/callback',  passport.authenticate('google-student', { session: false }), commonProcess.googlelogIn);
 
-
 //登入路由
 router.post('/v1/login', commonProcess.logIn);
 

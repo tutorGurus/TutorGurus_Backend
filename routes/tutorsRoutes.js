@@ -9,7 +9,7 @@ const jwtFn = require('../src/middleware/auth');
 
 /* GET users listing. */
 //老師註冊
-router.post('/v1/register', tutorController.teacherSignUp);
+router.post('/v1/register', jwtFn.isAuth, tutorController.teacherSignUp);
 
 //老師修改個人資料
 router.patch('/v1/profile', jwtFn.isAuth, tutorController.editInfo);

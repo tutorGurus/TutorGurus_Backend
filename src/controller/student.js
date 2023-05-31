@@ -143,7 +143,9 @@ let userController = {
         } catch(err) {
             return next(customiError(400, err));
         }
-    }
+    },
+    //獲取學生個資路由
+    
 }
 
 

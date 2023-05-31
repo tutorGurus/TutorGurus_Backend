@@ -5,6 +5,7 @@ const validator = require('validator');
 const bcrypt = require('bcryptjs');
 const customiError = require('../errorHandler/customiError');
 const successHandle = require('../service/successHandler');
+const tutorIdModel = require('../models/tutorIdModel');
 const jwtFn = require('../middleware/auth');
 const regex = /^(?=.*[a-z])(?=.*[A-Z])/; //密碼必須包含一個大小以及一個小寫
 
@@ -55,37 +56,18 @@ let tutorController = {
      */
 
         try{
-            let {userName, email, password, confirmPassword} = req.body;
-            let emailCheck = await User.findOne({"email" : email})
-            if(emailCheck)
-                return next(customiError(400, "該信箱已被註冊"));
-            if(!userName || !email || !password || !confirmPassword)
-                return next(customiError(400, "欄位未填寫完整"));
-            if(!validator.isEmail(email))
-                return  next(customiError(400, "信箱格式錯誤",{host_whitelist:['gmail.com', 'yahoo.com']}));
-            if(!regex.test(password))
-                return next(customiError(400, "密碼格式不正確 : 至少包含一個大寫與一個小寫"));
-            if(!validator.isLength(password, { min : 8 }))
-                return next(customiError(400, "密碼格式不正確 : 至少為8碼"));
-            if(password != confirmPassword)
-                return next(customiError(400, "密碼不一致"));
+            console.log(req.user);
+            let { name, email, phone, degree, school, birthday, address, major, teaching_category} = req.body;
+            if(!name || !email || !phone || !degree || !school || !birthday || !address || !major || !teaching_category){
+                return next(customiError(400, "請填寫必要欄位"));
+            }
             
-            let salt = bcrypt.genSaltSync(8);
-            let secretPassword = bcrypt.hashSync(password, salt);
-            const tutorsList = await User.find({ role : 'T'});
-            let nextTutorNum = tutorsList.length + 1;          
-            let newUser = await User.create({
-                name : userName,
-                email : email,
-                password : secretPassword,
-                role : 'T',
-                tutorId : nextTutorNum
-            })
-            // 建立關聯資料集 - 教學背景
-            await TutorBackground.create({ tutorId: newUser._id });
-            // 建立關聯資料集 - 行事曆
-            await TutorSchedule.create({ tutorId: newUser._id });
-            successHandle(res, newUser);
+            // // 建立關聯資料集 - 教學背景
+            // await TutorBackground.create({ tutorId: newUser._id });
+            // // 建立關聯資料集 - 行事曆
+            // await TutorSchedule.create({ tutorId: newUser._id });
+            // successHandle(res, newUser);
+            res.send({status : "sucess"})
         } catch(err){
             return next(err);
         }

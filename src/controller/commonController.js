@@ -120,7 +120,7 @@ let commonInstruction = {
                 status : "success",
                 data : req.user
             });
-        } catch {
+        } catch(err) {
             return next(customiError(400, err));
         }
     }

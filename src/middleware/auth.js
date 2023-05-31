@@ -21,7 +21,7 @@ let jwtFn = {
             await User.findByIdAndUpdate(userInfo["_id"], {token : ""}, {new : true});
             return next(error)
         }
-    },  
+    },
     //驗證Token
     async isAuth(req, res, next){
         try {
@@ -30,6 +30,9 @@ let jwtFn = {
             if(req.headers.authorization && req.headers.authorization.startsWith('Bearer')){
                 token = req.headers.authorization.split(' ')[1];
             };
+            if(!token && req.originalUrl == '/tutors/v1/register'){
+                return next(costomiError(400, "請先註冊加入我們"))
+            }
             if(!token){
                 return next(costomiError(400, "請先登入"));
             };
