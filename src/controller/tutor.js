@@ -58,10 +58,20 @@ let tutorController = {
         try{
             console.log(req.user);
             let { name, email, phone, degree, school, birthday, address, major, teaching_category} = req.body;
-            if(!name || !email || !phone || !degree || !school || !birthday || !address || !major || !teaching_category){
+            if(!name || !email || !phone || !degree || !school || !birthday || !address || !major || teaching_category.length == 0){
                 return next(customiError(400, "請填寫必要欄位"));
             }
-            
+            let newTutor = await User.findOneAndUpdate({'_id' : req.user._id}, {
+                name :  name,
+                // email : email,
+                phone : phone,
+                gender : gender,
+                degree : degree,
+                school : school,
+                country : country,
+                profile_image : profile_image,
+                birthday : birthday
+            })
             // // 建立關聯資料集 - 教學背景
             // await TutorBackground.create({ tutorId: newUser._id });
             // // 建立關聯資料集 - 行事曆
