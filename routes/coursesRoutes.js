@@ -1,7 +1,7 @@
 let express = require('express');
 let router = express.Router();
 let coursesController = require('../src/controller/coursesController');
-const jwtFn = require('../src/middleware/auth');;
+const jwtFn = require('../src/middleware/auth');
 
 // 新增一筆課程
 router.post('/', jwtFn.isAuth, coursesController.createCourse);
