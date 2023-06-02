@@ -172,150 +172,6 @@
         }
       }
     },
-    "/tutors/v1/profile": {
-      "patch": {
-        "tags": [
-          "Teacher"
-        ],
-        "description": "老師編輯個人檔案API",
-        "parameters": [
-          {
-            "name": "authorization",
-            "in": "header",
-            "type": "string"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "description": "資料格式",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "name": {
-                  "type": "string",
-                  "example": "userName"
-                },
-                "email": {
-                  "type": "string",
-                  "example": "Test@gmail.com"
-                },
-                "phone": {
-                  "type": "string",
-                  "example": "phone"
-                },
-                "gender": {
-                  "type": "string",
-                  "example": "gender"
-                },
-                "degree": {
-                  "type": "string",
-                  "example": "degree"
-                },
-                "school": {
-                  "type": "string",
-                  "example": "school"
-                },
-                "country": {
-                  "type": "string",
-                  "example": "country"
-                },
-                "profile_image": {
-                  "type": "string",
-                  "example": "profile_image"
-                },
-                "birthday": {
-                  "type": "string",
-                  "example": "2023-01-01"
-                }
-              },
-              "required": [
-                "name",
-                "email",
-                "phone",
-                "gender",
-                "degree",
-                "school",
-                "country",
-                "profile_image",
-                "birthday"
-              ]
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "資料修改成功",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "status": {
-                  "type": "string",
-                  "example": "success"
-                },
-                "data": {
-                  "type": "object",
-                  "properties": {
-                    "_id": {
-                      "type": "string",
-                      "example": "userID"
-                    },
-                    "name": {
-                      "type": "string",
-                      "example": "userName"
-                    },
-                    "email": {
-                      "type": "string",
-                      "example": "Test@gmail.com"
-                    },
-                    "phone": {
-                      "type": "string",
-                      "example": "phone"
-                    },
-                    "gender": {
-                      "type": "string",
-                      "example": "gender"
-                    },
-                    "degree": {
-                      "type": "string",
-                      "example": "degree"
-                    },
-                    "school": {
-                      "type": "string",
-                      "example": "school"
-                    },
-                    "country": {
-                      "type": "string",
-                      "example": "country"
-                    },
-                    "tutorId": {
-                      "type": "string",
-                      "example": "tutorId"
-                    },
-                    "profile_image": {
-                      "type": "string",
-                      "example": "profile_image"
-                    },
-                    "birthday": {
-                      "type": "string",
-                      "example": "2023-01-01"
-                    }
-                  }
-                }
-              },
-              "xml": {
-                "name": "main"
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "JwtToken": []
-          }
-        ]
-      }
-    },
     "/tutors/": {
       "get": {
         "tags": [
@@ -772,19 +628,13 @@
         ]
       }
     },
-    "/tutors/v1/{tutorId}/scheduleAll": {
+    "/tutors/v1/scheduleAll": {
       "get": {
         "tags": [
           "TutorSchedule"
         ],
-        "description": "取得單一教師 - 全部行事曆資料",
+        "description": "取得單一教師 - 所有年、月份行事曆設定資料",
         "parameters": [
-          {
-            "name": "tutorId",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
           {
             "name": "authorization",
             "in": "header",
@@ -889,19 +739,13 @@
         ]
       }
     },
-    "/tutors/v1/{tutorId}/schedule": {
+    "/tutors/v1/schedule": {
       "get": {
         "tags": [
           "TutorSchedule"
         ],
         "description": "取得單一教師 - 行事曆資料（特定 年度 及 月份區間）",
         "parameters": [
-          {
-            "name": "tutorId",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
           {
             "name": "authorization",
             "in": "header",
@@ -1033,12 +877,6 @@
         ],
         "description": "修改單一教師 - 行事曆資料",
         "parameters": [
-          {
-            "name": "tutorId",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
           {
             "name": "authorization",
             "in": "header",
@@ -1234,19 +1072,13 @@
         ]
       }
     },
-    "/tutors/v1/{tutorId}/scheduleV": {
+    "/tutors/v1/scheduleV": {
       "get": {
         "tags": [
           "TutorSchedule (v-calendar)"
         ],
         "description": "取得單一教師 - 行事曆資料（特定 年度 及 月份區間）",
         "parameters": [
-          {
-            "name": "tutorId",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
           {
             "name": "authorization",
             "in": "header",
@@ -1431,12 +1263,6 @@
         "description": "修改單一教師 - 行事曆資料，修改特定日期設定",
         "parameters": [
           {
-            "name": "tutorId",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
             "name": "authorization",
             "in": "header",
             "type": "string"
@@ -1469,7 +1295,7 @@
         ]
       }
     },
-    "/tutors/v1/{tutorId}/scheduleV/pull": {
+    "/tutors/v1/scheduleV/pull": {
       "patch": {
         "tags": [
           "TutorSchedule (v-calendar)"
@@ -1477,12 +1303,6 @@
         "description": "刪除單一教師 - 單日時段時間設定 (v-calendar 格式)",
         "parameters": [
           {
-            "name": "tutorId",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
             "name": "authorization",
             "in": "header",
             "type": "string"
@@ -1515,19 +1335,13 @@
         ]
       }
     },
-    "/tutors/v1/{tutorId}/scheduleV/routine": {
+    "/tutors/v1/scheduleV/routine": {
       "patch": {
         "tags": [
           "TutorSchedule (v-calendar)"
         ],
         "description": "更新單一教師 - 常規行事曆設定（依照年度、月份區間）  *",
         "parameters": [
-          {
-            "name": "tutorId",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
           {
             "name": "authorization",
             "in": "header",
@@ -1970,7 +1784,7 @@
                 },
                 "degree": {
                   "type": "string",
-                  "example": "學士"
+                  "example": "碩士"
                 },
                 "school": {
                   "type": "object",
@@ -2082,7 +1896,92 @@
     },
     "/v1/tutor/courses/": {
       "post": {
-        "description": "",
+        "tags": [
+          "Courses"
+        ],
+        "description": "新增課程 API",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "description": "資料格式",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "education_stages": {
+                  "type": "string",
+                  "example": "高中"
+                },
+                "grade": {
+                  "type": "string",
+                  "example": "高一"
+                },
+                "semester": {
+                  "type": "string",
+                  "example": "上學期"
+                },
+                "title": {
+                  "type": "string",
+                  "example": "數與數線"
+                },
+                "category": {
+                  "type": "string",
+                  "example": "數學"
+                },
+                "price": {
+                  "type": "string",
+                  "example": "ˊ600"
+                },
+                "introduction": {
+                  "type": "string",
+                  "example": "高中數學得基礎，必須要學好"
+                },
+                "preparation": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "item_title": {
+                        "type": "string",
+                        "example": "上課說明"
+                      },
+                      "content": {
+                        "type": "string",
+                        "example": "<p>1.開課前 10 分鐘進入網站，選擇『我的課程』找到該堂課並點選『進入教室』，即可開啟 ZOOM 教室開始上課。</p> <p>2.手機、電腦皆可使用 ZOOM 上課（手機請先下載 ZOOM 應用程式）</p>"
+                      }
+                    }
+                  }
+                },
+                "is_publish": {
+                  "type": "boolean",
+                  "example": true
+                },
+                "status": {
+                  "type": "string",
+                  "example": "上架"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {},
+        "security": [
+          {
+            "JwtToken": []
+          }
+        ]
+      },
+      "get": {
+        "tags": [
+          "Courses"
+        ],
+        "description": "取得該教師開設的所有課程 API",
         "parameters": [
           {
             "name": "authorization",
@@ -2090,50 +1989,423 @@
             "type": "string"
           }
         ],
-        "responses": {}
-      },
-      "get": {
-        "description": "",
-        "parameters": [],
-        "responses": {}
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "_id": {
+                        "type": "string",
+                        "example": "647779405052793982a3fd4d"
+                      },
+                      "user_id": {
+                        "type": "string",
+                        "example": "647777fa5052793982a3fd3f"
+                      },
+                      "education_stages": {
+                        "type": "string",
+                        "example": "高中"
+                      },
+                      "grade": {
+                        "type": "string",
+                        "example": "高一"
+                      },
+                      "semester": {
+                        "type": "string",
+                        "example": "上學期"
+                      },
+                      "category": {
+                        "type": "string",
+                        "example": "數學"
+                      },
+                      "title": {
+                        "type": "string",
+                        "example": "數與數線"
+                      },
+                      "price": {
+                        "type": "string",
+                        "example": "ˊ600"
+                      },
+                      "introduction": {
+                        "type": "string",
+                        "example": "高中數學得基礎，必須要學好"
+                      },
+                      "preparation": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "item_title": {
+                              "type": "string",
+                              "example": "上課說明"
+                            },
+                            "content": {
+                              "type": "string",
+                              "example": "<p>1.開課前 10 分鐘進入網站，選擇『我的課程』找到該堂課並點選『進入教室』，即可開啟 ZOOM 教室開始上課。</p> <p>2.手機、電腦皆可使用 ZOOM 上課（手機請先下載 ZOOM 應用程式）</p>"
+                            },
+                            "_id": {
+                              "type": "string",
+                              "example": "647779405052793982a3fd4f"
+                            }
+                          }
+                        }
+                      },
+                      "is_publish": {
+                        "type": "boolean",
+                        "example": true
+                      },
+                      "status": {
+                        "type": "string",
+                        "example": "上架"
+                      },
+                      "rate": {
+                        "type": "number",
+                        "example": 0
+                      },
+                      "createdAt": {
+                        "type": "string",
+                        "example": "2023-05-31T16:43:44.117Z"
+                      },
+                      "updatedAt": {
+                        "type": "string",
+                        "example": "2023-05-31T16:43:44.117Z"
+                      }
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JwtToken": []
+          }
+        ]
       }
     },
     "/v1/tutor/courses/{courseId}": {
       "get": {
-        "description": "",
+        "tags": [
+          "Courses"
+        ],
+        "description": "取得單一課程資訊API",
         "parameters": [
           {
             "name": "courseId",
             "in": "path",
             "required": true,
             "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
           }
         ],
-        "responses": {}
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "_id": {
+                        "type": "string",
+                        "example": "647779405052793982a3fd4d"
+                      },
+                      "user_id": {
+                        "type": "string",
+                        "example": "647777fa5052793982a3fd3f"
+                      },
+                      "education_stages": {
+                        "type": "string",
+                        "example": "高中"
+                      },
+                      "grade": {
+                        "type": "string",
+                        "example": "高一"
+                      },
+                      "semester": {
+                        "type": "string",
+                        "example": "上學期"
+                      },
+                      "category": {
+                        "type": "string",
+                        "example": "數學"
+                      },
+                      "title": {
+                        "type": "string",
+                        "example": "數與數線"
+                      },
+                      "price": {
+                        "type": "string",
+                        "example": "ˊ600"
+                      },
+                      "introduction": {
+                        "type": "string",
+                        "example": "高中數學得基礎，必須要學好"
+                      },
+                      "preparation": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "item_title": {
+                              "type": "string",
+                              "example": "上課說明"
+                            },
+                            "content": {
+                              "type": "string",
+                              "example": "<p>1.開課前 10 分鐘進入網站，選擇『我的課程』找到該堂課並點選『進入教室』，即可開啟 ZOOM 教室開始上課。</p> <p>2.手機、電腦皆可使用 ZOOM 上課（手機請先下載 ZOOM 應用程式）</p>"
+                            },
+                            "_id": {
+                              "type": "string",
+                              "example": "647779405052793982a3fd4f"
+                            }
+                          }
+                        }
+                      },
+                      "is_publish": {
+                        "type": "boolean",
+                        "example": true
+                      },
+                      "status": {
+                        "type": "string",
+                        "example": "上架"
+                      },
+                      "rate": {
+                        "type": "number",
+                        "example": 0
+                      },
+                      "createdAt": {
+                        "type": "string",
+                        "example": "2023-05-31T16:43:44.117Z"
+                      },
+                      "updatedAt": {
+                        "type": "string",
+                        "example": "2023-05-31T16:43:44.117Z"
+                      }
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JwtToken": []
+          }
+        ]
       },
       "patch": {
-        "description": "",
+        "tags": [
+          "Courses"
+        ],
+        "description": "更新單筆課程API",
         "parameters": [
           {
             "name": "courseId",
             "in": "path",
             "required": true,
             "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "description": "資料格式",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "education_stages": {
+                  "type": "string",
+                  "example": "高中"
+                },
+                "grade": {
+                  "type": "string",
+                  "example": "高二"
+                },
+                "semester": {
+                  "type": "string",
+                  "example": "上學期"
+                },
+                "title": {
+                  "type": "string",
+                  "example": "三角函數"
+                },
+                "category": {
+                  "type": "string",
+                  "example": "數學"
+                },
+                "price": {
+                  "type": "string",
+                  "example": "ˊ600"
+                },
+                "introduction": {
+                  "type": "string",
+                  "example": "直角三角形的邊角關係、廣義角與極坐標、廣義角與極坐標"
+                },
+                "preparation": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "item_title": {
+                        "type": "string",
+                        "example": "上課說明"
+                      },
+                      "content": {
+                        "type": "string",
+                        "example": "<p>1.開課前 10 分鐘進入網站，選擇『我的課程』找到該堂課並點選『進入教室』，即可開啟 ZOOM 教室開始上課。</p> <p>2.手機、電腦皆可使用 ZOOM 上課（手機請先下載 ZOOM 應用程式）</p>"
+                      }
+                    }
+                  }
+                },
+                "is_publish": {
+                  "type": "boolean",
+                  "example": true
+                },
+                "status": {
+                  "type": "string",
+                  "example": "上架"
+                }
+              }
+            }
           }
         ],
-        "responses": {}
+        "responses": {},
+        "security": [
+          {
+            "JwtToken": []
+          }
+        ]
       },
       "delete": {
-        "description": "",
+        "tags": [
+          "Courses"
+        ],
+        "description": "刪除單筆課程API",
         "parameters": [
           {
             "name": "courseId",
             "in": "path",
             "required": true,
+            "type": "string",
+            "description": "Course ID."
+          },
+          {
+            "name": "authorization",
+            "in": "header",
             "type": "string"
           }
         ],
-        "responses": {}
+        "responses": {
+          "200": {
+            "description": "刪除成功",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": ""
+                    },
+                    "rate": {
+                      "type": "number",
+                      "example": 0
+                    },
+                    "_id": {
+                      "type": "string",
+                      "example": "647618c9f79f6c4b1286b391"
+                    },
+                    "user_id": {
+                      "type": "string",
+                      "example": "6474a234bb279f17099142e5"
+                    },
+                    "title": {
+                      "type": "string",
+                      "example": "背景"
+                    },
+                    "category": {
+                      "type": "string",
+                      "example": "國一國文"
+                    },
+                    "price": {
+                      "type": "string",
+                      "example": "580"
+                    },
+                    "introduction": {
+                      "type": "string",
+                      "example": "朱志清的作品"
+                    },
+                    "is_publish": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "createdAt": {
+                      "type": "string",
+                      "example": "2023-05-30T15:39:53.060Z"
+                    },
+                    "updatedAt": {
+                      "type": "string",
+                      "example": "2023-05-30T15:39:53.060Z"
+                    },
+                    "preparation": {
+                      "type": "array",
+                      "example": [],
+                      "items": {}
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JwtToken": []
+          }
+        ]
       }
     },
     "/v1/booking/": {
