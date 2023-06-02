@@ -19,7 +19,6 @@ require('./src/service/mongoConnect')();
 let app = express();
 
 let indexRouter = require('./routes/index');
-let studentRouter = require('./routes/studentRoutes'); 
 let tutorsRouter = require('./routes/tutorsRoutes');
 let bookingRouter = require('./routes/bookingsRoutes');
 let coursesRouter = require('./routes/coursesRoutes');
@@ -40,7 +39,6 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-app.use('/student', studentRouter);
 app.use('/tutors', tutorsRouter);
 app.use('/user', userRouter);
 app.use('/v1/tutor/courses', coursesRouter);

@@ -9,7 +9,6 @@ passport.use('google-teacher',new GoogleStrategy({
     },
     async function(accessToken, refreshToken, profile, cb) {
         try {
-            console.log(profile)
             const user = await User.findOrCreate(
             {
                 googleId: profile.id,

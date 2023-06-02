@@ -15,8 +15,8 @@ const userSchema = new mongoose.Schema({
     },
     googleId : String,
     token : {
-      type : String,
-      default : ""  
+    type : String,
+    default : ""  
     },
     // tokens : [{
     //     token : { type : String},
@@ -43,9 +43,16 @@ const userSchema = new mongoose.Schema({
         default : ""
 
     },
+    address: "String",
     school : {
+        schoolName : {
         type : String,
         default : ""
+    },
+    major : {
+        type : String,
+        default : ""
+    }
     },
     country : {
         type : String,
