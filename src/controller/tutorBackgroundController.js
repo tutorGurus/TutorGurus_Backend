@@ -50,10 +50,12 @@ const tutorBackgroundController = {
             }]
          */
         try {
+            console.log(req.params)
             const id = req.params.tutorId;
+            console.log(id)
             const tutorBackground = await TutorBackground.findOne({"tutorId" : id}).populate({
                 path: "tutorId",
-                select: "name profile_image"
+                select: "name profile_image -carts"
             });
             if(tutorBackground) {
                 successHandle(res, tutorBackground);

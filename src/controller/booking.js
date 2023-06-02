@@ -36,7 +36,7 @@ let bookingsController = {
     },
     // 老師查詢預約列表
     async bookedList(req, res, next){
-          /**
+        /**
             #swagger.tags = ['Booking']
          */
         try{
@@ -53,7 +53,7 @@ let bookingsController = {
     },
     // 預約課程
     async bookingCourse(req, res, next){
-          /**
+        /**
             #swagger.tags = ['Booking']
          */
         try{
@@ -99,7 +99,7 @@ let bookingsController = {
     },
     // 請假、取消預約
     async editBookingStatus(req, res, next){
-          /**
+        /**
             #swagger.tags = ['Booking']
          */
         try{

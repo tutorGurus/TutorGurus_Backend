@@ -1,9 +1,11 @@
 const User = require('../models/userModel');
 const TutorBackground = require('../models/tutorBackgroundModel');
+const TutorSchedule = require('../models/tutorScheduleModel');
 const validator = require('validator');
 const bcrypt = require('bcryptjs');
 const customiError = require('../errorHandler/customiError');
 const successHandle = require('../service/successHandler');
+const tutorIdModel = require('../models/tutorIdModel');
 const jwtFn = require('../middleware/auth');
 const regex = /^(?=.*[a-z])(?=.*[A-Z])/; //密碼必須包含一個大小以及一個小寫
 
@@ -54,6 +56,7 @@ let tutorController = {
      */
 
         try{
+<<<<<<< HEAD
             let {userName, email, password, confirmPassword} = req.body;
             let emailCheck = await User.findOne({"email" : email})
             if(emailCheck){
@@ -82,15 +85,38 @@ let tutorController = {
                 name : userName,
                 email : email,
                 password : secretPassword,
+=======
+            if(req.user['role'] == 'T'){
+                return next(customiError(400, "已是教師身份!"));
+            }
+            let { userName, gender, phone, address, birthday, degree, school, major, teaching_category, country} = req.body;
+            if(!userName || !gender || !phone || !address || !birthday || !degree || !school || !major || !country ||teaching_category.length == 0){
+                return next(customiError(400, "請填寫必要欄位"));
+            }
+            let newTutor = await User.findOneAndUpdate({'_id' : req.user._id}, {
+                name :  userName,
+                // email : email,
+                gender : gender,
+                phone : phone,
+                address : address,
+                birthday : birthday,
+                degree : degree,
+                school : school,
+                major : major,
+                country : country,
+>>>>>>> dev
                 role : 'T',
-                tutorId : nextTutorNum
-            })
-            // 建立關聯的教學背景記錄
-            await TutorBackground.create({ tutorId: newUser._id });
-            successHandle(res, newUser);
+                
+            }, {new : true});
+            // 建立關聯資料集 - 教學背景
+            await TutorBackground.create({ tutorId: newTutor._id });
+            // 建立關聯資料集 - 行事曆
+            await TutorSchedule.create({ tutorId: newTutor._id });
+            successHandle(res, newTutor);
         } catch(err){
             return next(err);
         }
+<<<<<<< HEAD
     },
     //登入
     async logIn(req, res, next){
@@ -271,6 +297,8 @@ let tutorController = {
         } catch {
             return next(customiError(400, err));
         }
+=======
+>>>>>>> dev
     }
 }
 
