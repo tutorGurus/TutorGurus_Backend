@@ -28,424 +28,6 @@
         "responses": {}
       }
     },
-    "/student/v1/register": {
-      "post": {
-        "tags": [
-          "Student"
-        ],
-        "description": "學生註冊API",
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "description": "資料格式",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "userName": {
-                  "type": "string",
-                  "example": "Avocado"
-                },
-                "email": {
-                  "type": "string",
-                  "example": "Avocado@gmail.com"
-                },
-                "password": {
-                  "type": "string",
-                  "example": "Aa1234567"
-                },
-                "confirmPassword": {
-                  "type": "string",
-                  "example": "Aa1234567"
-                }
-              },
-              "required": [
-                "userName",
-                "email",
-                "password",
-                "confirmPassword"
-              ]
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "註冊成功",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "status": {
-                  "type": "string",
-                  "example": "success"
-                },
-                "data": {
-                  "type": "object",
-                  "properties": {
-                    "name": {
-                      "type": "string",
-                      "example": "Test"
-                    },
-                    "email": {
-                      "type": "string",
-                      "example": "test@gmail.com"
-                    },
-                    "password": {
-                      "type": "string",
-                      "example": "$2a$15$si.F.6x1GJk6VwKQWUkmu.LCd/Gif8PTz3ExAGyhE8s8l/UHfOQFq"
-                    },
-                    "role": {
-                      "type": "string",
-                      "example": "S"
-                    },
-                    "status": {
-                      "type": "number",
-                      "example": 0
-                    },
-                    "_id": {
-                      "type": "string",
-                      "example": "6455d6e919231164a788881"
-                    }
-                  }
-                }
-              },
-              "xml": {
-                "name": "main"
-              }
-            }
-          }
-        }
-      }
-    },
-    "/student/v1/login": {
-      "post": {
-        "tags": [
-          "Student"
-        ],
-        "description": "學生登入API",
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "description": "資料格式",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "email": {
-                  "type": "string",
-                  "example": "Test@gmail.com"
-                },
-                "password": {
-                  "type": "string",
-                  "example": "password"
-                }
-              },
-              "required": [
-                "email",
-                "password"
-              ]
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "登入成功獲取token",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "status": {
-                  "type": "string",
-                  "example": "success"
-                },
-                "data": {
-                  "type": "string",
-                  "example": "JWT token"
-                }
-              },
-              "xml": {
-                "name": "main"
-              }
-            }
-          }
-        }
-      }
-    },
-    "/student/v1/logout": {
-      "post": {
-        "tags": [
-          "Student"
-        ],
-        "description": "登出API",
-        "parameters": [
-          {
-            "name": "authorization",
-            "in": "header",
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "登出成功",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "status": {
-                  "type": "string",
-                  "example": "success"
-                }
-              },
-              "xml": {
-                "name": "main"
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "JwtToken": []
-          }
-        ]
-      }
-    },
-    "/student/v1/profile": {
-      "patch": {
-        "tags": [
-          "Student"
-        ],
-        "description": "學生編輯個人檔案API",
-        "parameters": [
-          {
-            "name": "authorization",
-            "in": "header",
-            "type": "string"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "description": "資料格式",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "name": {
-                  "type": "string",
-                  "example": "userName"
-                },
-                "email": {
-                  "type": "string",
-                  "example": "Test@gmail.com"
-                },
-                "phone": {
-                  "type": "string",
-                  "example": "phone"
-                },
-                "gender": {
-                  "type": "string",
-                  "example": "gender"
-                },
-                "degree": {
-                  "type": "string",
-                  "example": "degree"
-                },
-                "school": {
-                  "type": "string",
-                  "example": "school"
-                },
-                "country": {
-                  "type": "string",
-                  "example": "country"
-                },
-                "profile_image": {
-                  "type": "string",
-                  "example": "profile_image"
-                },
-                "birthday": {
-                  "type": "string",
-                  "example": "2023-01-01"
-                }
-              },
-              "required": [
-                "name",
-                "email",
-                "phone",
-                "gender",
-                "degree",
-                "school",
-                "country",
-                "profile_image",
-                "birthday"
-              ]
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "資料修改成功",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "status": {
-                  "type": "string",
-                  "example": "success"
-                },
-                "data": {
-                  "type": "object",
-                  "properties": {
-                    "_id": {
-                      "type": "string",
-                      "example": "userID"
-                    },
-                    "name": {
-                      "type": "string",
-                      "example": "userName"
-                    },
-                    "email": {
-                      "type": "string",
-                      "example": "Test@gmail.com"
-                    },
-                    "phone": {
-                      "type": "string",
-                      "example": "phone"
-                    },
-                    "gender": {
-                      "type": "string",
-                      "example": "gender"
-                    },
-                    "degree": {
-                      "type": "string",
-                      "example": "degree"
-                    },
-                    "school": {
-                      "type": "string",
-                      "example": "school"
-                    },
-                    "country": {
-                      "type": "string",
-                      "example": "country"
-                    },
-                    "profile_image": {
-                      "type": "string",
-                      "example": "profile_image"
-                    },
-                    "birthday": {
-                      "type": "string",
-                      "example": "2023-01-01"
-                    }
-                  }
-                }
-              },
-              "xml": {
-                "name": "main"
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "JwtToken": []
-          }
-        ]
-      },
-      "get": {
-        "tags": [
-          "Student"
-        ],
-        "description": "學生取得個人檔案API",
-        "parameters": [
-          {
-            "name": "authorization",
-            "in": "header",
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "資料取得成功",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "status": {
-                  "type": "string",
-                  "example": "success"
-                },
-                "data": {
-                  "type": "object",
-                  "properties": {
-                    "_id": {
-                      "type": "string",
-                      "example": "6462d56fa8ef5218d79afd79"
-                    },
-                    "name": {
-                      "type": "string",
-                      "example": "Rose"
-                    },
-                    "email": {
-                      "type": "string",
-                      "example": "rose@gmail.com"
-                    },
-                    "password": {
-                      "type": "string",
-                      "example": "$2a$15$8UHRa0FEVu/wNaY/eYKel.hhNF3p1Og0exWIqTS.GRjezRsjUZhOu"
-                    },
-                    "birthday": {},
-                    "phone": {
-                      "type": "string",
-                      "example": ""
-                    },
-                    "gender": {
-                      "type": "string",
-                      "example": ""
-                    },
-                    "degree": {
-                      "type": "string",
-                      "example": ""
-                    },
-                    "school": {
-                      "type": "string",
-                      "example": ""
-                    },
-                    "country": {
-                      "type": "string",
-                      "example": ""
-                    },
-                    "profile_image": {
-                      "type": "string",
-                      "example": " "
-                    },
-                    "bank_account": {
-                      "type": "string",
-                      "example": ""
-                    },
-                    "carts": {
-                      "type": "array",
-                      "example": [],
-                      "items": {}
-                    },
-                    "createdAt": {
-                      "type": "string",
-                      "example": "2023-05-16T00:59:27.783Z"
-                    },
-                    "updatedAt": {
-                      "type": "string",
-                      "example": "2023-05-16T01:01:51.564Z"
-                    }
-                  }
-                }
-              },
-              "xml": {
-                "name": "main"
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "JwtToken": []
-          }
-        ]
-      }
-    },
     "/tutors/v1/register": {
       "post": {
         "tags": [
@@ -453,6 +35,11 @@
         ],
         "description": "教師註冊API",
         "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
           {
             "name": "body",
             "in": "body",
@@ -575,60 +162,6 @@
                       "example": "2023-05-16T01:15:30.737Z"
                     }
                   }
-                }
-              },
-              "xml": {
-                "name": "main"
-              }
-            }
-          }
-        }
-      }
-    },
-    "/tutors/v1/login": {
-      "post": {
-        "tags": [
-          "Teacher"
-        ],
-        "description": "教師登入API",
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "description": "資料格式",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "email": {
-                  "type": "string",
-                  "example": "Test@gmail.com"
-                },
-                "password": {
-                  "type": "string",
-                  "example": "password"
-                }
-              },
-              "required": [
-                "email",
-                "password"
-              ]
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "登入成功獲取token",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "status": {
-                  "type": "string",
-                  "example": "success"
-                },
-                "data": {
-                  "type": "string",
-                  "example": "JWT token"
                 }
               },
               "xml": {
@@ -781,146 +314,9 @@
             "JwtToken": []
           }
         ]
-      },
-      "get": {
-        "tags": [
-          "Teacher"
-        ],
-        "description": "教師取得個人檔案API",
-        "parameters": [
-          {
-            "name": "authorization",
-            "in": "header",
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "資料取得成功",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "status": {
-                  "type": "string",
-                  "example": "success"
-                },
-                "data": {
-                  "type": "object",
-                  "properties": {
-                    "_id": {
-                      "type": "string",
-                      "example": "id"
-                    },
-                    "name": {
-                      "type": "string",
-                      "example": "userName"
-                    },
-                    "email": {
-                      "type": "string",
-                      "example": "userEmail"
-                    },
-                    "password": {
-                      "type": "string",
-                      "example": "secretPassword"
-                    },
-                    "birthday": {
-                      "type": "string",
-                      "example": "xxxx-xx-xx"
-                    },
-                    "phone": {
-                      "type": "string",
-                      "example": "phoneNum"
-                    },
-                    "gender": {
-                      "type": "string",
-                      "example": "userGender"
-                    },
-                    "degree": {
-                      "type": "string",
-                      "example": "userDegree"
-                    },
-                    "school": {
-                      "type": "string",
-                      "example": "userSchool"
-                    },
-                    "country": {
-                      "type": "string",
-                      "example": "country"
-                    },
-                    "tutorId": {
-                      "type": "string",
-                      "example": "tutorId"
-                    },
-                    "profile_image": {
-                      "type": "string",
-                      "example": "https://profile"
-                    },
-                    "bank_account": {
-                      "type": "string",
-                      "example": ""
-                    },
-                    "createdAt": {
-                      "type": "string",
-                      "example": "2023-05-16T00:59:27.783Z"
-                    },
-                    "updatedAt": {
-                      "type": "string",
-                      "example": "2023-05-16T01:01:51.564Z"
-                    }
-                  }
-                }
-              },
-              "xml": {
-                "name": "main"
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "JwtToken": []
-          }
-        ]
       }
     },
-    "/tutors/v1/logout": {
-      "post": {
-        "tags": [
-          "Teacher"
-        ],
-        "description": "登出API",
-        "parameters": [
-          {
-            "name": "authorization",
-            "in": "header",
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "登出成功",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "status": {
-                  "type": "string",
-                  "example": "success"
-                }
-              },
-              "xml": {
-                "name": "main"
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "JwtToken": []
-          }
-        ]
-      }
-    },
-    "/v1/tutorsInfo/": {
+    "/tutors/": {
       "get": {
         "tags": [
           "Teacher"
@@ -1015,7 +411,7 @@
         }
       }
     },
-    "/v1/tutorsInfo/detail": {
+    "/tutors/detail": {
       "get": {
         "tags": [
           "Teacher"
@@ -1127,6 +523,1617 @@
             }
           }
         }
+      }
+    },
+    "/tutors/v1/profile/tutorBackground": {
+      "get": {
+        "tags": [
+          "Teacher"
+        ],
+        "description": "取得全部教師背景資料API",
+        "parameters": [],
+        "responses": {}
+      }
+    },
+    "/tutors/v1/{tutorId}/profile/tutorBackground": {
+      "get": {
+        "tags": [
+          "Teacher"
+        ],
+        "description": "取得單一教師背景資料API",
+        "parameters": [
+          {
+            "name": "tutorId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "type": "string",
+                  "example": "王牌家教老師"
+                },
+                "teaching_category": {
+                  "type": "array",
+                  "example": [
+                    "國一國文",
+                    "國一數學",
+                    "高一英文"
+                  ],
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "introduction": {
+                  "type": "string",
+                  "example": "<p>多年教學經驗，讓我開始思考，為什麼孩子對於數學的認知及學習程度會有落差？</p><p>要如何幫助孩子們不排斥數學、喜歡上數學、甚至愛上數學呢？讓Kiki老師來告訴你！</p>"
+                },
+                "educational_background": {
+                  "type": "array",
+                  "example": [
+                    "台大數學系",
+                    "台大應數所"
+                  ],
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "work_experience": {
+                  "type": "array",
+                  "example": [
+                    "2013 - 2018 學生一對一家教",
+                    "2018 - 2023 私人補習班"
+                  ],
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "notice": {
+                  "type": "string",
+                  "example": "用Zoom上課，請提早上線等候！"
+                },
+                "teaching_introduction": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "teaching_category": {
+                        "type": "string",
+                        "example": "國中"
+                      },
+                      "subject": {
+                        "type": "string",
+                        "example": "數學"
+                      },
+                      "teaching_content": {
+                        "type": "string",
+                        "example": "整數的運算、分數的運算、一元一次方程式、二元一次聯立方程式、直角坐標與二元一次方程式的圖形、比與比例式、一元一次不等式、統計、生活中的幾何"
+                      }
+                    }
+                  }
+                },
+                "tutorId": {
+                  "type": "object",
+                  "properties": {
+                    "_id": {
+                      "type": "string",
+                      "example": "6469029fea027c04ceebc898"
+                    },
+                    "name": {
+                      "type": "string",
+                      "example": "Allen"
+                    },
+                    "profile_image": {
+                      "type": "string",
+                      "example": " "
+                    },
+                    "carts": {
+                      "type": "array",
+                      "example": [],
+                      "items": {}
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JwtToken": []
+          }
+        ]
+      },
+      "patch": {
+        "tags": [
+          "Teacher"
+        ],
+        "description": "修改教師背景資料API",
+        "parameters": [
+          {
+            "name": "tutorId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "description": "資料格式",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "type": "string",
+                  "example": "王牌家教老師"
+                },
+                "teaching_category": {
+                  "type": "array",
+                  "example": [
+                    "國文",
+                    "數學",
+                    "英文"
+                  ],
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "introduction": {
+                  "type": "string",
+                  "example": "<p>多年教學經驗，讓我開始思考，為什麼孩子對於數學的認知及學習程度會有落差？</p><p>要如何幫助孩子們不排斥數學、喜歡上數學、甚至愛上數學呢？讓Kiki老師來告訴你！</p>"
+                },
+                "educational_background": {
+                  "type": "array",
+                  "example": [
+                    "台大數學系",
+                    "台大應數所"
+                  ],
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "work_experience": {
+                  "type": "array",
+                  "example": [
+                    "2013 - 2018 學生一對一家教",
+                    "2018 - 2023 私人補習班"
+                  ],
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "notice": {
+                  "type": "string",
+                  "example": "用Zoom上課，請提早上線等候！"
+                },
+                "teaching_introduction": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "teaching_category": {
+                        "type": "string",
+                        "example": "國中"
+                      },
+                      "subject": {
+                        "type": "string",
+                        "example": "數學"
+                      },
+                      "teaching_content": {
+                        "type": "string",
+                        "example": "整數的運算、分數的運算、一元一次方程式、二元一次聯立方程式、直角坐標與二元一次方程式的圖形、比與比例式、一元一次不等式、統計、生活中的幾何"
+                      }
+                    },
+                    "required": [
+                      "teaching_category",
+                      "subject",
+                      "teaching_content"
+                    ]
+                  }
+                }
+              },
+              "required": [
+                "title",
+                "teaching_category",
+                "introduction",
+                "educational_background",
+                "work_experience",
+                "notice",
+                "teaching_introduction"
+              ]
+            }
+          }
+        ],
+        "responses": {},
+        "security": [
+          {
+            "JwtToken": []
+          }
+        ]
+      }
+    },
+    "/tutors/v1/{tutorId}/scheduleAll": {
+      "get": {
+        "tags": [
+          "TutorSchedule"
+        ],
+        "description": "取得單一教師 - 全部行事曆資料",
+        "parameters": [
+          {
+            "name": "tutorId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "_id": {
+                      "type": "string",
+                      "example": "6471760377d41e94b24fe00e"
+                    },
+                    "tutorId": {
+                      "type": "string",
+                      "example": "6471760377d41e94b24fe00a"
+                    },
+                    "dates": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "year": {
+                            "type": "number",
+                            "example": 2023
+                          },
+                          "months": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "month": {
+                                  "type": "number",
+                                  "example": 6
+                                },
+                                "days": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "object",
+                                    "properties": {
+                                      "day": {
+                                        "type": "number",
+                                        "example": 7
+                                      },
+                                      "time_slots": {
+                                        "type": "array",
+                                        "items": {
+                                          "type": "array",
+                                          "example": [
+                                            "10:00",
+                                            "12:00"
+                                          ],
+                                          "items": {
+                                            "type": "string"
+                                          }
+                                        }
+                                      },
+                                      "flag": {
+                                        "type": "boolean",
+                                        "example": false
+                                      },
+                                      "_id": {
+                                        "type": "string",
+                                        "example": "64717670832f6d5ce0c1c3fb"
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          },
+                          "_id": {
+                            "type": "string",
+                            "example": "6471761577d41e94b24fe012"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JwtToken": []
+          }
+        ]
+      }
+    },
+    "/tutors/v1/{tutorId}/schedule": {
+      "get": {
+        "tags": [
+          "TutorSchedule"
+        ],
+        "description": "取得單一教師 - 行事曆資料（特定 年度 及 月份區間）",
+        "parameters": [
+          {
+            "name": "tutorId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "year",
+            "in": "query",
+            "description": "請輸入年度，如： 2023",
+            "schema": {
+              "type": "integer"
+            },
+            "required": true
+          },
+          {
+            "name": "startMonth",
+            "in": "query",
+            "description": "請輸入開始月份，如： 5",
+            "schema": {
+              "type": "integer"
+            },
+            "required": true
+          },
+          {
+            "name": "endMonth",
+            "in": "query",
+            "description": "請輸入結束月份，如： 6",
+            "schema": {
+              "type": "integer"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "_id": {
+                  "type": "string",
+                  "example": "6471760377d41e94b24fe00e"
+                },
+                "tutorId": {
+                  "type": "string",
+                  "example": "6471760377d41e94b24fe00a"
+                },
+                "dates": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "year": {
+                        "type": "number",
+                        "example": 2023
+                      },
+                      "months": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "month": {
+                              "type": "number",
+                              "example": 5
+                            },
+                            "days": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "day": {
+                                    "type": "number",
+                                    "example": 31
+                                  },
+                                  "time_slots": {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "array",
+                                      "example": [
+                                        "21:00",
+                                        "22:00"
+                                      ],
+                                      "items": {
+                                        "type": "string"
+                                      }
+                                    }
+                                  },
+                                  "flag": {
+                                    "type": "boolean",
+                                    "example": false
+                                  },
+                                  "_id": {
+                                    "type": "string",
+                                    "example": "6471761577d41e94b24fe031"
+                                  }
+                                }
+                              }
+                            },
+                            "_id": {
+                              "type": "string",
+                              "example": "6471761577d41e94b24fe013"
+                            }
+                          }
+                        }
+                      },
+                      "_id": {
+                        "type": "string",
+                        "example": "6471761577d41e94b24fe012"
+                      }
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JwtToken": []
+          }
+        ]
+      },
+      "patch": {
+        "tags": [
+          "TutorSchedule"
+        ],
+        "description": "修改單一教師 - 行事曆資料",
+        "parameters": [
+          {
+            "name": "tutorId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "description": "資料格式",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "routine_dayTime": {
+                  "type": "object",
+                  "properties": {
+                    "0": {
+                      "type": "array",
+                      "items": {
+                        "type": "array",
+                        "example": [
+                          "08:00",
+                          "12:00"
+                        ],
+                        "items": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "1": {
+                      "type": "array",
+                      "items": {
+                        "type": "array",
+                        "example": [
+                          "11:00",
+                          "12:00"
+                        ],
+                        "items": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "2": {
+                      "type": "array",
+                      "items": {
+                        "type": "array",
+                        "example": [
+                          "14:00",
+                          "16:00"
+                        ],
+                        "items": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "3": {
+                      "type": "array",
+                      "items": {
+                        "type": "array",
+                        "example": [
+                          "19:00",
+                          "20:00"
+                        ],
+                        "items": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "4": {
+                      "type": "array",
+                      "items": {
+                        "type": "array",
+                        "example": [
+                          "21:00",
+                          "22:00"
+                        ],
+                        "items": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "5": {
+                      "type": "array",
+                      "items": {
+                        "type": "array",
+                        "example": [
+                          "20:00",
+                          "22:00"
+                        ],
+                        "items": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "6": {
+                      "type": "array",
+                      "items": {
+                        "type": "array",
+                        "example": [
+                          "14:00",
+                          "17:00"
+                        ],
+                        "items": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  },
+                  "required": [
+                    "0",
+                    "1",
+                    "2",
+                    "3",
+                    "4",
+                    "5",
+                    "6"
+                  ]
+                },
+                "dates": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "year": {
+                        "type": "number",
+                        "example": 2023
+                      },
+                      "months": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "month": {
+                              "type": "number",
+                              "example": 5
+                            },
+                            "days": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "day": {
+                                    "type": "number",
+                                    "example": 20
+                                  },
+                                  "time_slots": {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "array",
+                                      "example": [
+                                        "14:00",
+                                        "17:00"
+                                      ],
+                                      "items": {
+                                        "type": "string"
+                                      }
+                                    }
+                                  }
+                                },
+                                "required": [
+                                  "day",
+                                  "time_slots"
+                                ]
+                              }
+                            }
+                          },
+                          "required": [
+                            "month",
+                            "days"
+                          ]
+                        }
+                      }
+                    },
+                    "required": [
+                      "year",
+                      "months"
+                    ]
+                  }
+                }
+              },
+              "required": [
+                "routine_dayTime",
+                "dates"
+              ]
+            }
+          }
+        ],
+        "responses": {},
+        "security": [
+          {
+            "JwtToken": []
+          }
+        ]
+      }
+    },
+    "/tutors/v1/{tutorId}/scheduleV": {
+      "get": {
+        "tags": [
+          "TutorSchedule (v-calendar)"
+        ],
+        "description": "取得單一教師 - 行事曆資料（特定 年度 及 月份區間）",
+        "parameters": [
+          {
+            "name": "tutorId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "year",
+            "in": "query",
+            "description": "請輸入年度，如： 2023",
+            "schema": {
+              "type": "integer"
+            },
+            "required": true
+          },
+          {
+            "name": "startMonth",
+            "in": "query",
+            "description": "請輸入開始月份，如： 5",
+            "schema": {
+              "type": "integer"
+            },
+            "required": true
+          },
+          {
+            "name": "endMonth",
+            "in": "query",
+            "description": "請輸入結束月份，如： 5",
+            "schema": {
+              "type": "integer"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "routine_dayTime": {
+                      "type": "object",
+                      "properties": {
+                        "0": {
+                          "type": "array",
+                          "items": {
+                            "type": "array",
+                            "example": [
+                              "08:00",
+                              "12:00"
+                            ],
+                            "items": {
+                              "type": "string"
+                            }
+                          }
+                        },
+                        "1": {
+                          "type": "array",
+                          "items": {
+                            "type": "array",
+                            "example": [
+                              "16:00",
+                              "17:00"
+                            ],
+                            "items": {
+                              "type": "string"
+                            }
+                          }
+                        },
+                        "2": {
+                          "type": "array",
+                          "items": {
+                            "type": "array",
+                            "example": [
+                              "19:00",
+                              "21:00"
+                            ],
+                            "items": {
+                              "type": "string"
+                            }
+                          }
+                        },
+                        "3": {
+                          "type": "array",
+                          "items": {
+                            "type": "array",
+                            "example": [
+                              "18:00",
+                              "20:00"
+                            ],
+                            "items": {
+                              "type": "string"
+                            }
+                          }
+                        },
+                        "4": {
+                          "type": "array",
+                          "items": {
+                            "type": "array",
+                            "example": [
+                              "08:00",
+                              "09:00"
+                            ],
+                            "items": {
+                              "type": "string"
+                            }
+                          }
+                        },
+                        "5": {
+                          "type": "array",
+                          "items": {
+                            "type": "array",
+                            "example": [
+                              "09:00",
+                              "10:00"
+                            ],
+                            "items": {
+                              "type": "string"
+                            }
+                          }
+                        },
+                        "6": {
+                          "type": "array",
+                          "items": {
+                            "type": "array",
+                            "example": [
+                              "08:00",
+                              "10:00"
+                            ],
+                            "items": {
+                              "type": "string"
+                            }
+                          }
+                        },
+                        "_id": {
+                          "type": "string",
+                          "example": "64734f5a89a535508f0d834a"
+                        }
+                      }
+                    },
+                    "dates": {
+                      "type": "array",
+                      "items": {
+                        "type": "array",
+                        "example": [
+                          2023,
+                          5,
+                          21,
+                          "09:00",
+                          "10:00"
+                        ],
+                        "items": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JwtToken": []
+          }
+        ]
+      },
+      "patch": {
+        "tags": [
+          "TutorSchedule (v-calendar)"
+        ],
+        "description": "修改單一教師 - 行事曆資料，修改特定日期設定",
+        "parameters": [
+          {
+            "name": "tutorId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "description": "資料格式",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "dates": {
+                  "type": "array",
+                  "example": [],
+                  "items": {}
+                }
+              },
+              "required": [
+                "dates"
+              ]
+            }
+          }
+        ],
+        "responses": {},
+        "security": [
+          {
+            "JwtToken": []
+          }
+        ]
+      }
+    },
+    "/tutors/v1/{tutorId}/scheduleV/pull": {
+      "patch": {
+        "tags": [
+          "TutorSchedule (v-calendar)"
+        ],
+        "description": "刪除單一教師 - 單日時段時間設定 (v-calendar 格式)",
+        "parameters": [
+          {
+            "name": "tutorId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "description": "資料格式",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "dates": {
+                  "type": "array",
+                  "example": [],
+                  "items": {}
+                }
+              },
+              "required": [
+                "dates"
+              ]
+            }
+          }
+        ],
+        "responses": {},
+        "security": [
+          {
+            "JwtToken": []
+          }
+        ]
+      }
+    },
+    "/tutors/v1/{tutorId}/scheduleV/routine": {
+      "patch": {
+        "tags": [
+          "TutorSchedule (v-calendar)"
+        ],
+        "description": "更新單一教師 - 常規行事曆設定（依照年度、月份區間）  *",
+        "parameters": [
+          {
+            "name": "tutorId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "description": "資料格式",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "year": {
+                  "type": "number",
+                  "example": 2023
+                },
+                "month": {
+                  "type": "number",
+                  "example": 5
+                },
+                "data": {
+                  "type": "array",
+                  "example": [],
+                  "items": {}
+                }
+              },
+              "required": [
+                "year",
+                "month",
+                "data"
+              ]
+            }
+          }
+        ],
+        "responses": {},
+        "security": [
+          {
+            "JwtToken": []
+          }
+        ]
+      }
+    },
+    "/user/v1/T/register/google": {
+      "get": {
+        "description": "",
+        "parameters": [],
+        "responses": {}
+      }
+    },
+    "/user/v1/S/register/google": {
+      "get": {
+        "description": "",
+        "parameters": [],
+        "responses": {}
+      }
+    },
+    "/user/v1/T/google/callback": {
+      "get": {
+        "description": "",
+        "parameters": [],
+        "responses": {}
+      }
+    },
+    "/user/v1/register": {
+      "post": {
+        "tags": [
+          "共同行為"
+        ],
+        "description": "一搬註冊API（老師學生）",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "description": "資料格式",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "userName": {
+                  "type": "string",
+                  "example": "Avocado"
+                },
+                "email": {
+                  "type": "string",
+                  "example": "Avocado@gmail.com"
+                },
+                "password": {
+                  "type": "string",
+                  "example": "Aa1234567"
+                },
+                "confirmPassword": {
+                  "type": "string",
+                  "example": "Aa1234567"
+                }
+              },
+              "required": [
+                "userName",
+                "email",
+                "password",
+                "confirmPassword"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "註冊成功",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "example": "avocado"
+                    },
+                    "email": {
+                      "type": "string",
+                      "example": "avocado@gmail.com"
+                    },
+                    "password": {
+                      "type": "string",
+                      "example": "$2a$08$pEi4sTWQ8NrnHRIJrEWkXeWqu/X5LzSky/dlySX1JOFXD93k7TNSC"
+                    },
+                    "token": {
+                      "type": "string",
+                      "example": ""
+                    },
+                    "role": {
+                      "type": "string",
+                      "example": "S"
+                    },
+                    "birthday": {
+                      "type": "string",
+                      "example": " "
+                    },
+                    "phone": {
+                      "type": "string",
+                      "example": ""
+                    },
+                    "gender": {
+                      "type": "string",
+                      "example": ""
+                    },
+                    "degree": {
+                      "type": "string",
+                      "example": ""
+                    },
+                    "school": {
+                      "type": "object",
+                      "properties": {
+                        "schoolName": {
+                          "type": "string",
+                          "example": ""
+                        },
+                        "major": {
+                          "type": "string",
+                          "example": ""
+                        }
+                      }
+                    },
+                    "country": {
+                      "type": "string",
+                      "example": ""
+                    },
+                    "profile_image": {
+                      "type": "string",
+                      "example": " "
+                    },
+                    "bank_account": {
+                      "type": "string",
+                      "example": ""
+                    },
+                    "_id": {
+                      "type": "string",
+                      "example": "6478c115a1efd5a4f934570d"
+                    },
+                    "carts": {
+                      "type": "array",
+                      "example": [],
+                      "items": {}
+                    },
+                    "createdAt": {
+                      "type": "string",
+                      "example": "2023-06-01T16:02:29.036Z"
+                    },
+                    "updatedAt": {
+                      "type": "string",
+                      "example": "2023-06-01T16:02:29.036Z"
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user/v1/S/google/callback": {
+      "get": {
+        "description": "",
+        "parameters": [],
+        "responses": {}
+      }
+    },
+    "/user/v1/login": {
+      "post": {
+        "tags": [
+          "共同行為"
+        ],
+        "description": "學生登入API",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "description": "資料格式",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "type": "string",
+                  "example": "Test@gmail.com"
+                },
+                "password": {
+                  "type": "string",
+                  "example": "password"
+                }
+              },
+              "required": [
+                "email",
+                "password"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "登入成功獲取token",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "data": {
+                  "type": "string",
+                  "example": "JWT token"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user/v1/logout": {
+      "post": {
+        "tags": [
+          "共同行為"
+        ],
+        "description": "登出API",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "登出成功",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JwtToken": []
+          }
+        ]
+      }
+    },
+    "/user/v1/profile": {
+      "get": {
+        "tags": [
+          "共同行為"
+        ],
+        "description": "取得個人檔案API",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "資料取得成功",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "_id": {
+                      "type": "string",
+                      "example": "6462d56fa8ef5218d79afd79"
+                    },
+                    "name": {
+                      "type": "string",
+                      "example": "Rose"
+                    },
+                    "email": {
+                      "type": "string",
+                      "example": "rose@gmail.com"
+                    },
+                    "password": {
+                      "type": "string",
+                      "example": "$2a$15$8UHRa0FEVu/wNaY/eYKel.hhNF3p1Og0exWIqTS.GRjezRsjUZhOu"
+                    },
+                    "birthday": {},
+                    "phone": {
+                      "type": "string",
+                      "example": ""
+                    },
+                    "gender": {
+                      "type": "string",
+                      "example": ""
+                    },
+                    "degree": {
+                      "type": "string",
+                      "example": ""
+                    },
+                    "school": {
+                      "type": "string",
+                      "example": ""
+                    },
+                    "country": {
+                      "type": "string",
+                      "example": ""
+                    },
+                    "profile_image": {
+                      "type": "string",
+                      "example": " "
+                    },
+                    "bank_account": {
+                      "type": "string",
+                      "example": ""
+                    },
+                    "carts": {
+                      "type": "array",
+                      "example": [],
+                      "items": {}
+                    },
+                    "createdAt": {
+                      "type": "string",
+                      "example": "2023-05-16T00:59:27.783Z"
+                    },
+                    "updatedAt": {
+                      "type": "string",
+                      "example": "2023-05-16T01:01:51.564Z"
+                    },
+                    "teaching_category": {
+                      "type": "array",
+                      "example": [],
+                      "items": {}
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JwtToken": []
+          }
+        ]
+      },
+      "patch": {
+        "tags": [
+          "共同行為"
+        ],
+        "description": "修改個人資訊",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "description": "資料格式",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "userName": {
+                  "type": "string",
+                  "example": "userName"
+                },
+                "phone": {
+                  "type": "string",
+                  "example": "09123456789"
+                },
+                "gender": {
+                  "type": "string",
+                  "example": "male"
+                },
+                "degree": {
+                  "type": "string",
+                  "example": "學士"
+                },
+                "school": {
+                  "type": "object",
+                  "properties": {
+                    "schoolName": {
+                      "type": "string",
+                      "example": "NCCU"
+                    },
+                    "major": {
+                      "type": "string",
+                      "example": "CS"
+                    }
+                  }
+                },
+                "country": {
+                  "type": "string",
+                  "example": "Taipei"
+                },
+                "profile_image": {
+                  "type": "string",
+                  "example": "https://image"
+                },
+                "birthday": {
+                  "type": "string",
+                  "example": "2023-05-16"
+                }
+              },
+              "required": [
+                "userName",
+                "phone",
+                "gender",
+                "degree",
+                "school",
+                "country",
+                "profile_image",
+                "birthday"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "資料修改成功",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "_id": {
+                      "type": "string",
+                      "example": "userID"
+                    },
+                    "name": {
+                      "type": "string",
+                      "example": "userName"
+                    },
+                    "email": {
+                      "type": "string",
+                      "example": "Test@gmail.com"
+                    },
+                    "phone": {
+                      "type": "string",
+                      "example": "phone"
+                    },
+                    "gender": {
+                      "type": "string",
+                      "example": "gender"
+                    },
+                    "degree": {
+                      "type": "string",
+                      "example": "degree"
+                    },
+                    "school": {
+                      "type": "string",
+                      "example": "school"
+                    },
+                    "country": {
+                      "type": "string",
+                      "example": "country"
+                    },
+                    "profile_image": {
+                      "type": "string",
+                      "example": "profile_image"
+                    },
+                    "birthday": {
+                      "type": "string",
+                      "example": "2023-01-01"
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JwtToken": []
+          }
+        ]
+      }
+    },
+    "/v1/tutor/courses/": {
+      "post": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {}
+      },
+      "get": {
+        "description": "",
+        "parameters": [],
+        "responses": {}
+      }
+    },
+    "/v1/tutor/courses/{courseId}": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "courseId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {}
+      },
+      "patch": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "courseId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {}
+      },
+      "delete": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "courseId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {}
       }
     },
     "/v1/booking/": {

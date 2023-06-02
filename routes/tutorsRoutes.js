@@ -11,9 +11,6 @@ const jwtFn = require('../src/middleware/auth');
 //老師註冊
 router.post('/v1/register', jwtFn.isAuth, tutorController.teacherSignUp);
 
-//老師修改個人資料
-router.patch('/v1/profile', jwtFn.isAuth, tutorController.editInfo);
-
 // 教師一覽
 router.get('/', tutorInfosController.tutorsList);
 
