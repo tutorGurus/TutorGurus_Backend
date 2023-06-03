@@ -56,6 +56,7 @@ let tutorController = {
      */
 
         try{
+            
             if(req.user['role'] == 'T'){
                 return next(customiError(400, "已是教師身份!"));
             }
@@ -63,6 +64,12 @@ let tutorController = {
             if(!userName || !gender || !phone || !address || !birthday || !degree || !school || !major || !country ||teaching_category.length == 0){
                 return next(customiError(400, "請填寫必要欄位"));
             }
+            let tutorId = await tutorIdModel.find();
+            if(tutorId.length == 0){
+                tutorId = await tutorIdModel.create({},{new:true});
+            };
+            let newTutorId = tutorId[0]['serial_number'] += 1;
+            await tutorIdModel.findByIdAndUpdate(tutorId[0]['_id'], {serial_number : newTutorId});
             let newTutor = await User.findOneAndUpdate({'_id' : req.user._id}, {
                 name :  userName,
                 // email : email,
@@ -75,6 +82,7 @@ let tutorController = {
                 major : major,
                 country : country,
                 role : 'T',
+                tutorId : newTutorId
                 
             }, {new : true});
             // 建立關聯資料集 - 教學背景
