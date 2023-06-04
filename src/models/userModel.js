@@ -65,7 +65,8 @@ const userSchema = new mongoose.Schema({
     imageName : String,
     bank_account : {
         type : String,
-        default : ""
+        default : "",
+        select : false
     },
     carts : [{
         cart : {
@@ -80,10 +81,11 @@ const userSchema = new mongoose.Schema({
         }],
     tutorId: {
         type : Number,
-    },       
+    },  
+    
 },{ 
     versionKey : false,
-    timestamps: true
+    timestamps: true 
 });
 
 userSchema.statics.findOrCreate = async function (doc) {

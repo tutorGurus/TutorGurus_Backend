@@ -60,8 +60,8 @@ let tutorController = {
             if(req.user['role'] == 'T'){
                 return next(customiError(400, "已是教師身份!"));
             }
-            let { userName, gender, phone, address, birthday, degree, school, major, teaching_category, country} = req.body;
-            if(!userName || !gender || !phone || !address || !birthday || !degree || !school || !major || !country ||teaching_category.length == 0){
+            let { userName, gender, phone, address, birthday, degree, school, teaching_category, country} = req.body;
+            if(!userName || !gender || !phone || !address || !birthday || !degree || !school['schoolName'] || !school['major'] || teaching_category.length == 0){
                 return next(customiError(400, "請填寫必要欄位"));
             }
             let tutorId = await tutorIdModel.find();
@@ -79,14 +79,13 @@ let tutorController = {
                 birthday : birthday,
                 degree : degree,
                 school : school,
-                major : major,
                 country : country,
                 role : 'T',
                 tutorId : newTutorId
                 
             }, {new : true});
             // 建立關聯資料集 - 教學背景
-            await TutorBackground.create({ tutorId: newTutor._id });
+            await TutorBackground.create({ tutorId: newTutor._id , teaching_category : teaching_category});
             // 建立關聯資料集 - 行事曆
             await TutorSchedule.create({ tutorId: newTutor._id });
             successHandle(res, newTutor);

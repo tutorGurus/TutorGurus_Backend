@@ -55,7 +55,7 @@ let jwtFn = {
             if(!user.token || user.token != token){
                 return next(customiError(400, "請先登入"));
             }
-            const currentUser = await User.findById(decryptPayload.id).select('+password -token +role');
+            const currentUser = await User.findById(decryptPayload.id).select('-token +role -createdAt -updatedAt -password');
             req.user = currentUser;
             req.token = token;
             req.userId = decryptPayload.id;

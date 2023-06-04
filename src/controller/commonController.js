@@ -66,11 +66,11 @@ let commonInstruction = {
      */
 
         try{
-            let {userName, email, password, confirmPassword} = req.body;
+            let {name, email, password, confirmPassword} = req.body;
             let emailCheck = await User.findOne({"email" : email})
             if(emailCheck)
                 return next(customiError(400, "該信箱已被註冊"));
-            if(!userName || !email || !password || !confirmPassword)
+            if(!name || !email || !password || !confirmPassword)
                 return next(customiError(400, "欄位未填寫完整"));
             if(!validator.isEmail(email,{host_whitelist:['gmail.com', 'yahoo.com']})){
                 return  next(customiError(400, "信箱格式錯誤"));}
@@ -84,7 +84,7 @@ let commonInstruction = {
             let salt = bcrypt.genSaltSync(8);
             let secretPassword = bcrypt.hashSync(password, salt);
             let newUser = await User.create({
-                name : userName,
+                name : name,
                 email : email,
                 password : secretPassword,
                 role : 'S'
@@ -199,10 +199,9 @@ let commonInstruction = {
         try{
             const user = JSON.parse(JSON.stringify(req.user)); 
             if(req.user['role'] == 'T'){
-                const teacherInfo = await tutorBackground.find({
-                    tutorId : req.user['_id ']
-                }).select('teaching_category');
-                user.teaching_category = teacherInfo;
+                const teacherInfo = await tutorBackground.find({ tutorId : req.user['_id']})
+                .select('teaching_category -_id');
+                user.teaching_category = teacherInfo[0]['teaching_category'];
                 successHandle(res, user)
                 
             }else {
@@ -258,7 +257,8 @@ let commonInstruction = {
         try{
             let {userName, gender, phone, address, birthday, degree, school,  country, profile_image} = req.body;
             if(req.user['role'] == 'T'){
-                if(!userName || !gender || !phone || !address || !birthday || !degree || !school || !country){
+                if(!userName || !gender || !phone || !address || !birthday || !degree || !school['schoolName'] || 
+                !school['major'] || !country){
                     return next( customiError(400, "必要欄位不得為空"));
                 }
                 let replaceData = await User.findOneAndUpdate( {"_id" : req.user._id}, {
