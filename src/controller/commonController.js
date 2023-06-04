@@ -255,14 +255,14 @@ let commonInstruction = {
             }]
          */
         try{
-            let {userName, gender, phone, address, birthday, degree, school,  country, profile_image} = req.body;
             if(req.user['role'] == 'T'){
-                if(!userName || !gender || !phone || !address || !birthday || !degree || !school['schoolName'] || 
+                let {name, gender, phone, address, birthday, degree, school,  country, profile_image} = req.body;
+                if(!name || !gender || !phone || !address || !birthday || !degree || !school['schoolName'] || 
                 !school['major'] || !country){
                     return next( customiError(400, "必要欄位不得為空"));
                 }
                 let replaceData = await User.findOneAndUpdate( {"_id" : req.user._id}, {
-                    name :  userName,
+                    name :  name,
                     // email : email,
                     phone : phone,
                     gender : gender,
@@ -272,24 +272,25 @@ let commonInstruction = {
                     profile_image : profile_image,
                     birthday : birthday,
                     address : address
-                },{ new : true }).select('-token -_id');
+                },{ new : true }).select('-token -_id -createdAt -updatedAt');
                 successHandle(res, replaceData);
             } else {
-                if(!userName){
+                let {name} = req.body;
+                if(!name){
                     return next(customiError(400, "必填欄位不得為空"));
                 }
                 let replaceData = await User.findOneAndUpdate( {"_id" : req.user._id}, {
-                    name :  userName,
+                    name :  name,
                     // email : email,
-                    phone : phone,
-                    gender : gender,
-                    degree : degree,
-                    school : school,
-                    country : country,
-                    major : major,
-                    profile_image : profile_image,
-                    birthday : birthday,
-                    address : address
+                    phone : req['body']['phone'],
+                    gender : req['body']['gender'],
+                    degree : req['body']['degree'],
+                    school : req['body']['school'],
+                    country : req['body']['country'],
+                    major : req['body']['major'],
+                    profile_image : req['body']['profile_image'],
+                    birthday : req['body']['birthday'],
+                    address : req['body']['address']
             },{ new : true }).select('-token -_id');
             successHandle(res, replaceData);
             }
