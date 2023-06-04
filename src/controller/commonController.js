@@ -203,7 +203,6 @@ let commonInstruction = {
                 .select('teaching_category -_id');
                 user.teaching_category = teacherInfo[0]['teaching_category'];
                 successHandle(res, user)
-                
             }else {
                 successHandle(res, req.user)
             }

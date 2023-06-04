@@ -56,7 +56,6 @@ let tutorController = {
      */
 
         try{
-            
             if(req.user['role'] == 'T'){
                 return next(customiError(400, "已是教師身份!"));
             }
@@ -83,7 +82,7 @@ let tutorController = {
                 role : 'T',
                 tutorId : newTutorId
                 
-            }, {new : true});
+            }, {new : true}).select('-token -createdAt -updatedAt');
             // 建立關聯資料集 - 教學背景
             await TutorBackground.create({ tutorId: newTutor._id , teaching_category : teaching_category});
             // 建立關聯資料集 - 行事曆
