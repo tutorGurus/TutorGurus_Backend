@@ -7,7 +7,8 @@ const tutorScheduleController = require('../src/controller/tutorScheduleControll
 let tutorInfosController = require('../src/controller/tutorInfo');
 const jwtFn = require('../src/middleware/auth');
 
-/* GET users listing. */
+/* GET users listing. */  
+// "/tutors/"
 //老師註冊
 router.post('/v1/register', jwtFn.isAuth, tutorController.teacherSignUp);
 

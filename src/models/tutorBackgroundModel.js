@@ -5,6 +5,7 @@ const tutorBackgroundSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
     },
+    tutorIdCustom : Number,
     title : {
         type : String,
         maxlength : 50,

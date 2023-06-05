@@ -19,7 +19,6 @@ require('./src/service/mongoConnect')();
 let app = express();
 app.use(cors());
 
-let indexRouter = require('./routes/index');
 let tutorsRouter = require('./routes/tutorsRoutes');
 let bookingRouter = require('./routes/bookingsRoutes');
 let coursesRouter = require('./routes/coursesRoutes');
@@ -27,8 +26,10 @@ let carts = require('./routes/cartRoutes');
 let orders = require('./routes/orderRoutes');
 let imageUpload = require('./routes/uploadRoutes');
 let userRouter = require('./routes/commonRoutes');
+let adminRoutes = require('./routes/adminRoutes');
 
 // view engine setup
+
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 app.use('/api-doc', swaggerUI.serve, swaggerUI.setup(swaggerFile));
@@ -37,8 +38,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-
-app.use('/', indexRouter);
 app.use('/tutors', tutorsRouter);
 app.use('/user', userRouter);
 app.use('/v1/tutor/courses', coursesRouter);
@@ -46,6 +45,7 @@ app.use('/v1/booking', bookingRouter)
 app.use('/cart', carts);
 app.use('/order', orders);
 app.use('/v1/upload', imageUpload);
+app.use('/admin', adminRoutes);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));

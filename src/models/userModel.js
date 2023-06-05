@@ -79,9 +79,15 @@ const userSchema = new mongoose.Schema({
                 default : 1
             }
         }],
-    tutorId: {
-        type : Number,
-    },  
+    tutorIdCustom: {
+            type : Number,
+            ref : 'TutorBackground' 
+    },
+    status : {
+        type :String,
+        enum : ['cancel','generally', "Apply", "tutor"],
+        default : 'generally'
+    }
     
 },{ 
     versionKey : false,

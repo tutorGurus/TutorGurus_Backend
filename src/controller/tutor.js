@@ -56,9 +56,11 @@ let tutorController = {
      */
 
         try{
-            
             if(req.user['role'] == 'T'){
                 return next(customiError(400, "已是教師身份!"));
+            }
+            if(req.user['status'] == 'Apply'){
+                return next(customiError(400, "資料審核中，請靜候通知"));
             }
             let { userName, gender, phone, address, birthday, degree, school, teaching_category, country} = req.body;
             if(!userName || !gender || !phone || !address || !birthday || !degree || !school['schoolName'] || !school['major'] || teaching_category.length == 0){
@@ -80,12 +82,17 @@ let tutorController = {
                 degree : degree,
                 school : school,
                 country : country,
-                role : 'T',
-                tutorId : newTutorId
+                status : "Apply",
+                // role : 'T',
+                tutorIdCustom : newTutorId
                 
             }, {new : true});
             // 建立關聯資料集 - 教學背景
-            await TutorBackground.create({ tutorId: newTutor._id , teaching_category : teaching_category});
+            await TutorBackground.create({ 
+                    tutorId: newTutor._id ,
+                    teaching_category : teaching_category,
+                    tutorIdCustom : newTutorId
+                });
             // 建立關聯資料集 - 行事曆
             await TutorSchedule.create({ tutorId: newTutor._id });
             successHandle(res, newTutor);
