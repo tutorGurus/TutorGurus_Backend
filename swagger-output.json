@@ -21,13 +21,6 @@
     }
   },
   "paths": {
-    "/": {
-      "get": {
-        "description": "",
-        "parameters": [],
-        "responses": {}
-      }
-    },
     "/tutors/v1/register": {
       "post": {
         "tags": [
@@ -389,6 +382,113 @@
         "description": "取得全部教師背景資料API",
         "parameters": [],
         "responses": {}
+      },
+      "patch": {
+        "tags": [
+          "Teacher"
+        ],
+        "description": "修改教師背景資料API",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "description": "資料格式",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "type": "string",
+                  "example": "王牌家教老師"
+                },
+                "teaching_category": {
+                  "type": "array",
+                  "example": [
+                    "國文",
+                    "數學",
+                    "英文"
+                  ],
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "introduction": {
+                  "type": "string",
+                  "example": "<p>多年教學經驗，讓我開始思考，為什麼孩子對於數學的認知及學習程度會有落差？</p><p>要如何幫助孩子們不排斥數學、喜歡上數學、甚至愛上數學呢？讓Kiki老師來告訴你！</p>"
+                },
+                "educational_background": {
+                  "type": "array",
+                  "example": [
+                    "台大數學系",
+                    "台大應數所"
+                  ],
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "work_experience": {
+                  "type": "array",
+                  "example": [
+                    "2013 - 2018 學生一對一家教",
+                    "2018 - 2023 私人補習班"
+                  ],
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "notice": {
+                  "type": "string",
+                  "example": "用Zoom上課，請提早上線等候！"
+                },
+                "teaching_introduction": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "teaching_category": {
+                        "type": "string",
+                        "example": "國中"
+                      },
+                      "subject": {
+                        "type": "string",
+                        "example": "數學"
+                      },
+                      "teaching_content": {
+                        "type": "string",
+                        "example": "整數的運算、分數的運算、一元一次方程式、二元一次聯立方程式、直角坐標與二元一次方程式的圖形、比與比例式、一元一次不等式、統計、生活中的幾何"
+                      }
+                    },
+                    "required": [
+                      "teaching_category",
+                      "subject",
+                      "teaching_content"
+                    ]
+                  }
+                }
+              },
+              "required": [
+                "title",
+                "teaching_category",
+                "introduction",
+                "educational_background",
+                "work_experience",
+                "notice",
+                "teaching_introduction"
+              ]
+            }
+          }
+        ],
+        "responses": {},
+        "security": [
+          {
+            "JwtToken": []
+          }
+        ]
       }
     },
     "/tutors/v1/{tutorId}/profile/tutorBackground": {
@@ -508,119 +608,6 @@
             }
           }
         },
-        "security": [
-          {
-            "JwtToken": []
-          }
-        ]
-      },
-      "patch": {
-        "tags": [
-          "Teacher"
-        ],
-        "description": "修改教師背景資料API",
-        "parameters": [
-          {
-            "name": "tutorId",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "type": "string"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "description": "資料格式",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "title": {
-                  "type": "string",
-                  "example": "王牌家教老師"
-                },
-                "teaching_category": {
-                  "type": "array",
-                  "example": [
-                    "國文",
-                    "數學",
-                    "英文"
-                  ],
-                  "items": {
-                    "type": "string"
-                  }
-                },
-                "introduction": {
-                  "type": "string",
-                  "example": "<p>多年教學經驗，讓我開始思考，為什麼孩子對於數學的認知及學習程度會有落差？</p><p>要如何幫助孩子們不排斥數學、喜歡上數學、甚至愛上數學呢？讓Kiki老師來告訴你！</p>"
-                },
-                "educational_background": {
-                  "type": "array",
-                  "example": [
-                    "台大數學系",
-                    "台大應數所"
-                  ],
-                  "items": {
-                    "type": "string"
-                  }
-                },
-                "work_experience": {
-                  "type": "array",
-                  "example": [
-                    "2013 - 2018 學生一對一家教",
-                    "2018 - 2023 私人補習班"
-                  ],
-                  "items": {
-                    "type": "string"
-                  }
-                },
-                "notice": {
-                  "type": "string",
-                  "example": "用Zoom上課，請提早上線等候！"
-                },
-                "teaching_introduction": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "teaching_category": {
-                        "type": "string",
-                        "example": "國中"
-                      },
-                      "subject": {
-                        "type": "string",
-                        "example": "數學"
-                      },
-                      "teaching_content": {
-                        "type": "string",
-                        "example": "整數的運算、分數的運算、一元一次方程式、二元一次聯立方程式、直角坐標與二元一次方程式的圖形、比與比例式、一元一次不等式、統計、生活中的幾何"
-                      }
-                    },
-                    "required": [
-                      "teaching_category",
-                      "subject",
-                      "teaching_content"
-                    ]
-                  }
-                }
-              },
-              "required": [
-                "title",
-                "teaching_category",
-                "introduction",
-                "educational_background",
-                "work_experience",
-                "notice",
-                "teaching_introduction"
-              ]
-            }
-          }
-        ],
-        "responses": {},
         "security": [
           {
             "JwtToken": []
@@ -2555,10 +2542,9 @@
           },
           {
             "name": "quantity",
-            "int": "query",
+            "in": "query",
             "description": "數量",
             "required": true,
-            "in": "query",
             "type": "string"
           }
         ],
@@ -3118,6 +3104,285 @@
                 "status": {
                   "type": "string",
                   "example": "success"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JwtToken": []
+          }
+        ]
+      }
+    },
+    "/admin/": {
+      "get": {
+        "tags": [
+          "admin"
+        ],
+        "description": "取得所有老師列表",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "資料取得成功",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "school": {
+                        "type": "object",
+                        "properties": {
+                          "schoolName": {
+                            "type": "string",
+                            "example": "NCCU"
+                          },
+                          "major": {
+                            "type": "string",
+                            "example": "CS"
+                          }
+                        }
+                      },
+                      "_id": {
+                        "type": "string",
+                        "example": "6482ad57777782004e4c5550"
+                      },
+                      "name": {
+                        "type": "string",
+                        "example": "avocado"
+                      },
+                      "email": {
+                        "type": "string",
+                        "example": "avocado@gmail.com"
+                      },
+                      "token": {
+                        "type": "string",
+                        "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ODJhZDU3Nzc3NzgyMDA0ZTRjNTU1MCIsImlhdCI6MTY4NjMxNTU0MSwiZXhwIjoxNjg2OTIwMzQxfQ.ot9PlPTjZG9xLRMiEJJK5n-9-GBkEUKOvAyTKDKTKAY"
+                      },
+                      "birthday": {
+                        "type": "string",
+                        "example": "123456"
+                      },
+                      "phone": {
+                        "type": "string",
+                        "example": "09191234567"
+                      },
+                      "gender": {
+                        "type": "string",
+                        "example": "male"
+                      },
+                      "degree": {
+                        "type": "string",
+                        "example": "university"
+                      },
+                      "country": {
+                        "type": "string",
+                        "example": "Taipai"
+                      },
+                      "profile_image": {
+                        "type": "string",
+                        "example": " "
+                      },
+                      "status": {
+                        "type": "string",
+                        "example": "Apply"
+                      },
+                      "carts": {
+                        "type": "array",
+                        "example": [],
+                        "items": {}
+                      },
+                      "createdAt": {
+                        "type": "string",
+                        "example": "2023-06-09T04:40:55.614Z"
+                      },
+                      "updatedAt": {
+                        "type": "string",
+                        "example": "2023-06-09T12:59:01.306Z"
+                      },
+                      "address": {
+                        "type": "string",
+                        "example": "sample address"
+                      },
+                      "tutorBackgroundId": {
+                        "type": "object",
+                        "properties": {
+                          "tutorIdCustom": {
+                            "type": "number",
+                            "example": 1
+                          },
+                          "title": {
+                            "type": "string",
+                            "example": ""
+                          },
+                          "teaching_category": {
+                            "type": "array",
+                            "example": [
+                              "123",
+                              "apple"
+                            ],
+                            "items": {
+                              "type": "string"
+                            }
+                          },
+                          "completed_courses_nun": {
+                            "type": "number",
+                            "example": 0
+                          },
+                          "introduction": {
+                            "type": "string",
+                            "example": ""
+                          },
+                          "educational_background": {
+                            "type": "array",
+                            "example": [],
+                            "items": {}
+                          },
+                          "work_experience": {
+                            "type": "array",
+                            "example": [],
+                            "items": {}
+                          },
+                          "notice": {
+                            "type": "string",
+                            "example": ""
+                          },
+                          "teaching_introduction": {
+                            "type": "array",
+                            "example": [],
+                            "items": {}
+                          }
+                        }
+                      },
+                      "tutorIdCustom": {
+                        "type": "number",
+                        "example": 1
+                      },
+                      "tutorScheduleId": {
+                        "type": "object",
+                        "properties": {
+                          "dates": {
+                            "type": "array",
+                            "example": [],
+                            "items": {}
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JwtToken": []
+          }
+        ]
+      }
+    },
+    "/admin/{tutorIdCustom}": {
+      "patch": {
+        "tags": [
+          "admin"
+        ],
+        "description": "修改身份(教師申請成功、註銷、拒絕教師申請)",
+        "parameters": [
+          {
+            "name": "tutorIdCustom",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "流水號ID"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "description": "狀態",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "資料修改成功",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "_id": {
+                      "type": "string",
+                      "example": "userID"
+                    },
+                    "name": {
+                      "type": "string",
+                      "example": "userName"
+                    },
+                    "email": {
+                      "type": "string",
+                      "example": "Test@gmail.com"
+                    },
+                    "phone": {
+                      "type": "string",
+                      "example": "phone"
+                    },
+                    "gender": {
+                      "type": "string",
+                      "example": "gender"
+                    },
+                    "degree": {
+                      "type": "string",
+                      "example": "degree"
+                    },
+                    "school": {
+                      "type": "string",
+                      "example": "school"
+                    },
+                    "country": {
+                      "type": "string",
+                      "example": "country"
+                    },
+                    "profile_image": {
+                      "type": "string",
+                      "example": "profile_image"
+                    },
+                    "birthday": {
+                      "type": "string",
+                      "example": "2023-01-01"
+                    }
+                  }
                 }
               },
               "xml": {

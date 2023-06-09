@@ -6,7 +6,7 @@ const tutorBackgroundController = require('../src/controller/tutorBackgroundCont
 const tutorScheduleController = require('../src/controller/tutorScheduleController');
 let tutorInfosController = require('../src/controller/tutorInfo');
 const jwtFn = require('../src/middleware/auth');
-const tutorMiddleWare = require('../src/middleware/tutorMiddleware');
+const idMiddleWare = require('../src/middleware/idMiddleware');
 
 /* GET users listing. */  
 // "/tutors/"
@@ -26,7 +26,7 @@ router.get('/v1/profile/tutorBackground', tutorBackgroundController.getAllTutorB
 router.get('/v1/:tutorId/profile/tutorBackground', jwtFn.isAuth, tutorBackgroundController.getTutorBackground);
 
 // 修改單一教師-背景資料
-router.patch('/v1/profile/tutorBackground', jwtFn.isAuth, tutorMiddleWare.isTutor, tutorBackgroundController.updateTutorBackground);
+router.patch('/v1/profile/tutorBackground', jwtFn.isAuth, idMiddleWare.isTutor, tutorBackgroundController.updateTutorBackground);
 
 // 取得單一教師 - 所有年、月份行事曆設定資料
 router.get('/v1/scheduleAll', jwtFn.isAuth, tutorScheduleController.getAllTutorsSchedule);

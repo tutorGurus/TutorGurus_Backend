@@ -52,7 +52,7 @@ let cartController = {
                     description: 'Course ID.' 
             }
             #swagger.parameters['quantity'] = {
-                int : 'query',
+                in : 'query',
                 description : '數量',
                 required : true
             }

@@ -68,19 +68,24 @@ let commonInstruction = {
         try{
             let {name, email, password, confirmPassword} = req.body;
             let emailCheck = await User.findOne({"email" : email})
-            if(emailCheck)
+            if(emailCheck){
                 return next(customiError(400, "該信箱已被註冊"));
-            if(!name || !email || !password || !confirmPassword)
+            };
+            if(!name || !email || !password || !confirmPassword){
                 return next(customiError(400, "欄位未填寫完整"));
+            };
             if(!validator.isEmail(email,{host_whitelist:['gmail.com', 'yahoo.com']})){
-                return  next(customiError(400, "信箱格式錯誤"));}
-            if(!regex.test(password))
+                return  next(customiError(400, "信箱格式錯誤"));
+            }
+            if(!regex.test(password)){
                 return next(customiError(400, "密碼格式不正確 : 至少包含一個大寫與一個小寫"));
-            if(!validator.isLength(password, { min : 8 }))
-                return next(customiError(400, "密碼格式不正確 : 至少為8碼"));
-            if(password != confirmPassword)
+            };
+            if(!validator.isLength(password, { min : 8 })){
+                return next(customiError(400, "密碼格式不正確 : 至少為8碼"))
+            };
+            if(password != confirmPassword){
                 return next(customiError(400, "密碼不一致"));
-            
+            };
             let salt = bcrypt.genSaltSync(8);
             let secretPassword = bcrypt.hashSync(password, salt);
             let newUser = await User.create({
