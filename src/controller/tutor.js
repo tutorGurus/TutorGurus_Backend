@@ -68,10 +68,18 @@ let tutorController = {
             }
             let tutorId = await tutorIdModel.find();
             if(tutorId.length == 0){
-                tutorId = await tutorIdModel.create({},{new:true});
+                tutorId = await tutorIdModel.create({},{ new : true });
             };
             let newTutorId = tutorId[0]['serial_number'] += 1;
             await tutorIdModel.findByIdAndUpdate(tutorId[0]['_id'], {serial_number : newTutorId});
+            // 建立關聯資料集 - 教學背景
+            const newTutorBackground =  await TutorBackground.create({ 
+                    tutorId: req.user['_id'],
+                    teaching_category : teaching_category,
+                    tutorIdCustom : newTutorId
+                });
+            // 建立關聯資料集 - 行事曆
+            const newTutorSchedule = await TutorSchedule.create({ tutorId:  req.user['_id'] });
             let newTutor = await User.findOneAndUpdate({'_id' : req.user._id}, {
                 name :  userName,
                 // email : email,
@@ -83,18 +91,12 @@ let tutorController = {
                 school : school,
                 country : country,
                 status : "Apply",
+                tutorBackgroundId : newTutorBackground["_id"],
+                tutorScheduleId :  newTutorSchedule["_id"],
                 // role : 'T',
                 tutorIdCustom : newTutorId
-                
             }, {new : true});
-            // 建立關聯資料集 - 教學背景
-            await TutorBackground.create({ 
-                    tutorId: newTutor._id ,
-                    teaching_category : teaching_category,
-                    tutorIdCustom : newTutorId
-                });
-            // 建立關聯資料集 - 行事曆
-            await TutorSchedule.create({ tutorId: newTutor._id });
+            console.log(newTutor);
             successHandle(res, newTutor);
         } catch(err){
             return next(err);

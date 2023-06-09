@@ -49,6 +49,8 @@ const tutorBackgroundSchema = new mongoose.Schema({
         type : String,
         default : ""
     }
+},{
+    versionKey : false
 });
 
 const TutorBackground = mongoose.model("TutorBackground", tutorBackgroundSchema);

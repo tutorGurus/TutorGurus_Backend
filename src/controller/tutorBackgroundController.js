@@ -98,8 +98,9 @@ const tutorBackgroundController = {
             }]
          */
         try {
-            const id = req.params.tutorId;
+            const id = req.user['_id']
             const { body } = req;
+            console.log(body)
             const updatedTutorBackground = await TutorBackground.findOneAndUpdate({"tutorId" : id
             }, {
                 title: body.title,
@@ -110,7 +111,7 @@ const tutorBackgroundController = {
                 work_experience: body.work_experience,
                 notice: body.notice,
                 teaching_introduction: body.teaching_introduction
-            });
+            },{new : true});
             successHandle(res, updatedTutorBackground);
         } catch (err) {
             return next(err);

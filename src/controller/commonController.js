@@ -87,7 +87,8 @@ let commonInstruction = {
                 name : name,
                 email : email,
                 password : secretPassword,
-                role : 'S'
+                role : 'S',
+                status : 'generally'
             })
             successHandle(res, newUser);
         } catch(error) {
