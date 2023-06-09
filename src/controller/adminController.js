@@ -3,6 +3,7 @@ let TutorSchedule = require('../models/tutorScheduleModel');
 let successHandle = require('../service/successHandler');
 
 let adminController = {
+    //會取所有老師資訊列表
     async getAlltutorInfo(req, res, next){
         /**
          * #swagger.tags = ['admin'],
@@ -67,7 +68,7 @@ let adminController = {
             console.log(err);
         }
     },
-
+    //更新帳號狀態(同意教師申請．拒絕申請，註銷帳號)
     async updateTutorIdentity(req, res, next){
         /**
          * #swagger.tags = ['admin'],

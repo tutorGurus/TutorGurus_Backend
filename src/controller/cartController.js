@@ -47,9 +47,9 @@ let cartController = {
         /**
          * #swagger.tags = ['Carts'],
          * #swagger.description = '新增與修改購物車API'
-         * #swagger.parameters['coursesID'] = {
-                    in: 'path',
-                    description: 'Course ID.' 
+            #swagger.parameters['coursesID'] = {
+                in: 'path',
+                description: 'Course ID.' 
             }
             #swagger.parameters['quantity'] = {
                 in : 'query',
@@ -87,10 +87,12 @@ let cartController = {
             let { coursesID } = req.params;
             let { quantity } = req.query;
             const findCourse = await Courses.findById(coursesID);
-            if(!quantity)
+            if(!quantity){
                 return next(customiError(400, "請填入購買數量"));
-            if(!findCourse)
+            };
+            if(!findCourse){
                 return next(customiError(400,"找不到該商品資訊"));
+            };
             let newCartContent
             let course = await User.findOne({ carts : { $elemMatch : { cart :  coursesID }} });
             if(course){
