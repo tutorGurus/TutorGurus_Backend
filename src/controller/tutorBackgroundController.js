@@ -32,7 +32,7 @@ const tutorBackgroundController = {
                     "notice": "用Zoom上課，請提早上線等候！",
                     "teaching_introduction": [
                         {
-                            "teaching_category": "國中",
+                            "teaching_level": "國中",
                             "subject" : "數學",
                             "teaching_content": "整數的運算、分數的運算、一元一次方程式、二元一次聯立方程式、直角坐標與二元一次方程式的圖形、比與比例式、一元一次不等式、統計、生活中的幾何"
                         }
@@ -86,7 +86,7 @@ const tutorBackgroundController = {
                     $notice: "用Zoom上課，請提早上線等候！",
                     $teaching_introduction: [
                         {
-                            $teaching_category: "國中",
+                            $teaching_level: "國中",
                             $subject : "數學",
                             $teaching_content: "整數的運算、分數的運算、一元一次方程式、二元一次聯立方程式、直角坐標與二元一次方程式的圖形、比與比例式、一元一次不等式、統計、生活中的幾何"
                         }

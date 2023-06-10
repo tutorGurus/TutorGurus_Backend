@@ -1,11 +1,12 @@
 const User = require('../models/userModel');
 const customiError = require('../errorHandler/customiError');
 const successHandle = require('../service/successHandler');
-
+const TutorBackground = require('../models/tutorBackgroundModel');
+const path = require('path');
 let tutorInfosController = {
     // 教師一覽
     async tutorsList(req, res, next){
-            /**
+        /**
         * #swagger.tags = ['Teacher']
         * #swagger.description = '教師一覽API'
         * #swagger.responses[200] = {
@@ -33,6 +34,29 @@ let tutorInfosController = {
             }
      */
         try{
+            let teaching_category = req.query["teaching_category"] != undefined ? req.query['teaching_category'] : 0;
+            let teaching_level = req.query["teaching_level"] != undefined ? req.query['teaching_level'] : 0;
+            // let otherCondition = req.query["teaching_category"] != undefined ? new RegExp(req.query["teaching_category"]) : 0;
+            let tutorsInfo;
+            console.log(teaching_category, teaching_level);
+            if(!teaching_category && !teaching_level){
+                tutorsInfo = await TutorBackground.find({ role: "T"});
+            } else {
+                tutorsInfo = await TutorBackground.find({
+                $or: [
+                    { teaching_category: { $in: [teaching_category] } },
+                    { teaching_introduction: {
+                            $elemMatch: {
+                            teaching_level: teaching_level,
+                            },
+                        },
+                    },
+                ],
+                }).populate({
+                    path : 'tutorId',
+                });
+            }
+            console.log(tutorsInfo);
             const tutorsList = await User.find({
                 role : 'T',
             }).select('-tokens')

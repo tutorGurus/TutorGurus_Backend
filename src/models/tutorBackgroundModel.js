@@ -32,7 +32,7 @@ const tutorBackgroundSchema = new mongoose.Schema({
         default : []
     },
     teaching_introduction : [{
-        teaching_category : {
+        teaching_level : {
             type : String,
             default : ""
         },
