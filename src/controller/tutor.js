@@ -59,11 +59,16 @@ let tutorController = {
             if(req.user['role'] == 'T'){
                 return next(customiError(400, "已是教師身份!"));
             }
+<<<<<<< HEAD
             if(req.user['status'] == 'Apply'){
                 return next(customiError(400, "資料審核中，請靜候通知"));
             }
             let { userName, gender, phone, address, birthday, degree, school, teaching_category, country} = req.body;
             if(!userName || !gender || !phone || !address || !birthday || !degree || !school['schoolName'] || !school['major'] || teaching_category.length == 0){
+=======
+            let { name, gender, phone, address, birthday, degree, school, teaching_category, country} = req.body;
+            if(!name || !gender || !phone || !address || !birthday || !degree || !school['schoolName'] || !school['major'] || teaching_category.length == 0){
+>>>>>>> dev
                 return next(customiError(400, "請填寫必要欄位"));
             }
             let tutorId = await tutorIdModel.find();
@@ -81,7 +86,7 @@ let tutorController = {
             // 建立關聯資料集 - 行事曆
             const newTutorSchedule = await TutorSchedule.create({ tutorId:  req.user['_id'] });
             let newTutor = await User.findOneAndUpdate({'_id' : req.user._id}, {
-                name :  userName,
+                name :  name,
                 // email : email,
                 gender : gender,
                 phone : phone,
@@ -89,12 +94,19 @@ let tutorController = {
                 birthday : birthday,
                 degree : degree,
                 school : school,
+<<<<<<< HEAD
                 country : country,
                 status : "Apply",
                 tutorBackgroundId : newTutorBackground["_id"],
                 tutorScheduleId :  newTutorSchedule["_id"],
                 // role : 'T',
                 tutorIdCustom : newTutorId
+=======
+                // country : country,
+                role : 'T',
+                tutorId : newTutorId
+                
+>>>>>>> dev
             }, {new : true});
             console.log(newTutor);
             successHandle(res, newTutor);
