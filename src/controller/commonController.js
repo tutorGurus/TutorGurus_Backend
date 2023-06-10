@@ -123,6 +123,10 @@ let commonInstruction = {
                 return next(customiError(400,"請輸入完整帳號和密碼"));
             }
             const user = await User.findOne({"email" : email}).select("+password");
+            if(!user){
+                console.log(233)
+                return next(customiError(400, "無此帳號"));
+            }
             if(user['password'] == undefined){
                 return next(customiError(400, "無此帳號"));
             }
