@@ -34,16 +34,9 @@ const courseSchema = new mongoose.Schema({
     introduction : {
         type: String
     },
-    preparation :[{
-        item_title : {
-            type : String,
-            default : ""
-        },
-        content : {
-            type : String,
-            default : ""
-        },
-    }],
+    preparation :{
+        type: String
+    },
     is_publish : {
         type : Boolean,
         default : true
