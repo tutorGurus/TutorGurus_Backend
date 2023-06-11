@@ -18,7 +18,7 @@ require('./src/service/mongoConnect')();
 
 let app = express();
 app.use(cors());
-
+let ServerTest = require('./src/service/ServerTest');
 let tutorsRouter = require('./routes/tutorsRoutes');
 let bookingRouter = require('./routes/bookingsRoutes');
 let coursesRouter = require('./routes/coursesRoutes');
@@ -46,9 +46,10 @@ app.use('/cart', carts);
 app.use('/order', orders);
 app.use('/v1/upload', imageUpload);
 app.use('/admin', adminRoutes);
+
 // catch 404 and forward to error handler
+app.use('/', ServerTest);
 app.use(function(req, res, next) {
-  console.log(req.method);
   next(createError(404));
 });
 
