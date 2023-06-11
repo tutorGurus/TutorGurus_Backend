@@ -3,7 +3,7 @@ let TutorSchedule = require('../models/tutorScheduleModel');
 let successHandle = require('../service/successHandler');
 
 let adminController = {
-    //會取所有老師資訊列表
+    //獲取所有老師資訊列表
     async getAlltutorInfo(req, res, next){
         /**
          * #swagger.tags = ['admin'],

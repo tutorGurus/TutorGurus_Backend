@@ -171,7 +171,20 @@
           "Teacher"
         ],
         "description": "教師一覽API",
-        "parameters": [],
+        "parameters": [
+          {
+            "name": "teaching_level",
+            "in": "query",
+            "description": "課程授課對象年紀(例如：國一)",
+            "type": "string"
+          },
+          {
+            "name": "teaching_category",
+            "in": "query",
+            "description": "學科類別(例如：國文)",
+            "type": "string"
+          }
+        ],
         "responses": {
           "200": {
             "description": "獲取成功",
@@ -450,7 +463,7 @@
                   "items": {
                     "type": "object",
                     "properties": {
-                      "teaching_category": {
+                      "teaching_level": {
                         "type": "string",
                         "example": "國中"
                       },
@@ -464,7 +477,7 @@
                       }
                     },
                     "required": [
-                      "teaching_category",
+                      "teaching_level",
                       "subject",
                       "teaching_content"
                     ]
@@ -564,7 +577,7 @@
                   "items": {
                     "type": "object",
                     "properties": {
-                      "teaching_category": {
+                      "teaching_level": {
                         "type": "string",
                         "example": "國中"
                       },
