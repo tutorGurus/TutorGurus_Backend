@@ -5,6 +5,7 @@ const tutorBackgroundSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
     },
+    tutorIdCustom : Number,
     title : {
         type : String,
         maxlength : 50,
@@ -31,7 +32,7 @@ const tutorBackgroundSchema = new mongoose.Schema({
         default : []
     },
     teaching_introduction : [{
-        teaching_category : {
+        teaching_level : {
             type : String,
             default : ""
         },
@@ -48,6 +49,8 @@ const tutorBackgroundSchema = new mongoose.Schema({
         type : String,
         default : ""
     }
+},{
+    versionKey : false
 });
 
 const TutorBackground = mongoose.model("TutorBackground", tutorBackgroundSchema);

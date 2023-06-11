@@ -71,6 +71,8 @@ const scheduleSchema = new Schema({
     },
     routine_dayTime: routineTimeSchema,
     dates: [yearSchema]
+},{
+    versionKey : false,
 });
 
 // 建立 TutorSchedule 實例

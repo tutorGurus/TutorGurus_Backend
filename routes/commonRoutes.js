@@ -17,7 +17,7 @@ router.get('/v1/S/register/google', passport.authenticate('google-student', {
 //google登入後重導向教師位置
 router.get('/v1/T/google/callback', passport.authenticate('google-teacher', { session: false }), commonProcess.googlelogIn);
 
-//一般註冊路由
+//一般註冊路由]
 router.post('/v1/register', commonProcess.signUp);
 
 //google登入後重導向學生位置

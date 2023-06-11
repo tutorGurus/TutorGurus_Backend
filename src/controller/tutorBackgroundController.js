@@ -32,7 +32,7 @@ const tutorBackgroundController = {
                     "notice": "用Zoom上課，請提早上線等候！",
                     "teaching_introduction": [
                         {
-                            "teaching_category": "國中",
+                            "teaching_level": "國中",
                             "subject" : "數學",
                             "teaching_content": "整數的運算、分數的運算、一元一次方程式、二元一次聯立方程式、直角坐標與二元一次方程式的圖形、比與比例式、一元一次不等式、統計、生活中的幾何"
                         }
@@ -52,10 +52,11 @@ const tutorBackgroundController = {
         try {
             console.log(req.params)
             const id = req.params.tutorId;
-            console.log(id)
-            const tutorBackground = await TutorBackground.findOne({"tutorId" : id}).populate({
+            console.log(typeof id);
+            console.log(typeof parseInt(id));
+            const tutorBackground = await TutorBackground.findOne({"tutorId " : parseInt(id)}).populate({
                 path: "tutorId",
-                select: "name profile_image -carts"
+                select: "name profile_image -carts email"
             });
             if(tutorBackground) {
                 successHandle(res, tutorBackground);
@@ -85,7 +86,7 @@ const tutorBackgroundController = {
                     $notice: "用Zoom上課，請提早上線等候！",
                     $teaching_introduction: [
                         {
-                            $teaching_category: "國中",
+                            $teaching_level: "國中",
                             $subject : "數學",
                             $teaching_content: "整數的運算、分數的運算、一元一次方程式、二元一次聯立方程式、直角坐標與二元一次方程式的圖形、比與比例式、一元一次不等式、統計、生活中的幾何"
                         }
@@ -97,8 +98,9 @@ const tutorBackgroundController = {
             }]
          */
         try {
-            const id = req.params.tutorId;
+            const id = req.user['_id']
             const { body } = req;
+            console.log(body)
             const updatedTutorBackground = await TutorBackground.findOneAndUpdate({"tutorId" : id
             }, {
                 title: body.title,
@@ -109,7 +111,7 @@ const tutorBackgroundController = {
                 work_experience: body.work_experience,
                 notice: body.notice,
                 teaching_introduction: body.teaching_introduction
-            });
+            },{new : true});
             successHandle(res, updatedTutorBackground);
         } catch (err) {
             return next(err);

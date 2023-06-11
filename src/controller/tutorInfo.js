@@ -1,14 +1,24 @@
 const User = require('../models/userModel');
 const customiError = require('../errorHandler/customiError');
 const successHandle = require('../service/successHandler');
-
+const TutorBackground = require('../models/tutorBackgroundModel');
+const path = require('path');
 let tutorInfosController = {
     // 教師一覽
     async tutorsList(req, res, next){
-            /**
+    /**
         * #swagger.tags = ['Teacher']
         * #swagger.description = '教師一覽API'
+            #swagger.parameters['teaching_level'] = {
+                in : 'query',
+                description : '課程授課對象年紀(例如：國一)',
+            }
+            #swagger.parameters['teaching_category'] = {
+                in : 'query',
+                description : '學科類別(例如：國文)',
+            }
         * #swagger.responses[200] = {
+
                 description: '獲取成功',
                 schema : {
                     "status": "success",
@@ -32,14 +42,42 @@ let tutorInfosController = {
                 }
             }
      */
-        try{
-            const tutorsList = await User.find({
-                role : 'T',
-            }).select('-tokens')
-            successHandle(res, tutorsList);
-        } catch(err){
-            return next(err);
+    try {
+        let teaching_category =
+        req.query["teaching_category"] != undefined
+            ? req.query["teaching_category"]
+            : 0;
+        let teaching_level =
+        req.query["teaching_level"] != undefined
+            ? req.query["teaching_level"]
+            : 0;
+        // let otherCondition = req.query["teaching_category"] != undefined ? new RegExp(req.query["teaching_category"]) : 0;
+        let tutorsList;
+        console.log(teaching_category, teaching_level);
+        if (!teaching_category && !teaching_level) {
+        tutorsList = await TutorBackground.find({ role: "T" });
+        } else {
+        tutorsList = await TutorBackground.find({
+            $or: [
+                { teaching_category: { $in: [teaching_category] } },
+                {
+                    teaching_introduction: {
+                    $elemMatch: {
+                        teaching_level: teaching_level,
+                    },
+                    },
+                },
+            ],
+        }).populate({
+            path: "tutorId",
+            select : "name gender school -_id -carts"
+        });
         }
+        console.log(tutorsList);
+        successHandle(res, tutorsList);
+    } catch (err) {
+        return next(err);
+    }
     },
     // 教師詳情
     async tutorDetail(req, res, next){
