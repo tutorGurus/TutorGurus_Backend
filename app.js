@@ -48,7 +48,7 @@ app.use('/v1/upload', imageUpload);
 app.use('/admin', adminRoutes);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-  console.log(req.url);
+  console.log(req.method);
   next(createError(404));
 });
 
