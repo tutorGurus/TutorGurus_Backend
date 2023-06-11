@@ -23,6 +23,7 @@ const productError = (err, res) =>{
             Errormessage : err.message,
         })
     } else {
+        console.log(err);
         console.log("未定義的錯誤!");
         res.status(500).send({
             status : false,
