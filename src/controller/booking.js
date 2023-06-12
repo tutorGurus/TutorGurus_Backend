@@ -45,7 +45,10 @@ let bookingsController = {
 
             const bookedList = await Booking.find({
                 booked_user_id : id,
-            })
+            }).populate({
+            path: "booking_user_id",
+            select : "name email -carts"
+            });
             successHandle(res, bookedList);
         } catch(err){
             return next(err);
