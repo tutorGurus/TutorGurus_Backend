@@ -20,10 +20,10 @@ router.get('/', tutorInfosController.tutorsList);
 router.get('/detail', tutorInfosController.tutorDetail);
 
 // 取得所有教師-背景資料
-router.get('/v1/profile/tutorBackground', tutorBackgroundController.getAllTutorBackground);
+router.get('/v1/profile/alltutorBackground', tutorBackgroundController.getAllTutorBackground);
 
 // 取得單一教師-背景資料
-router.get('/v1/:tutorId/profile/tutorBackground', jwtFn.isAuth, tutorBackgroundController.getTutorBackground);
+router.get('/v1/profile/tutorBackground', jwtFn.isAuth, tutorBackgroundController.getTutorBackground);
 
 // 修改單一教師-背景資料
 router.patch('/v1/profile/tutorBackground', jwtFn.isAuth, idMiddleWare.isTutor, tutorBackgroundController.updateTutorBackground);
