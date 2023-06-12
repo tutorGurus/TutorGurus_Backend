@@ -17,7 +17,6 @@ let bookingsController = {
             const bookingList = await Booking.find({
                 booking_user_id: id,
             })
-            
         //avocado ========== ceiling 
             let searchBookingList = JSON.parse(JSON.stringify(bookingList));
             console.log(new Date(searchBookingList[0]["startTime"]).toLocaleString('en-US', { timeZone: 'Asia/Taipei', hour12: false }));
@@ -26,9 +25,7 @@ let bookingsController = {
                 searchBookingList[i]["endTime"] = new Date(searchBookingList[i]["endTime"]).toLocaleString('en-US', { timeZone: 'Asia/Taipei', hour12: false });
             }
         //avocado =========== floor
-
             //successHandle(res, searchBookingList);
-
             successHandle(res, bookingList);
         } catch(err){
             return next(err);
@@ -42,7 +39,6 @@ let bookingsController = {
         try{
             let id  = req.user._id;
             id = id.toHexString();
-
             const bookedList = await Booking.find({
                 booked_user_id : id,
             }).populate({
@@ -64,10 +60,10 @@ let bookingsController = {
             let id  = req.user._id;
             id = id.toHexString();
             let bookedUserID = await Course.findById(course_id).select('user_id -_id');
-
         //avocado ============ ceiling 
             if(!bookedUserID || !ObjectId.isValid(course_id))
                 return next(customiError(400, "無此課程資訊可預約或課程ID有誤"));
+            // let startTransfer = new Date("2023/05/31 22:00");
             let startTransfer = new Date("2023/05/31 22:00");
             console.log(startTransfer);
             const bookingList = await Booking.find({ booking_user_id: id })
@@ -88,10 +84,10 @@ let bookingsController = {
                 booking_user_id: id,
                 booked_user_id: bookedUserID,
                 course_id: course_id,
-                startTime : startTime,
-                endTime : endTime ,
-                // startTime: startTransfer,
-                // endTime: endTransfer,
+                // startTime : startTime,
+                // endTime : endTime ,
+                startTime: startTransfer,
+                endTime: endTransfer,
                 status: 'booked',
                 room_link: 'temp.zoom.link'
             })

@@ -309,7 +309,7 @@ const coursesController = {
             const id = req.params.courseId;
             const deletedCourse = await Course.findByIdAndDelete(id);
             if(deletedCourse) {
-                successHandle(res, deletedCourse);
+                successHandle(res, "刪除成功");
             } else {
                 return next(customiError(400, "無此課程ID"));
             }
