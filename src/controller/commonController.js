@@ -130,13 +130,13 @@ let commonInstruction = {
             }
             const user = await User.findOne({"email" : email}).select("+password");
             if(!user){
-                console.log(233)
                 return next(customiError(400, "無此帳號"));
             }
             if(user['password'] == undefined){
                 return next(customiError(400, "無此帳號"));
             }
             const auth = await bcrypt.compare(password, user.password);
+            console.log(auth)
             if(!auth){
                 return next(customiError(400,"無此帳號或密碼錯誤！"));
             }

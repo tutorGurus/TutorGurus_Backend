@@ -1,8 +1,42 @@
 const Course = require('../models/coursesModel');
 const customiError = require('../errorHandler/customiError');
 const successHandle = require('../service/successHandler');
+const classPrice = require('../models/classPriceModel');
+const User = require('../models/userModel');
 
 const coursesController = {
+    //設定課程種類價格
+    async classPriceConfig(req, res, next){
+        try{
+            classPrice.find();
+            console.log(req.body)
+            const id = req.user['_id'];
+            const { body } = req;
+            console.log(body.category, body.grade, body.price)
+            const tutor = await User.findById(id);
+            if(tutor.status != "tutor"){
+                return next(customiError(400, "您沒有開課權限!"));
+            }
+            if(!body.grade || !body.category || !body.price){
+                return next(customiError(400, "資料未填寫完整"));
+            }
+            let course = await classPrice.find({
+                $and : [
+                    { user_id : id },
+                    { category : body.category },
+                    { grade :  body.grade }
+                ]
+            });
+            if(course.length){
+                return next(customiError(400, "已有相同學程"));
+            }
+            res.send({
+                status : "success"
+            });
+        } catch (err){
+            console.log(err)
+        }
+    },
     // 取得該教師開設的所有課程
     async getAllCourses(req, res, next) {
         /**
@@ -97,8 +131,9 @@ const coursesController = {
             const { body } = req;
             let userId  = req.user['_id'];
             userId = userId.toHexString();
-            if(!body.title || !body.category || !body.price)
+            if(!body.title || !body.category || !body.price){
                 return next(customiError(400, "欄位未填寫完整"));
+            }
             const newCourse = await Course.create(
                 {
                     user_id: userId,
