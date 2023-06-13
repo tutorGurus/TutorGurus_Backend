@@ -1,7 +1,9 @@
 const mongoose = require('mongoose');
+const User = require('./userModel');
+
 
 const classPriceSchema = new mongoose.Schema({
-    user_id : {
+    user_Id : {
         type : mongoose.Schema.Types.ObjectId,
         require : true
     },
@@ -17,6 +19,8 @@ const classPriceSchema = new mongoose.Schema({
         type : String,
         required : [true, "課程價格為必填欄位"]
     }
+},{
+    versionKey : false
 });
-const priceSchema = mongoose.model("classPriceSchema", classPriceSchema);
+const priceSchema = mongoose.model("classPrice", classPriceSchema);
 module.exports = priceSchema;
