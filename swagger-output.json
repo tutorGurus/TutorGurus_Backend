@@ -387,7 +387,7 @@
         }
       }
     },
-    "/tutors/v1/profile/tutorBackground": {
+    "/tutors/v1/profile/alltutorBackground": {
       "get": {
         "tags": [
           "Teacher"
@@ -395,128 +395,15 @@
         "description": "取得全部教師背景資料API",
         "parameters": [],
         "responses": {}
-      },
-      "patch": {
-        "tags": [
-          "Teacher"
-        ],
-        "description": "修改教師背景資料API",
-        "parameters": [
-          {
-            "name": "authorization",
-            "in": "header",
-            "type": "string"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "description": "資料格式",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "title": {
-                  "type": "string",
-                  "example": "王牌家教老師"
-                },
-                "teaching_category": {
-                  "type": "array",
-                  "example": [
-                    "國文",
-                    "數學",
-                    "英文"
-                  ],
-                  "items": {
-                    "type": "string"
-                  }
-                },
-                "introduction": {
-                  "type": "string",
-                  "example": "<p>多年教學經驗，讓我開始思考，為什麼孩子對於數學的認知及學習程度會有落差？</p><p>要如何幫助孩子們不排斥數學、喜歡上數學、甚至愛上數學呢？讓Kiki老師來告訴你！</p>"
-                },
-                "educational_background": {
-                  "type": "array",
-                  "example": [
-                    "台大數學系",
-                    "台大應數所"
-                  ],
-                  "items": {
-                    "type": "string"
-                  }
-                },
-                "work_experience": {
-                  "type": "array",
-                  "example": [
-                    "2013 - 2018 學生一對一家教",
-                    "2018 - 2023 私人補習班"
-                  ],
-                  "items": {
-                    "type": "string"
-                  }
-                },
-                "notice": {
-                  "type": "string",
-                  "example": "用Zoom上課，請提早上線等候！"
-                },
-                "teaching_introduction": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "teaching_level": {
-                        "type": "string",
-                        "example": "國中"
-                      },
-                      "subject": {
-                        "type": "string",
-                        "example": "數學"
-                      },
-                      "teaching_content": {
-                        "type": "string",
-                        "example": "整數的運算、分數的運算、一元一次方程式、二元一次聯立方程式、直角坐標與二元一次方程式的圖形、比與比例式、一元一次不等式、統計、生活中的幾何"
-                      }
-                    },
-                    "required": [
-                      "teaching_level",
-                      "subject",
-                      "teaching_content"
-                    ]
-                  }
-                }
-              },
-              "required": [
-                "title",
-                "teaching_category",
-                "introduction",
-                "educational_background",
-                "work_experience",
-                "notice",
-                "teaching_introduction"
-              ]
-            }
-          }
-        ],
-        "responses": {},
-        "security": [
-          {
-            "JwtToken": []
-          }
-        ]
       }
     },
-    "/tutors/v1/{tutorId}/profile/tutorBackground": {
+    "/tutors/v1/profile/tutorBackground": {
       "get": {
         "tags": [
           "Teacher"
         ],
         "description": "取得單一教師背景資料API",
         "parameters": [
-          {
-            "name": "tutorId",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
           {
             "name": "authorization",
             "in": "header",
@@ -549,24 +436,12 @@
                   "example": "<p>多年教學經驗，讓我開始思考，為什麼孩子對於數學的認知及學習程度會有落差？</p><p>要如何幫助孩子們不排斥數學、喜歡上數學、甚至愛上數學呢？讓Kiki老師來告訴你！</p>"
                 },
                 "educational_background": {
-                  "type": "array",
-                  "example": [
-                    "台大數學系",
-                    "台大應數所"
-                  ],
-                  "items": {
-                    "type": "string"
-                  }
+                  "type": "string",
+                  "example": "<h1>台大數學系</h1><h1>台大應數所</h1>"
                 },
                 "work_experience": {
-                  "type": "array",
-                  "example": [
-                    "2013 - 2018 學生一對一家教",
-                    "2018 - 2023 私人補習班"
-                  ],
-                  "items": {
-                    "type": "string"
-                  }
+                  "type": "string",
+                  "example": "<h2>2013 - 2018 學生一對一家教</h2><h2>2018 - 2023 私人補習班</h2>"
                 },
                 "notice": {
                   "type": "string",
@@ -621,6 +496,101 @@
             }
           }
         },
+        "security": [
+          {
+            "JwtToken": []
+          }
+        ]
+      },
+      "patch": {
+        "tags": [
+          "Teacher"
+        ],
+        "description": "修改教師背景資料API",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "description": "資料格式",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "type": "string",
+                  "example": "王牌家教老師"
+                },
+                "teaching_category": {
+                  "type": "array",
+                  "example": [
+                    "國文",
+                    "數學",
+                    "英文"
+                  ],
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "introduction": {
+                  "type": "string",
+                  "example": "<p>多年教學經驗，讓我開始思考，為什麼孩子對於數學的認知及學習程度會有落差？</p><p>要如何幫助孩子們不排斥數學、喜歡上數學、甚至愛上數學呢？讓Kiki老師來告訴你！</p>"
+                },
+                "educational_background": {
+                  "type": "string",
+                  "example": "<h1>台大數學系</h1> <h1>台大應數所</h1>"
+                },
+                "work_experience": {
+                  "type": "string",
+                  "example": "<h2>2013 - 2018 學生一對一家教</h2> <h2>2018 - 2023 私人補習班</h2>"
+                },
+                "notice": {
+                  "type": "string",
+                  "example": "用Zoom上課，請提早上線等候！"
+                },
+                "teaching_introduction": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "teaching_level": {
+                        "type": "string",
+                        "example": "國中"
+                      },
+                      "subject": {
+                        "type": "string",
+                        "example": "數學"
+                      },
+                      "teaching_content": {
+                        "type": "string",
+                        "example": "整數的運算、分數的運算、一元一次方程式、二元一次聯立方程式、直角坐標與二元一次方程式的圖形、比與比例式、一元一次不等式、統計、生活中的幾何"
+                      }
+                    },
+                    "required": [
+                      "teaching_level",
+                      "subject",
+                      "teaching_content"
+                    ]
+                  }
+                }
+              },
+              "required": [
+                "title",
+                "teaching_category",
+                "introduction",
+                "educational_background",
+                "work_experience",
+                "notice",
+                "teaching_introduction"
+              ]
+            }
+          }
+        ],
+        "responses": {},
         "security": [
           {
             "JwtToken": []
@@ -1340,7 +1310,7 @@
         "tags": [
           "TutorSchedule (v-calendar)"
         ],
-        "description": "更新單一教師 - 常規行事曆設定（依照年度、月份區間）  *",
+        "description": "更新單一教師 - 常規行事曆設定（依照年度、月份區間）   *",
         "parameters": [
           {
             "name": "authorization",
@@ -2408,6 +2378,23 @@
         ]
       }
     },
+    "/v1/tutor/courses/classPrice": {
+      "post": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/v1/booking/": {
       "get": {
         "tags": [
@@ -3409,6 +3396,18 @@
             "JwtToken": []
           }
         ]
+      }
+    },
+    "/": {
+      "get": {
+        "description": "",
+        "parameters": [],
+        "responses": {}
+      },
+      "options": {
+        "description": "",
+        "parameters": [],
+        "responses": {}
       }
     }
   }

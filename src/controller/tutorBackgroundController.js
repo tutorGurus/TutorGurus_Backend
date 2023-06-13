@@ -27,8 +27,8 @@ const tutorBackgroundController = {
                     "title": "王牌家教老師",
                     "teaching_category": ["國一國文","國一數學","高一英文"],
                     "introduction": "<p>多年教學經驗，讓我開始思考，為什麼孩子對於數學的認知及學習程度會有落差？</p><p>要如何幫助孩子們不排斥數學、喜歡上數學、甚至愛上數學呢？讓Kiki老師來告訴你！</p>",
-                    "educational_background": ["台大數學系", "台大應數所"],
-                    "work_experience": ["2013 - 2018 學生一對一家教", "2018 - 2023 私人補習班"],
+                    "educational_background": "<h1>台大數學系</h1><h1>台大應數所</h1>",
+                    "work_experience": "<h2>2013 - 2018 學生一對一家教</h2><h2>2018 - 2023 私人補習班</h2>",
                     "notice": "用Zoom上課，請提早上線等候！",
                     "teaching_introduction": [
                         {
@@ -78,8 +78,8 @@ const tutorBackgroundController = {
                     $title: "王牌家教老師",
                     $teaching_category: ["國文","數學","英文"],
                     $introduction: "<p>多年教學經驗，讓我開始思考，為什麼孩子對於數學的認知及學習程度會有落差？</p><p>要如何幫助孩子們不排斥數學、喜歡上數學、甚至愛上數學呢？讓Kiki老師來告訴你！</p>",
-                    $educational_background: ["台大數學系", "台大應數所"],
-                    $work_experience: ["2013 - 2018 學生一對一家教", "2018 - 2023 私人補習班"],
+                    $educational_background: "<h1>台大數學系</h1> <h1>台大應數所</h1>",
+                    $work_experience: "<h2>2013 - 2018 學生一對一家教</h2> <h2>2018 - 2023 私人補習班</h2>",
                     $notice: "用Zoom上課，請提早上線等候！",
                     $teaching_introduction: [
                         {
