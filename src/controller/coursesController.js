@@ -1,18 +1,20 @@
 const Course = require('../models/coursesModel');
 const customiError = require('../errorHandler/customiError');
 const successHandle = require('../service/successHandler');
-const classPrice = require('../models/classPriceModel');
+const ClassPrice = require('../models/classPriceModel');
 const User = require('../models/userModel');
+const { log } = require('debug/src/node');
 
 const coursesController = {
-    //設定課程種類價格
-    async classPriceConfig(req, res, next){
+    // //設定課程種類價格
+    async newClassPrice(req, res, next){
         try{
-            classPrice.find();
-            console.log(req.body)
             const id = req.user['_id'];
+            console.log(id)
             const { body } = req;
-            console.log(body.category, body.grade, body.price)
+            if(!body.category || !body.grade || !body.price){
+                return next(customiError(400, "請填寫完整開課價格資訊"));
+            }
             const tutor = await User.findById(id);
             if(tutor.status != "tutor"){
                 return next(customiError(400, "您沒有開課權限!"));
@@ -20,19 +22,39 @@ const coursesController = {
             if(!body.grade || !body.category || !body.price){
                 return next(customiError(400, "資料未填寫完整"));
             }
-            let course = await classPrice.find({
-                $and : [
-                    { user_id : id },
-                    { category : body.category },
-                    { grade :  body.grade }
-                ]
+            let course = await ClassPrice.find({
+                    user_Id : id,
+                    category : body.category,
+                    grade :  body.grade 
             });
             if(course.length){
                 return next(customiError(400, "已有相同學程"));
             }
+            let newData = await ClassPrice.create({
+                user_Id : id,
+                category : body.category,
+                grade : body.grade,
+                price : body.price
+            });
+            successHandle(res, newData);
+        } catch (err){
+            console.log(err)
+        }
+    },
+    //修改課程種類價格
+    async editClassPrice(req, res, next){
+        try{
+            const { price, classId } = req.body;
+            const findClass = await ClassPrice.findById(classId);
+            if(!findClass){
+                return next(customiError(400, "未找到相關課程資訊"));
+            };
+            await ClassPrice.findByIdAndUpdate(classId, {
+                price : price
+            });
             res.send({
                 status : "success"
-            });
+            })
         } catch (err){
             console.log(err)
         }
@@ -129,24 +151,34 @@ const coursesController = {
          */
         try {
             const { body } = req;
+            const { grade, category } = req.body;
             let userId  = req.user['_id'];
+            console.log(userId, grade, category);
+            let coursePriceList = await ClassPrice.find({
+                user_Id : userId,
+                grade : grade,
+                category : category
+            });
+            if(!coursePriceList.length){
+                return next(customiError(400, "請先設定課程類別價格"));
+            };
             userId = userId.toHexString();
-            if(!body.title || !body.category || !body.price){
+            if(!body.title || !body.category){
                 return next(customiError(400, "欄位未填寫完整"));
-            }
+            };
             const newCourse = await Course.create(
                 {
+                    price_id : coursePriceList[0]["_id"],
                     user_id: userId,
                     education_stages: body.education_stages,
                     grade: body.grade,
                     semester: body.semester,
                     category: body.category,
                     title: body.title,
-                    price: body.price,
                     introduction: body.introduction,
                     preparation: body.preparation,
                     is_publish: body.is_publish,
-                    status: body.status
+                    status: body.status,
                 }
             );
             successHandle(res, newCourse);
@@ -205,6 +237,9 @@ const coursesController = {
             const course = await Course.findById(courseId).populate({
                 path: "user_id",
                 select: "name"
+            }).populate({
+                path : "price_id",
+                select : "price -_id"
             });
             if(course) {
                 successHandle(res, course);

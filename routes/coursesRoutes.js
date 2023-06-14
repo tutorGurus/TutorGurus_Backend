@@ -19,6 +19,9 @@ router.patch('/:courseId', jwtFn.isAuth, coursesController.updateCourse);
 router.delete('/:courseId', jwtFn.isAuth, coursesController.deleteCourse);
 
 //課程價格設定
-router.post('/classPrice', jwtFn.isAuth, coursesController.classPriceConfig);
+router.post('/classPrice', jwtFn.isAuth, coursesController.newClassPrice);
+
+//修改課程價格
+router.patch('/classPrice/edit', jwtFn.isAuth, coursesController.editClassPrice);
 
 module.exports = router;

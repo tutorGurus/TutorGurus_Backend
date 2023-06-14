@@ -436,24 +436,12 @@
                   "example": "<p>多年教學經驗，讓我開始思考，為什麼孩子對於數學的認知及學習程度會有落差？</p><p>要如何幫助孩子們不排斥數學、喜歡上數學、甚至愛上數學呢？讓Kiki老師來告訴你！</p>"
                 },
                 "educational_background": {
-                  "type": "array",
-                  "example": [
-                    "台大數學系",
-                    "台大應數所"
-                  ],
-                  "items": {
-                    "type": "string"
-                  }
+                  "type": "string",
+                  "example": "<h1>台大數學系</h1><h1>台大應數所</h1>"
                 },
                 "work_experience": {
-                  "type": "array",
-                  "example": [
-                    "2013 - 2018 學生一對一家教",
-                    "2018 - 2023 私人補習班"
-                  ],
-                  "items": {
-                    "type": "string"
-                  }
+                  "type": "string",
+                  "example": "<h2>2013 - 2018 學生一對一家教</h2><h2>2018 - 2023 私人補習班</h2>"
                 },
                 "notice": {
                   "type": "string",
@@ -553,24 +541,12 @@
                   "example": "<p>多年教學經驗，讓我開始思考，為什麼孩子對於數學的認知及學習程度會有落差？</p><p>要如何幫助孩子們不排斥數學、喜歡上數學、甚至愛上數學呢？讓Kiki老師來告訴你！</p>"
                 },
                 "educational_background": {
-                  "type": "array",
-                  "example": [
-                    "台大數學系",
-                    "台大應數所"
-                  ],
-                  "items": {
-                    "type": "string"
-                  }
+                  "type": "string",
+                  "example": "<h1>台大數學系</h1> <h1>台大應數所</h1>"
                 },
                 "work_experience": {
-                  "type": "array",
-                  "example": [
-                    "2013 - 2018 學生一對一家教",
-                    "2018 - 2023 私人補習班"
-                  ],
-                  "items": {
-                    "type": "string"
-                  }
+                  "type": "string",
+                  "example": "<h2>2013 - 2018 學生一對一家教</h2> <h2>2018 - 2023 私人補習班</h2>"
                 },
                 "notice": {
                   "type": "string",
@@ -1334,7 +1310,7 @@
         "tags": [
           "TutorSchedule (v-calendar)"
         ],
-        "description": "更新單一教師 - 常規行事曆設定（依照年度、月份區間）  *",
+        "description": "更新單一教師 - 常規行事曆設定（依照年度、月份區間）   *",
         "parameters": [
           {
             "name": "authorization",

@@ -24,12 +24,12 @@ const tutorBackgroundSchema = new mongoose.Schema({
         default : ""
     },
     educational_background : {
-        type : [String],
-        default : []
+        type : String,
+        default : ""
     },
     work_experience : {
-        type : [String],
-        default : []
+        type : String,
+        default : ""
     },
     teaching_introduction : [{
         teaching_level : {

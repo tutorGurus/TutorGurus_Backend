@@ -1,11 +1,18 @@
 const mongoose = require('mongoose');
 const User = require('./userModel');
-
+const classPrice = require('./classPriceModel');
 const courseSchema = new mongoose.Schema({
     user_id : {
         type : mongoose.Schema.Types.ObjectId,
         ref : "User",
-        required : [true , "教師ID為必填欄位"]
+        required : [true , "教師ID為必填欄位"],
+        select : false
+    },
+    price_id : {
+        type : mongoose.Schema.Types.ObjectId,
+        ref : "classPrice",
+        required : [true, "請填寫課程價格id以確保價格一至"], 
+        select : false
     },
     education_stages: {
         type : String,
@@ -26,10 +33,6 @@ const courseSchema = new mongoose.Schema({
     title : {
         type : String,
         required : [true , "課程名稱為必填欄位"]
-    },
-    price : {
-        type : String,
-        required : [true, "課程價格為必填欄位"]
     },
     introduction : {
         type: String

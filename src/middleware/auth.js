@@ -31,20 +31,20 @@ let jwtFn = {
                 token = req.headers.authorization.split(' ')[1];
             };
             if(!token && req.originalUrl == '/tutors/v1/register'){
-                return next(customiError(400, "請先註冊加入我們"))
-            }
+                return next(customiError(400, "請先註冊加入我們"));
+            };
             if(!token){
                 return next(customiError(400, "請先登入"));
             };
             const decryptPayload  = await new Promise((resolve, reject) => {
                 jwt.verify(token, process.env.JWT_SECRET, (err, payload) => {
-                    if(err){ 
+                    if(err){
                         reject(err);
                     } else {
                         resolve(payload);
                     }
                 })
-            })
+            });
             //多人登入
             // const user = await User.findOne({ "_id" : decryptPayload.id , 'tokens.token' : token });
              //單人登入
@@ -58,10 +58,9 @@ let jwtFn = {
             const currentUser = await User.findById(decryptPayload.id).select('-token +role -createdAt -updatedAt -password');
             req.user = currentUser;
             req.token = token;
-            req.userId = decryptPayload.id;
             next();
         } catch (err){
-            console.error("auth.js (44)", err.message);
+            console.error("auth.js (63)", err.message);
             if(err.message == "invalid token" || err.message == "jwt expired"  ||  err.message == "invalid signature"){
                 return next(customiError(400, "無效Token請先登入"))
             }
