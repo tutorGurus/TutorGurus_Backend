@@ -40,9 +40,9 @@ let bookingsController = {
             let id  = req.user._id;
             id = id.toHexString();
             const bookedList = await Booking.find({
-              booked_user_id: id,
+            booked_user_id: id,
             })
-              .populate({
+            .populate({
                 path: "booking_user_id",
                 select: "name email -carts",
             }).populate({
@@ -68,7 +68,7 @@ let bookingsController = {
             if(!bookedUserID || !ObjectId.isValid(course_id)){
                 return next(customiError(400, "無此課程資訊可預約或課程ID有誤"));
             };
-            let startTransfer = new Date("2023/05/31 22:00");
+            let startTransfer = new Date(startTime);
             const bookingList = await Booking.find({ booking_user_id: id })
             for(let obj of bookingList){
                 let existTime = obj["startTime"].getTime();
