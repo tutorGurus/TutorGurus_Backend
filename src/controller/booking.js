@@ -65,16 +65,13 @@ let bookingsController = {
             id = id.toHexString();
             let bookedUserID = await Course.findById(course_id).select('user_id -_id');
         //avocado ============ ceiling 
-            if(!bookedUserID || !ObjectId.isValid(course_id))
+            if(!bookedUserID || !ObjectId.isValid(course_id)){
                 return next(customiError(400, "無此課程資訊可預約或課程ID有誤"));
-            // let startTransfer = new Date("2023/05/31 22:00");
+            };
             let startTransfer = new Date("2023/05/31 22:00");
-            console.log(startTransfer);
             const bookingList = await Booking.find({ booking_user_id: id })
             for(let obj of bookingList){
-                console.log(obj);
                 let existTime = obj["startTime"].getTime();
-                console.log(startTransfer.getTime == existTime);
                 if(startTransfer.getTime() == existTime && obj["status"] == "booked"){
                     return next(customiError(400, "該時段已經有預約的課程"));
                 }
@@ -83,7 +80,6 @@ let bookingsController = {
         //avocado ============ floor 
 
             bookedUserID = bookedUserID.user_id.toHexString();
-
             const bookingCourse = await Booking.create({
                 booking_user_id: id,
                 booked_user_id: bookedUserID,
@@ -121,7 +117,7 @@ let bookingsController = {
 
     // 修改課程 Zoom Link
     async editZoomLink(req, res, next){
-          /**
+        /**
             #swagger.tags = ['Booking']
          */
         try{
