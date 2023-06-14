@@ -8,6 +8,33 @@ const { log } = require('debug/src/node');
 const coursesController = {
     //設定課程種類價格
     async newClassPrice(req, res, next){
+        /**
+         * #swagger.tags = ['Courses'],
+         * #swagger.description = '設定課程種類價格API'
+         * #swagger.parameters['body'] = {
+                in : 'body',
+                type : 'object',
+                required : true,
+                description : '資料格式',
+                schema : 
+                {
+                    "category" : "國文",
+                    "grade" : "國一",
+                    "price" : "700",
+                }
+            }
+           * #swagger.responses[200] = {
+                description: 'OK',
+                schema :
+                {
+                    "status": "success",
+                    "data": "新增成功"
+                }
+            }
+         * #swagger.security = [{
+            "JwtToken" : []
+            }]
+         */
         try{
             const id = req.user['_id'];
             console.log(id)
@@ -43,6 +70,32 @@ const coursesController = {
     },
     //修改課程種類價格
     async editClassPrice(req, res, next){
+          /**
+         * #swagger.tags = ['Courses'],
+         * #swagger.description = '修改課程種類價格API'
+         * #swagger.parameters['body'] = {
+                in : 'body',
+                type : 'object',
+                required : true,
+                description : '資料格式',
+                schema : 
+                {
+                    "price" : "新價格",
+                    "classId" : "課程類別ID(不是課程ID)"
+                }
+            }
+           * #swagger.responses[200] = {
+                description: 'OK',
+                schema :
+                {
+                    "status": "success",
+                    "data": "修改成功"
+                }
+            }
+         * #swagger.security = [{
+            "JwtToken" : []
+            }]
+         */
         try{
             const { price, classId } = req.body;
             if( !price || !classId){
@@ -56,7 +109,8 @@ const coursesController = {
                 price : price,
             });
             res.send({
-                status : "success"
+                status : "success",
+                message : "修改成功"
             })
         } catch (err){
             console.log(err)
@@ -64,6 +118,31 @@ const coursesController = {
     },
     //刪除課程類別
     async deleteClassPrice(req, res, next){
+         /**
+         * #swagger.tags = ['Courses'],
+         * #swagger.description = '刪除課程種類價格API'
+         * #swagger.parameters['body'] = {
+                in : 'body',
+                type : 'object',
+                required : true,
+                description : '資料格式',
+                schema : 
+                {
+                    "classId" : "課程類別ID(不是課程ID)"
+                }
+            }
+           * #swagger.responses[200] = {
+                description: 'OK',
+                schema :
+                {
+                    "status": "success",
+                    "data": "刪除成功"
+                }
+            }
+         * #swagger.security = [{
+            "JwtToken" : []
+            }]
+         */
         try{
             const userId = req.user['_id'];
             const { classId } = req.body;
