@@ -55,7 +55,7 @@ let tutorController = {
             if(req.user['role'] == 'T'){
                 return next(customiError(400, "已是教師身份!"));
             }
-            if(req.user['status'] == 'Apply'){
+            if(req.user['status'] == 'Apply'){  
                 return next(customiError(400, "資料審核中，請靜候通知"));
             }
             let { name, gender, phone, address, birthday, degree, school, teaching_category, country} = req.body;

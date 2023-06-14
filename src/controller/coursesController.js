@@ -6,7 +6,7 @@ const User = require('../models/userModel');
 const { log } = require('debug/src/node');
 
 const coursesController = {
-    // //設定課程種類價格
+    //設定課程種類價格
     async newClassPrice(req, res, next){
         try{
             const id = req.user['_id'];
@@ -45,18 +45,44 @@ const coursesController = {
     async editClassPrice(req, res, next){
         try{
             const { price, classId } = req.body;
+            if( !price || !classId){
+                return next(customiError(400, "請填寫必要欄位"));
+            };
             const findClass = await ClassPrice.findById(classId);
             if(!findClass){
                 return next(customiError(400, "未找到相關課程資訊"));
             };
             await ClassPrice.findByIdAndUpdate(classId, {
-                price : price
+                price : price,
             });
             res.send({
                 status : "success"
             })
         } catch (err){
             console.log(err)
+        }
+    },
+    //刪除課程類別
+    async deleteClassPrice(req, res, next){
+        try{
+            const userId = req.user['_id'];
+            const { classId } = req.body;
+            if( !classId ){
+                return next(customiError(400, "請帶入欲刪除類別的ID"));
+            };
+            const findClassFromDB = await Course.find({
+                price_id : classId,
+            });
+            if(findClassFromDB.length){
+                return next(customiError(400, "此類別下尚有課程內容"));
+            };
+            await ClassPrice.findByIdAndDelete(classId);
+            res.send({
+                status : "success",
+                message : "刪除成功"
+            })
+        } catch(err){
+            console.log(err);
         }
     },
     // 取得該教師開設的所有課程

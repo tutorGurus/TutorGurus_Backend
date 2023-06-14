@@ -22,6 +22,9 @@ router.delete('/:courseId', jwtFn.isAuth, coursesController.deleteCourse);
 router.post('/classPrice', jwtFn.isAuth, coursesController.newClassPrice);
 
 //修改課程價格
-router.patch('/classPrice/edit', jwtFn.isAuth, coursesController.editClassPrice);
+router.patch('/edit/classPrice', jwtFn.isAuth, coursesController.editClassPrice);
+
+//刪除課程類別
+router.delete('/delete/classPrice', jwtFn.isAuth, coursesController.deleteClassPrice);
 
 module.exports = router;
