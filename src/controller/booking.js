@@ -40,10 +40,14 @@ let bookingsController = {
             let id  = req.user._id;
             id = id.toHexString();
             const bookedList = await Booking.find({
-                booked_user_id : id,
+              booked_user_id: id,
+            })
+              .populate({
+                path: "booking_user_id",
+                select: "name email -carts",
             }).populate({
-            path: "booking_user_id",
-            select : "name email -carts"
+                path: "course_id",
+                select : "-_id -user_id -createAt -updateAt"
             });
             successHandle(res, bookedList);
         } catch(err){
