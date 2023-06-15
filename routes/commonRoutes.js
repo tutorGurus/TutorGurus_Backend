@@ -3,6 +3,7 @@ const router = express.Router();
 const jwtFn = require('../src/middleware/auth');
 const commonProcess = require('../src/controller/commonController');
 const passport = require('../src/middleware/passportValidate');
+const gmailController = require('../src/service/gmailAPI');
 
 //goolge教師登入or註冊
 router.get('/v1/T/register/google', passport.authenticate('google-teacher', {
@@ -34,5 +35,10 @@ router.get('/v1/profile', jwtFn.isAuth, commonProcess.getUserInfo);
 
 //修改個人資料路由
 router.patch('/v1/profile', jwtFn.isAuth, commonProcess.editUserInfo);
+
+//忘記密碼發信API
+router.post('/forgetPassword/gmail', gmailController.sendForgetMail);
+
+
 
 module.exports = router;
