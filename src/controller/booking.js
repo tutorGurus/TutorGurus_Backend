@@ -60,7 +60,7 @@ let bookingsController = {
             #swagger.tags = ['Booking']
          */
         try{
-            const { course_id, startTime, endTime} = req.body;
+            const { course_id, startTime, endTime } = req.body;
             let id  = req.user._id;
             id = id.toHexString();
             let bookedUserID = await Course.findById(course_id).select('user_id -_id');

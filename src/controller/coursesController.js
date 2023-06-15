@@ -37,18 +37,20 @@ const coursesController = {
          */
         try{
             const id = req.user['_id'];
-            console.log(id)
             const { body } = req;
+            if(req.user["role"] != "T" || req.user["status"] != "tutor"){
+                return next(customiError(400, "尚未有教師身分"));
+            };
             if(!body.category || !body.grade || !body.price){
                 return next(customiError(400, "請填寫完整開課價格資訊"));
-            }
+            };
             const tutor = await User.findById(id);
             if(tutor.status != "tutor"){
                 return next(customiError(400, "您沒有開課權限!"));
-            }
+            };
             if(!body.grade || !body.category || !body.price){
                 return next(customiError(400, "資料未填寫完整"));
-            }
+            };
             let course = await ClassPrice.find({
                     user_Id : id,
                     category : body.category,
@@ -211,7 +213,9 @@ const coursesController = {
         }]
         */
         let userId  = req.user['_id'];
-        const courses = await Course.find({user_id:userId});
+        const courses = await Course.find({
+            user_id:userId
+        });
         if (courses) {
             successHandle(res, courses);
         } else {
@@ -258,12 +262,15 @@ const coursesController = {
             const { body } = req;
             const { grade, category } = req.body;
             let userId  = req.user['_id'];
-            console.log(userId, grade, category);
             let coursePriceList = await ClassPrice.find({
                 user_Id : userId,
                 grade : grade,
                 category : category
             });
+            console.log(req.user);
+            if(req.user["role"] != "T" || req.user["status"] != "tutor"){
+                return next(customiError(400, "尚未有教師身分"));
+            }
             if(!coursePriceList.length){
                 return next(customiError(400, "請先設定課程類別價格"));
             };
