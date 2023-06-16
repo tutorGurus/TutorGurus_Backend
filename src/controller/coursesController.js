@@ -4,6 +4,7 @@ const successHandle = require('../service/successHandler');
 const ClassPrice = require('../models/classPriceModel');
 const User = require('../models/userModel');
 const { log } = require('debug/src/node');
+const { query } = require('express');
 
 const coursesController = {
     //設定課程種類價格
@@ -72,7 +73,7 @@ const coursesController = {
     },
     //修改課程種類價格
     async editClassPrice(req, res, next){
-          /**
+        /**
          * #swagger.tags = ['Courses'],
          * #swagger.description = '修改課程種類價格API'
          * #swagger.parameters['body'] = {
@@ -120,7 +121,7 @@ const coursesController = {
     },
     //刪除課程類別
     async deleteClassPrice(req, res, next){
-         /**
+        /**
          * #swagger.tags = ['Courses'],
          * #swagger.description = '刪除課程種類價格API'
          * #swagger.parameters['body'] = {
@@ -260,14 +261,13 @@ const coursesController = {
          */
         try {
             const { body } = req;
-            const { grade, category } = req.body;
+            const { grade, category, title} = req.body;
             let userId  = req.user['_id'];
             let coursePriceList = await ClassPrice.find({
                 user_Id : userId,
                 grade : grade,
                 category : category
             });
-            console.log(req.user);
             if(req.user["role"] != "T" || req.user["status"] != "tutor"){
                 return next(customiError(400, "尚未有教師身分"));
             }
@@ -277,6 +277,10 @@ const coursesController = {
             userId = userId.toHexString();
             if(!body.title || !body.category){
                 return next(customiError(400, "欄位未填寫完整"));
+            };
+            let tutorCourseInfo = await Course.find({ title : title });
+            if(tutorCourseInfo.length){
+                return next(customiError(400, "已有相同課程名稱的課程正在授課"));
             };
             const newCourse = await Course.create(
                 {
@@ -462,6 +466,53 @@ const coursesController = {
             }
         } catch(err) {
             return next(err);
+        }
+    },
+    //課程一覽(首頁篩選想學課程)
+    async courseListWithFilter(req, res, next){
+        try {
+            const queryContent = req.query;
+            let course_education_stages = queryContent['education_stages'] != undefined 
+                ? queryContent['education_stages'] 
+                : 0;
+            let course_category = queryContent["category"] != undefined
+                ? queryContent["category"]
+                : 0;
+            let course_grade = queryContent['grade'] != undefined 
+                ? queryContent['grade']
+                : 0;
+            let courseList;
+            if (!course_education_stages && !course_category && !course_grade){
+                courseList = await Course.find().populate({
+                    path: "user_id",
+                    select: "name profile_image tutorIdCustom -carts",
+                });;
+                successHandle(res, courseList);
+                return;
+            }
+            if(course_grade == `所有${course_education_stages}課程`){
+                courseList = await Course.find({
+                    education_stages: course_education_stages,
+                    category: course_category,
+                }).populate({
+                    path: "user_id",
+                    select: "name profile_image tutorIdCustom -carts",
+                });
+                successHandle(res, courseList);
+                return;
+            }
+            console.log(course_education_stages, course_category, course_grade)
+            courseList = await Course.find({
+                education_stages : course_education_stages,
+                category : course_category,
+                grade : course_grade,
+            }).populate({
+                path: "user_id",
+                select: "name profile_image tutorIdCustom -carts",
+            });
+            successHandle(res, courseList);
+        } catch(err){
+            console.log(err);
         }
     }
 }

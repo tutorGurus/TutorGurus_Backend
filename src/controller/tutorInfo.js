@@ -53,7 +53,6 @@ let tutorInfosController = {
             : 0;
         // let otherCondition = req.query["teaching_category"] != undefined ? new RegExp(req.query["teaching_category"]) : 0;
         let tutorsList;
-        console.log(teaching_category, teaching_level);
         if (!teaching_category && !teaching_level) {
         tutorsList = await TutorBackground.find({ role: "T" });
         } else {

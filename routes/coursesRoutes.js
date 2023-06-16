@@ -6,8 +6,11 @@ const jwtFn = require('../src/middleware/auth');
 // 新增一筆課程
 router.post('/', jwtFn.isAuth, coursesController.createCourse);
 
-// 取得所有課程資訊
+// 取得該教師開設的所有課程
 router.get('/', jwtFn.isAuth, coursesController.getAllCourses);
+
+//課程一覽(首頁篩選想學課程)
+router.get('/courseList', coursesController.courseListWithFilter);
 
 // 取得一筆課程資訊
 router.get('/:courseId', jwtFn.isAuth, coursesController.getCourse);
@@ -26,5 +29,6 @@ router.patch('/edit/classPrice', jwtFn.isAuth, coursesController.editClassPrice)
 
 //刪除課程類別
 router.delete('/delete/classPrice', jwtFn.isAuth, coursesController.deleteClassPrice);
+
 
 module.exports = router;

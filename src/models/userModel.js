@@ -101,7 +101,7 @@ const userSchema = new mongoose.Schema({
 });
 
 userSchema.statics.findOrCreate = async function (doc) {
-    let result = await this.findOne({googleId:doc.googleId});
+    let result = await this.findOne({googleId : doc.googleId});
     if (result) {
         return result;
     } else {
