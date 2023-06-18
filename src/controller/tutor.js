@@ -92,7 +92,6 @@ let tutorController = {
                 // role : 'T',
                 tutorIdCustom : newTutorId
             }, {new : true});
-            console.log(newTutor);
             successHandle(res, newTutor);
         } catch(err){
             return next(err);

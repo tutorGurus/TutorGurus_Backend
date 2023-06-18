@@ -2762,7 +2762,7 @@
         "tags": [
           "Booking"
         ],
-        "description": "",
+        "description": "預約課程",
         "parameters": [
           {
             "name": "authorization",
@@ -2772,23 +2772,103 @@
           {
             "name": "body",
             "in": "body",
+            "required": true,
+            "description": "資料格式",
             "schema": {
               "type": "object",
               "properties": {
-                "course_id": {
-                  "example": "any"
-                },
-                "startTime": {
-                  "example": "any"
-                },
-                "endTime": {
-                  "example": "any"
+                "bookingList": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "courseid": {
+                        "type": "string",
+                        "example": "courseID"
+                      },
+                      "tutorid": {
+                        "type": "string",
+                        "example": "tutorID of the course"
+                      },
+                      "starttime": {
+                        "type": "string",
+                        "example": "booking time with time stamp"
+                      }
+                    }
+                  }
                 }
-              }
+              },
+              "required": [
+                "bookingList"
+              ]
             }
           }
         ],
-        "responses": {}
+        "responses": {
+          "200": {
+            "description": "註冊成功",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "booking_user_id": {
+                        "type": "string",
+                        "example": "6486025f1113d3f14cf5cbb4"
+                      },
+                      "booked_user_id": {
+                        "type": "string",
+                        "example": "6482ad57777782004e4c5550"
+                      },
+                      "course_id": {
+                        "type": "string",
+                        "example": "648dc0586e93a5bfccefdde6"
+                      },
+                      "status": {
+                        "type": "string",
+                        "example": "booked"
+                      },
+                      "room_link": {
+                        "type": "string",
+                        "example": "temp.zoom.link"
+                      },
+                      "startTime": {
+                        "type": "string",
+                        "example": "1976-05-30T12:08:20.899Z"
+                      },
+                      "endTime": {
+                        "type": "string",
+                        "example": "1976-05-30T12:58:20.899Z"
+                      },
+                      "_id": {
+                        "type": "string",
+                        "example": "648ee47b828a698a43b09a68"
+                      },
+                      "createdAt": {
+                        "type": "string",
+                        "example": "2023-06-18T11:03:23.448Z"
+                      },
+                      "updatedAt": {
+                        "type": "string",
+                        "example": "2023-06-18T11:03:23.448Z"
+                      }
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
       }
     },
     "/v1/booking/booked": {
@@ -3367,7 +3447,7 @@
         ]
       }
     },
-    "/v1/upload/file": {
+    "/v1/upload/headshot": {
       "post": {
         "tags": [
           "ImageProcess"
@@ -3428,6 +3508,17 @@
             "JwtToken": []
           }
         ]
+      }
+    },
+    "/v1/upload/backgroundImg": {
+      "post": {
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
       }
     },
     "/v1/upload/file/remove": {
