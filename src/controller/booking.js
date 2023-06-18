@@ -40,22 +40,22 @@ let bookingsController = {
             let id  = req.user._id;
             id = id.toHexString();
             const bookedList = await Booking.find({
-            booked_user_id: id,
+                booked_user_id: id,
             })
             .populate({
                 path: "booking_user_id",
-                select: "name email -carts",
+                select: "name email -carts -_id",
             }).populate({
                 path: "course_id",
-                select : "-_id -user_id -createAt -updateAt"
-            });
+                select : "-user_id -createAt -updateAt -_id"
+            }).select("-_id");
             successHandle(res, bookedList);
         } catch(err){
             return next(err);
         }
     },
-    // 預約課程
-    async bookingCourse(req, res, next){
+    // 預約課程Ver.1
+    async bookingCourse1(req, res, next){
         /**
             #swagger.tags = ['Booking']
          */
@@ -96,6 +96,66 @@ let bookingsController = {
             return next(err);
         }
     },
+    // 預約課程Ver.2
+    async bookingCourse(req, res, next){
+        let id = req.user['_id'];
+        const bookingList = req.body['bookingList'];
+        if(!bookingList){
+            return next(customiError(400, "請帶入欲預約的課程"));
+        }
+        if (!bookingList.length) {
+            return next(customiError(400, "請帶入欲預約的課程"));
+        };
+        let existTutorBookingId;
+        let existTutorBookingList;
+        for(let bookedCourse of bookingList){
+            if(existTutorBookingId == undefined || existTutorBookingId != existTutorBookingId){
+                existTutorBookingId = bookedCourse['tutorid'];
+                if(!ObjectId.isValid(existTutorBookingId)){
+                    return next(customiError(400, "資料格式錯誤(tutorid)"));
+                }
+                existTutorBookingList = await Booking.find({ booked_user_id : existTutorBookingId });
+            };
+            for(let checkBookingStatus of existTutorBookingList){
+                if(checkBookingStatus['startTime'].getTime() == parseInt(bookedCourse["starttime"]) || checkBookingStatus == "booked"){
+                    return next(customiError(400, "此老師該時段已經有預約的課程"));
+                };
+            };
+        }
+        const existStudentBookingList = await Booking.find({ booking_user_id: id });
+        for(let bookedCourse of bookingList){
+            if(!ObjectId.isValid(bookedCourse["courseid"])){
+                return next(customiError(400, "課程資訊錯誤(ID)"));
+            };
+            let checkCourse = await Course.findById(bookedCourse["courseid"]);
+            if(!checkCourse){
+                return next(customiError(400, "無課程資訊"));
+            };
+            for(let checkBookingStatus of existStudentBookingList){
+                if(checkBookingStatus['startTime'].getTime() == parseInt(bookedCourse["starttime"]) || checkBookingStatus == "booked"){
+                    return next(customiError(400, "您在該時段已經有預約的課程"));
+                };
+            };
+        };
+        let endTransfer, newData;
+        let returnData = [];
+        for(let booking of bookingList){
+            endTimeTransfer = parseInt(booking['starttime']) + 50*60*1000;
+            newData = await Booking.create({
+                booking_user_id: id,
+                booked_user_id: booking['tutorid'],
+                course_id: booking['courseid'],
+                // startTime : startTime,
+                // endTime : endTime ,
+                startTime: booking['starttime'],
+                endTime: endTimeTransfer,
+                status: 'booked',
+                room_link: 'temp.zoom.link'
+            });
+            returnData.push(newData);
+        }
+        successHandle(res, returnData);
+    },
     // 請假、取消預約
     async editBookingStatus(req, res, next){
         /**
@@ -114,7 +174,6 @@ let bookingsController = {
             return next(err);
         }
     },
-
     // 修改課程 Zoom Link
     async editZoomLink(req, res, next){
         /**

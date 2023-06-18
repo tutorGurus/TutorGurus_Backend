@@ -15,8 +15,9 @@ const userSchema = new mongoose.Schema({
     },
     googleId : String,
     token : {
-    type : String,
-    default : ""  
+        type : String,
+        default : "",
+        select : false
     },
     // tokens : [{
     //     token : { type : String},
@@ -62,7 +63,10 @@ const userSchema = new mongoose.Schema({
         type : String,
         default : " "     
     },
-    imageName : String,
+    background_image : {
+        type : String,
+        default : " "     
+    },
     bank_account : {
         type : String,
         default : "",
@@ -94,10 +98,19 @@ const userSchema = new mongoose.Schema({
         enum : ['cancel','generally', "Apply", "tutor"],
         default : 'generally'
     },
-    tutorIdCustom : Number
+    tutorIdCustom : Number,
+    createdAt : {
+        type : Date,
+        default : Date.now,
+        select : false
+    },
+    updatedAt : {
+        type : Date,
+        default : Date.now,
+        select : false
+    }
 },{ 
-    versionKey : false,
-    timestamps: true 
+    versionKey : false
 });
 
 userSchema.statics.findOrCreate = async function (doc) {

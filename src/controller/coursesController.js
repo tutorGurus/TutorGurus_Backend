@@ -470,48 +470,105 @@ const coursesController = {
     },
     //課程一覽(首頁篩選想學課程)
     async courseListWithFilter(req, res, next){
+    /**
+         * #swagger.tags = ['Courses'],
+         * #swagger.description = '課程一覽(首頁篩選想學課程)'
+            #swagger.parameters['education_stages'] = {
+                in : 'query',
+                description : '年級（例如：國中、高中 ...）',
+                required : true
+            }
+            #swagger.parameters['category'] = {
+                in : 'query',
+                description : '課程類別(例如：國中、高中 ...)',
+                required : true
+            }
+            #swagger.parameters['grade'] = {
+                in : 'query',
+                description : '課程程度 (例如 : 國一 、 高二 ....)',
+                required : true
+            }
+            #swagger.responses[200] = {
+                description: '取得成功',
+                schema : {
+                    "status": "success",
+                    "data" : [
+                        {
+                            "_id": "648bbaf71e4f1347b58481ef",
+                            "user_id": {
+                                "_id": "6482ad57777782004e4c5550",
+                                "name": "avocado",
+                                "profile_image": " ",
+                                "carts": [],
+                                "tutorIdCustom": 1
+                            },
+                            "education_stages": "國中",
+                            "grade": "國三",
+                            "semester": "上學期",
+                            "category": "國文",
+                            "title": "台灣地理",
+                            "introduction": "高中地理得基礎，必須要學好",
+                            "preparation": [
+                                {
+                                    "item_title": "上課說明",
+                                    "content": "<p>1.開課前 10 分鐘進入網站，選擇『我的課程』找到該堂課並點選『進入教室』，即可開啟 ZOOM 教室開始上課。</p> <p>2.手機、電腦皆可使用 ZOOM 上課（手機請先下載 ZOOM 應用程式）</p>",
+                                    "_id": "648bbaf71e4f1347b58481f0"
+                                }
+                            ],
+                            "is_publish": false,
+                            "status": "上架",
+                            "rate": 0,
+                            "createdAt": "2023-06-16T01:29:27.264Z",
+                            "updatedAt": "2023-06-16T01:29:27.264Z"
+                        }
+                    ]
+                }
+            }
+         * #swagger.security = [{
+            "JwtToken" : []
+            }]
+         */
         try {
             const queryContent = req.query;
-            let course_education_stages = queryContent['education_stages'] != undefined 
-                ? queryContent['education_stages'] 
+            let course_education_stages =
+            queryContent["education_stages"] != undefined
+                ? queryContent["education_stages"]
                 : 0;
-            let course_category = queryContent["category"] != undefined
-                ? queryContent["category"]
-                : 0;
-            let course_grade = queryContent['grade'] != undefined 
-                ? queryContent['grade']
-                : 0;
+            let course_category =
+            queryContent["category"] != undefined ? queryContent["category"] : 0;
+            let course_grade =
+            queryContent["grade"] != undefined ? queryContent["grade"] : 0;
             let courseList;
-            if (!course_education_stages && !course_category && !course_grade){
-                courseList = await Course.find().populate({
-                    path: "user_id",
-                    select: "name profile_image tutorIdCustom -carts",
-                });;
-                successHandle(res, courseList);
-                return;
+            if (!course_education_stages && !course_category && !course_grade) {
+            courseList = await Course.find().populate({
+                path: "user_id",
+                select: "name profile_image tutorIdCustom -carts",
+            });
+            successHandle(res, courseList);
+            return;
             }
-            if(course_grade == `所有${course_education_stages}課程`){
-                courseList = await Course.find({
-                    education_stages: course_education_stages,
-                    category: course_category,
-                }).populate({
-                    path: "user_id",
-                    select: "name profile_image tutorIdCustom -carts",
-                });
-                successHandle(res, courseList);
-                return;
-            }
-            console.log(course_education_stages, course_category, course_grade)
+            if (course_grade == `所有${course_education_stages}課程`) {
             courseList = await Course.find({
-                education_stages : course_education_stages,
-                category : course_category,
-                grade : course_grade,
+                education_stages: course_education_stages,
+                category: course_category,
             }).populate({
                 path: "user_id",
                 select: "name profile_image tutorIdCustom -carts",
             });
             successHandle(res, courseList);
-        } catch(err){
+            return;
+            }
+            console.log(course_education_stages, course_category, course_grade);
+            courseList = await Course.find({
+            education_stages: course_education_stages,
+            category: course_category,
+            grade: course_grade,
+            }).populate({
+            path: "user_id",
+            select: "name profile_image tutorIdCustom -carts",
+            });
+            successHandle(res, courseList);
+        } catch (err) {
             console.log(err);
         }
     }

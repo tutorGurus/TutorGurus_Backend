@@ -1310,7 +1310,7 @@
         "tags": [
           "TutorSchedule (v-calendar)"
         ],
-        "description": "更新單一教師 - 常規行事曆設定（依照年度、月份區間）   *",
+        "description": "更新單一教師 - 常規行事曆設定（依照年度、月份區間）  *",
         "parameters": [
           {
             "name": "authorization",
@@ -1864,6 +1864,36 @@
         ]
       }
     },
+    "/user/forgetPassword/gmail": {
+      "post": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "to": {
+                  "example": "any"
+                },
+                "subject": {
+                  "example": "any"
+                },
+                "text": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/v1/tutor/courses/": {
       "post": {
         "tags": [
@@ -2049,6 +2079,161 @@
                       "updatedAt": {
                         "type": "string",
                         "example": "2023-05-31T16:43:44.117Z"
+                      }
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JwtToken": []
+          }
+        ]
+      }
+    },
+    "/v1/tutor/courses/courseList": {
+      "get": {
+        "tags": [
+          "Courses"
+        ],
+        "description": "課程一覽(首頁篩選想學課程)",
+        "parameters": [
+          {
+            "name": "education_stages",
+            "in": "query",
+            "description": "年級（例如：國中、高中 ...）",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "category",
+            "in": "query",
+            "description": "課程類別(例如：國中、高中 ...)",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "grade",
+            "in": "query",
+            "description": "課程程度 (例如 : 國一 、 高二 ....)",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "取得成功",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "_id": {
+                        "type": "string",
+                        "example": "648bbaf71e4f1347b58481ef"
+                      },
+                      "user_id": {
+                        "type": "object",
+                        "properties": {
+                          "_id": {
+                            "type": "string",
+                            "example": "6482ad57777782004e4c5550"
+                          },
+                          "name": {
+                            "type": "string",
+                            "example": "avocado"
+                          },
+                          "profile_image": {
+                            "type": "string",
+                            "example": " "
+                          },
+                          "carts": {
+                            "type": "array",
+                            "example": [],
+                            "items": {}
+                          },
+                          "tutorIdCustom": {
+                            "type": "number",
+                            "example": 1
+                          }
+                        }
+                      },
+                      "education_stages": {
+                        "type": "string",
+                        "example": "國中"
+                      },
+                      "grade": {
+                        "type": "string",
+                        "example": "國三"
+                      },
+                      "semester": {
+                        "type": "string",
+                        "example": "上學期"
+                      },
+                      "category": {
+                        "type": "string",
+                        "example": "國文"
+                      },
+                      "title": {
+                        "type": "string",
+                        "example": "台灣地理"
+                      },
+                      "introduction": {
+                        "type": "string",
+                        "example": "高中地理得基礎，必須要學好"
+                      },
+                      "preparation": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "item_title": {
+                              "type": "string",
+                              "example": "上課說明"
+                            },
+                            "content": {
+                              "type": "string",
+                              "example": "<p>1.開課前 10 分鐘進入網站，選擇『我的課程』找到該堂課並點選『進入教室』，即可開啟 ZOOM 教室開始上課。</p> <p>2.手機、電腦皆可使用 ZOOM 上課（手機請先下載 ZOOM 應用程式）</p>"
+                            },
+                            "_id": {
+                              "type": "string",
+                              "example": "648bbaf71e4f1347b58481f0"
+                            }
+                          }
+                        }
+                      },
+                      "is_publish": {
+                        "type": "boolean",
+                        "example": false
+                      },
+                      "status": {
+                        "type": "string",
+                        "example": "上架"
+                      },
+                      "rate": {
+                        "type": "number",
+                        "example": 0
+                      },
+                      "createdAt": {
+                        "type": "string",
+                        "example": "2023-06-16T01:29:27.264Z"
+                      },
+                      "updatedAt": {
+                        "type": "string",
+                        "example": "2023-06-16T01:29:27.264Z"
                       }
                     }
                   }

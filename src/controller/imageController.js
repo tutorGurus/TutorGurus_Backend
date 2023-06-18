@@ -11,8 +11,8 @@ const User = require('../models/userModel');
 
 const imageController = {
     
-    //上傳圖片
-    async uploadImage(req, res, next){
+    //上傳頭貼圖片
+    async uploadHeadImage(req, res, next){
         /**
          * #swagger.tags = ['ImageProcess'],
          * #swagger.description = '使用者頭貼上傳'
@@ -79,7 +79,12 @@ const imageController = {
             return next(customiError(400, err));
         }
     },
-
+    //上傳背景圖片
+    async uploadBackgroundImage(req, res, next){
+        res.send({
+            status : "success"
+        })
+    },
     //刪除圖片
     async removeImage(req, res, next){
         /**

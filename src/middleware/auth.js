@@ -48,7 +48,7 @@ let jwtFn = {
             //多人登入
             // const user = await User.findOne({ "_id" : decryptPayload.id , 'tokens.token' : token });
              //單人登入
-            const user = await User.findOne({ "_id" : decryptPayload.id});
+            const user = await User.findOne({ "_id" : decryptPayload.id}).select("token");
             if(!user){
                 return next(customiError(400, "請先登入"));
             }

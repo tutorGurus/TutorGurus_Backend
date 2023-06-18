@@ -46,8 +46,8 @@ const orderSchema = new mongoose.Schema({
 
 orderSchema.pre(/^find/, function(next){
     this.populate({
-        path : 'course_id',
-    })
+        path: "course_id",
+    });
     next();
 })
 

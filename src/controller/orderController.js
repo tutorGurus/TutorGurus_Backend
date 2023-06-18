@@ -44,20 +44,18 @@ let orderController = {
             }]
          */
         try {
-            console.log(req.user);
-            let { courseId, totalPrice, quantity} = req.body;
+            let { courseId, totalPrice, quantity } = req.body;
             if( !courseId || !totalPrice){
                 return next(customiError(400, "訂單資訊不完全"));
-            }
+            };
+            let caculateTotalPrice = parseInt(totalPrice)*parseInt(quantity);
             let newOrder = await Order.create({
-                
                 order_date : new Date(),
                 quantity : quantity,
                 user_id : req.user['_id'],
                 course_id : courseId,
-                total_price : totalPrice
+                total_price : caculateTotalPrice
             })
-            console.log(newOrder);
             successHandle(res, newOrder);
         } catch(err){
             console.log(err);
@@ -94,7 +92,7 @@ let orderController = {
         try{
             const orders = await Order.find(
                 { user_id : req.user["_id"] 
-            });
+            }).select("_id");
             successHandle(res, orders);
         } catch(err){
             console.log(err);
