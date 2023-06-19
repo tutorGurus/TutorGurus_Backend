@@ -2252,6 +2252,71 @@
         ]
       }
     },
+    "/v1/tutor/courses/getPriceList": {
+      "get": {
+        "tags": [
+          "Courses"
+        ],
+        "description": "取得課程種類價格API",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "_id": {
+                        "type": "string",
+                        "example": "648dc0366e93a5bfccefdde0"
+                      },
+                      "user_Id": {
+                        "type": "string",
+                        "example": "6482ad57777782004e4c5550"
+                      },
+                      "grade": {
+                        "type": "string",
+                        "example": "國一"
+                      },
+                      "category": {
+                        "type": "string",
+                        "example": "數學"
+                      },
+                      "price": {
+                        "type": "string",
+                        "example": "600"
+                      }
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JwtToken": []
+          }
+        ]
+      }
+    },
     "/v1/tutor/courses/{courseId}": {
       "get": {
         "tags": [

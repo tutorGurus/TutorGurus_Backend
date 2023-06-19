@@ -71,6 +71,39 @@ const coursesController = {
             console.log(err)
         }
     },
+    //取得課程種類價格
+    async getClassPrice(req, res, next){
+    /**
+         * #swagger.tags = ['Courses'],
+         * #swagger.description = '取得課程種類價格API'
+        #swagger.responses[200] = {
+            description: 'OK',
+            schema :
+            {
+                "status": "success",
+                "data": [
+                    {
+                        "_id": "648dc0366e93a5bfccefdde0",
+                        "user_Id": "6482ad57777782004e4c5550",
+                        "grade": "國一",
+                        "category": "數學",
+                        "price": "600"
+                    }
+                ]
+            }
+        }
+        * #swagger.security = [{
+        "JwtToken" : []
+        }]
+        */
+    try {
+            const id = req.user["_id"];
+            let data = await ClassPrice.find({ user_Id: id });
+            successHandle(res, data);
+        } catch (err) {
+            console.log(err);
+        }
+    },
     //修改課程種類價格
     async editClassPrice(req, res, next){
         /**

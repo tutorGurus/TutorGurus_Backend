@@ -12,6 +12,9 @@ router.get('/', jwtFn.isAuth, coursesController.getAllCourses);
 //課程一覽(首頁篩選想學課程)
 router.get('/courseList', coursesController.courseListWithFilter);
 
+//取得課程種類價格
+router.get('/getPriceList', jwtFn.isAuth, coursesController.getClassPrice);
+
 // 取得一筆課程資訊
 router.get('/:courseId', jwtFn.isAuth, coursesController.getCourse);
 
