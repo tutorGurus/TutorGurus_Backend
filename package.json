@@ -31,6 +31,7 @@
     "passport": "^0.6.0",
     "passport-google-oauth20": "^2.0.0",
     "path": "^0.12.7",
+    "socket.io": "^4.6.2",
     "swagger-autogen": "^2.23.1",
     "swagger-ui-express": "^4.6.3",
     "uuid": "^9.0.0",
