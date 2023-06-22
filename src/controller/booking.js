@@ -152,15 +152,15 @@ let bookingsController = {
         if (
             existTutorBookingId == undefined ||
             existTutorBookingId != existTutorBookingId
-          ) {
+        ) {
             existTutorBookingId = bookedCourse["tutorid"];
             if (!ObjectId.isValid(existTutorBookingId)) {
-              return next(customiError(400, "資料格式錯誤(tutorid)"));
+                return next(customiError(400, "資料格式錯誤(tutorid)"));
             }
             existTutorBookingList = await Booking.find({
-              booked_user_id: existTutorBookingId,
+                booked_user_id: existTutorBookingId,
             });
-          }
+        }
           for (let checkBookingStatus of existTutorBookingList) {
             if (
               checkBookingStatus["startTime"].getTime() ==

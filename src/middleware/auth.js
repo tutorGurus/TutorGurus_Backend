@@ -34,6 +34,7 @@ let jwtFn = {
                 return next(customiError(400, "請先註冊加入我們"));
             };
             if(!token){
+                console.log(37);
                 return next(customiError(400, "請先登入"));
             };
             const decryptPayload  = await new Promise((resolve, reject) => {
@@ -50,9 +51,11 @@ let jwtFn = {
              //單人登入
             const user = await User.findOne({ "_id" : decryptPayload.id}).select("token");
             if(!user){
+                console.log(53)
                 return next(customiError(400, "請先登入"));
             }
             if(!user.token || user.token != token){
+                console.log(57);
                 return next(customiError(400, "請先登入"));
             }
             const currentUser = await User.findById(decryptPayload.id).select('-token +role -createdAt -updatedAt -password');

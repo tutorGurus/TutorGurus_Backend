@@ -2,6 +2,7 @@ const Course = require('../models/coursesModel');
 const customiError = require('../errorHandler/customiError');
 const successHandle = require('../service/successHandler');
 const ClassPrice = require('../models/classPriceModel');
+const Booking = require("../models/bookingModel");
 const User = require('../models/userModel');
 const { log } = require('debug/src/node');
 const { query } = require('express');
@@ -491,6 +492,10 @@ const coursesController = {
          */
         try {
             const id = req.params.courseId;
+            const checkIsBooked = await Booking.find({ course_id : id, status : "booked" });
+            if(checkIsBooked.length){
+                return next(customiError(400, "該時段有學生預約，請勿刪除，或聯絡該學生"));
+            }
             const deletedCourse = await Course.findByIdAndDelete(id);
             if(deletedCourse) {
                 successHandle(res, "刪除成功");
